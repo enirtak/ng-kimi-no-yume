@@ -1,0 +1,13 @@
+<nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/']">Back</a>
+      </li>
+      <li class="breadcrumb-item text-dark active">{{currentPage}}</li>
+      <ng-container *ngIf="isAuthenticated">
+        <li class="btn btn-outline-dark btn-sm ms-auto" (click)="onLogoutButtonClick()">
+          LOGOUT
+        </li>
+      </ng-container>
+    </ol>
+</nav>

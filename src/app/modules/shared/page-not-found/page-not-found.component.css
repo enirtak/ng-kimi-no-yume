@@ -1,0 +1,33 @@
+.container-relative-404 {
+    height: 200px;
+    position: relative;
+    z-index: -1;
+}
+
+.container-relative-404 h1 {    
+    font-family: 'Itim';
+    font-size: 150px;
+    font-weight: 900;
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    background: white; 
+    /* url('/src/assets/images/dreamy.jpg') no-repeat; */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: cover;
+    background-position: center;
+}
+
+h2 {
+    font-family: 'Handlee';
+    font-size: 24px;
+}
+
+a {
+    font-family: 'Handlee';
+    font-size: 14px;
+}

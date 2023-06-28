@@ -1,0 +1,17 @@
+<span class="badge text-danger text-sm ps-1">
+    <ng-container *ngIf="
+        control &&
+        control.errors &&
+        (control.dirty || control.touched)">
+        <i class="bi bi-exclamation-diamond-fill"></i>
+        <span *ngIf="control.errors.required">
+            This field is required.
+        </span>
+        <span *ngIf="control.errors.maxlength">
+            The value is too long.
+        </span>
+        <span *ngIf="control.errors.minlength">
+            The value is too short.
+        </span>
+    </ng-container>
+</span>

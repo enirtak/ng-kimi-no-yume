@@ -1,0 +1,30 @@
+<navigation></navigation>
+<div class="container py-4">
+    <nav-home [currentPage]="'Search'"></nav-home>
+    <div class="text-center">
+        <h1 class="text-purple mb-3 d-flex">Enter a dream symbol</h1>
+        <div class="row">
+            <div class="col">
+                <input type="text" 
+                    class="form-control" 
+                    placeholder="What's in your dream?"
+                    [(ngModel)]="searchValue"
+                />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" *ngIf="searchValue">
+    <div class="text-md-start text-center">
+        <h1 class="text-purple">Search Results</h1>
+        <div class="row text-dark" *ngIf="dreamList">
+            <ng-container *ngFor="let dream of dreamList | filter : searchValue : 'dreamName'">
+                <accordion-result
+                    [id]="dream?.id"
+                    [title]="dream.dreamName"
+                    [description]="dream?.dreamDescription"
+                ></accordion-result>
+            </ng-container>
+        </div>
+    </div>
+</div>

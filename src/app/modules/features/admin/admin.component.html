@@ -1,0 +1,74 @@
+<div class="p-3">
+  <nav-home [currentPage]="'LOGIN'"></nav-home>
+</div>
+
+<spinner></spinner>
+
+<div class="container-fluid py-5">
+  <div class="row px-5">
+    <div class="col-md-6 col-sm-12 pe-5">
+      <dictionary-list
+        [dreamList]="dreamList"
+        (onGetDreamList)="onGetDreamList()"
+        (onShowAddDreamForm)="onShowAddDreamForm()"
+        (onShowEditDreamForm)="onShowEditDreamForm()"
+        (onGetSelectedDreamItem)="onGetSelectedDreamItem($event)"
+      ></dictionary-list>
+    </div>
+    <div class="col-md-6 col-sm-12">
+      <category-list
+        [dreamThemeList]="dreamThemeList"
+        (onGetDreamThemeList)="onGetDreamThemeList()"
+        (onShowAddForm)="onShowAddDreamThemeForm()"
+        (onShowEditForm)="onShowEditDreamThemeForm()"
+        (onGetSelectedDreamThemeItem)="onGetSelectedDreamThemeItem($event)"
+      ></category-list>
+    </div>
+  </div>
+</div>
+
+<!-- List Modal -->
+<div class="modal fade" id="dictionaryModalForm" 
+    data-bs-backdrop="static" 
+    data-bs-keyboard="false" 
+    tabindex="-1">
+    <dictionary-form
+        [formGroup]="yumeFormGroup"
+        [dreamThemeList]="dreamThemeList"
+        (onResetButtonClick)="resetForm()"
+        (onUpSertButtonClick)="onUpSertDream()"
+    ></dictionary-form>
+</div>
+
+<div class="modal fade" id="themeModalForm" 
+    data-bs-backdrop="static" 
+    data-bs-keyboard="false" 
+    tabindex="-1">
+    <category-form
+        [formGroup]="dreamThemeFormGroup"
+        (onUpSertButtonClick)="onUpSertDreamTheme()"
+    ></category-form>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" 
+    data-bs-backdrop="static" 
+    data-bs-keyboard="false" 
+    tabindex="-1">
+    <delete-modal
+        [selectedId] = "selectedDream?.id"
+        [selectedName] = "selectedDream?.dreamName"
+        (onDeleteConfirm)="onDeleteDreamConfirm()"
+    ></delete-modal>
+</div>
+
+<div class="modal fade" id="delThemeModal" 
+    data-bs-backdrop="static" 
+    data-bs-keyboard="false" 
+    tabindex="-1">
+    <delete-modal
+        [selectedId] = "selectedDreamTheme?.id"
+        [selectedName] = "selectedDreamTheme?.categoryName"
+        (onDeleteConfirm)="onDeleteDreamTheme()"
+    ></delete-modal>
+</div>

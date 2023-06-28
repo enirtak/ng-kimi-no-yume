@@ -1,0 +1,28 @@
+
+<spinner></spinner>
+<div id="container-relative">
+    <div class="p-3">
+        <nav-home [currentPage]="'LOGIN'"></nav-home>
+    </div>
+    <div class="container-relative bg-white">
+        <div class="p-5 d-flex justify-content-center align-items-center">
+            <div class="col col-lg-3">
+                <h3 class="mb-3 text-start text-purple">LOGIN</h3>
+                <form [formGroup]="loginFormGroup">
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="emailAddr" placeholder="name@example.com" formControlName="Username">
+                        <label for="emailAddr">Email Address</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="password" placeholder="Password" formControlName="Password">
+                        <label for="password">Password</label>
+                    </div>
+                </form>
+                <div class="d-grid">
+                    <button class="btn btn-dkpurple text-white" (click)="onLoginButtonClick()">LOGIN</button>
+                </div>
+            </div>
+            <img src="./../../../../../assets/images/admin.jpg" alt="" class="img-fluid w-25 mx-5 d-none d-lg-block">
+        </div>
+    </div>
+</div>

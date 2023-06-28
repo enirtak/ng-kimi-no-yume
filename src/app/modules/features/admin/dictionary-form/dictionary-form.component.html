@@ -1,0 +1,62 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <p class="lead fw-bold mt-auto mb-auto text-dark">{{isEditForm ? 'Edit' : 'Add'}} a Dream</p>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body mb-2">
+            <small>
+                <span class="text-danger">*</span> 
+                Required Field
+            </small>
+            <form [formGroup]="formGroup">
+                <div class="row py-2">
+                    <label class="col-sm-4 fw-bold">
+                        Dream Name 
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-sm-8">
+                        <input type="hidden" formControlName="Id">
+                        <input type="text" class="form-control" formControlName="DreamName"/>
+                        <field-error [control]="formGroup.get('DreamName')"></field-error>
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <label class="col-sm-4 fw-bold">
+                        Description
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control" rows="2" formControlName="DreamDescription"></textarea>
+                        <span *ngIf="descriptionCharCount < 20" class="text-body-secondary text-sm">
+                            <strong>{{ descriptionCharCount }}</strong> characters 
+                            (minimum {{minDescriptionCount}} characters)
+                        </span>
+                        <field-error [control]="formGroup.get('DreamDescription')"></field-error>
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <label class="col-sm-4 fw-bold">
+                        Dream Theme
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-sm-8">
+                        <select class="form-select" formControlName="DreamCategoryId">
+                            <option value="null" disabled>Dream Theme</option>
+                            <option *ngFor="let cat of dreamThemeList" value="{{cat?.id}}">
+                                {{cat?.categoryName}}
+                            </option>
+                        </select>
+                        <field-error [control]="formGroup.get('DreamCategoryId')"></field-error>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-primary" (click)="upsertClickButtonClick()" [disabled]="formGroup.invalid">
+                Save
+            </button>
+        </div>
+    </div>
+</div>

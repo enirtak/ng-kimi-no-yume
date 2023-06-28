@@ -1,0 +1,52 @@
+<div class="d-sm-flex">
+    <h4>Dream List</h4>
+    <div class="hstack gap-1 ms-auto">
+        <input type="text" class="form-control" placeholder="Search" [(ngModel)]="dreamListSearch"/>
+        <button class="btn btn-primary btn-sm w-50 ms-1" (click)="getDreamList()">
+            Get List
+        </button> 
+        <button class="btn btn-primary btn-sm ms-1" 
+            data-bs-toggle="modal" 
+            data-bs-target="#dictionaryModalForm"
+            (click)="addButtonClick()">
+            ADD
+        </button>
+    </div>
+</div>
+<table class="table table-hover mt-2">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Dream Name</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <ng-container *ngIf="dreamList">
+        <tbody *ngFor="let dream of dreamList
+        | filter : dreamListSearch : 'dreamName'
+        | paginate : { itemsPerPage: itemCount, currentPage: currentPage }
+        ">
+            <tr>
+                <th scope="row">{{dream?.id}}</th>
+                <td>{{dream?.dreamName}}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm me-1" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#dictionaryModalForm"
+                        (click)="getSelectedItem(dream?.id)">
+                        EDIT
+                    </button>
+                    <button class="btn btn-primary btn-sm me-1"
+                        data-bs-toggle="modal" 
+                        data-bs-target="#deleteModal" 
+                        (click)="getSelectedItem(dream?.id)">
+                        DELETE
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </ng-container>
+</table>
+<div class="text-center">
+    <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+</div>

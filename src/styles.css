@@ -1,1 +1,92 @@
-/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
+
+.handlee {
+    font-family: 'Handlee';
+}
+
+.marcellus {
+    font-family: 'Marcellus';
+}
+
+body {
+    font-family: 'Marcellus';
+    /* color: white; */
+    background-image: url('src/assets/images/dreamy.jpg');
+    background-repeat: no-repeat;
+    position: relative; 
+    display: block;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    height: 100vh !important;
+    width: 100%;
+}
+
+#container-relative {
+    position: relative;
+    height: 100vh;
+}
+
+.container-relative {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.cursor-default {
+    cursor: default;
+}
+
+.btn-dkpurple {
+    background-color: #8080ff;
+}
+
+.btn-dkpurple:hover {
+    background-color: #7272ff;
+}
+
+.text-purple {
+    text-shadow: 2px 2px #e2a6e6;
+}
+
+.purple-underline {
+    border-bottom: 3px solid #e2a6e6;
+}
+
+.ngx-pagination {
+    color: white !important;
+}
+
+.ngx-pagination li {
+    background: #8080ff !important;
+}
+
+.ngx-pagination .disabled {
+    background: #cacaca !important;
+    color: white !important;
+}
+
+.ngx-pagination li a:hover {
+    background: #7272ff !important;
+}
+
+.admin-link {
+    font-size: .8rem;
+    display: inline-block;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.admin-link:hover {
+    text-decoration: underline;
+    cursor: default;
+}
