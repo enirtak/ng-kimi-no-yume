@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg text-dark" id="transparentBg">
     <div class="container">
-        <h4 class="navbar-brand fs-1 text-purple text-light handlee">
+        <h4 class="navbar-brand fs-1 purple-shadow text-light handlee">
             <a class="nav-link d-sm-block" [routerLink]="['/']">
                 <span class="fw-bold align-content-center">君の夢</span>
                 <p class="fs-5 text-start m-0">
@@ -13,7 +13,7 @@
             data-bs-toggle="collapse"
             data-bs-target="#navigationBar">
             <span class="text-light">
-                <i class="bi bi-menu-up"></i>
+                <i class="bi bi-three-dots-vertical"></i>
             </span>
         </button>
         
@@ -37,6 +37,11 @@
                 <li class="nav-item m-md-3 m-2">
                     <a class="nav-link link-light" [routerLink]="['/about']">
                         ABOUT
+                    </a>
+                </li>
+                <li class="nav-item m-md-3 m-2">
+                    <a class="nav-link link-light" [routerLink]="['/contact']">
+                        CONTACT
                     </a>
                 </li>
             </ul>

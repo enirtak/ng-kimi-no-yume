@@ -15,5 +15,4 @@ export class AccordionResultComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

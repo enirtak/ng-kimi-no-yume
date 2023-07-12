@@ -1,8 +1,10 @@
 <navigation></navigation>
-<div class="container py-4">
-    <nav-home [currentPage]="'Search'"></nav-home>
-    <div class="text-center">
-        <h1 class="text-purple mb-3 d-flex">Enter a dream symbol</h1>
+
+<div class="my-4">
+    <div class="container my-4">
+        <nav-home [currentPage]="'Search'"></nav-home>
+
+        <h1 class="purple-shadow">Enter a Dream</h1>
         <div class="row">
             <div class="col">
                 <input type="text" 
@@ -13,18 +15,18 @@
             </div>
         </div>
     </div>
-</div>
-<div class="container" *ngIf="searchValue">
-    <div class="text-md-start text-center">
-        <h1 class="text-purple">Search Results</h1>
-        <div class="row text-dark" *ngIf="dreamList">
-            <ng-container *ngFor="let dream of dreamList | filter : searchValue : 'dreamName'">
-                <accordion-result
-                    [id]="dream?.id"
-                    [title]="dream.dreamName"
-                    [description]="dream?.dreamDescription"
-                ></accordion-result>
-            </ng-container>
+    <div class="container" *ngIf="searchValue">
+        <div class="text-md-start text-center">
+            <h1 class="purple-shadow">Search Results</h1>
+            <div class="row text-dark" *ngIf="combinedList">
+                <ng-container *ngFor="let dream of combinedList | filter : searchValue : 'name'">
+                    <accordion-result
+                        [id]="dream?.id"
+                        [title]="dream.name"
+                        [description]="dream?.description"
+                    ></accordion-result>
+                </ng-container>
+            </div>
         </div>
     </div>
 </div>

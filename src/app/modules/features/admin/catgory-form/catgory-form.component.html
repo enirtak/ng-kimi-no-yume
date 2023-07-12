@@ -1,32 +1,52 @@
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <p class="lead fw-bold mt-auto mb-auto text-dark">{{isEditForm ? 'Edit' : 'Add'}} a Dream Theme</p>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body mb-2">
-            <small>
-                <span class="text-danger">*</span> 
-                Required Field
-            </small>
-            <form [formGroup]="formGroup">
-                <div class="row py-2">
-                    <label class="col-sm-4 fw-bold">
-                        Theme Name
-                        <span class="text-danger">*</span> 
-                    </label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" formControlName="CategoryName"/>
-                        <field-error [control]="formGroup.get('CategoryName')"></field-error>
+
+<div class="modal fade" [id]="modalId" 
+    data-bs-backdrop="static" 
+    data-bs-keyboard="false" 
+    tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="lead fw-bold mt-auto mb-auto text-dark">{{isEditForm ? 'Edit' : 'Add'}}</p>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body mb-2">
+                <small>
+                    <span class="text-danger">*</span> 
+                    Required Field
+                </small>
+                <form [formGroup]="formGroup">
+                    <div class="row py-2">
+                        <label class="col-sm-4 fw-bold">
+                            Theme Name
+                            <span class="text-danger">*</span> 
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" formControlName="categoryName"/>
+                            <field-error [control]="formGroup.get('categoryName')"></field-error>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button class="btn btn-primary" (click)="upsertClickButtonClick()" [disabled]="formGroup.invalid">
-                Save
-            </button>
+                    <div class="row py-2">
+                        <label class="col-sm-4 fw-bold">
+                            Description
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" rows="10" formControlName="description"></textarea>
+                            <span class="text-body-secondary text-sm mt-2">
+                                <strong>{{ descriptionCharCount }}</strong> characters 
+                                (minimum {{minDescriptionCount}} characters)
+                            </span>
+                            <field-error [control]="formGroup.get('description')"></field-error>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-primary" data-bs-dismiss="modal" (click)="upsertClickButtonClick()" [disabled]="formGroup.invalid">
+                    Save
+                </button>
+            </div>
         </div>
     </div>
 </div>

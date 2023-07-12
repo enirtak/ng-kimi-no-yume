@@ -11,8 +11,8 @@ import { DreamListResponse } from '../models/dream-list-response';
 import { DreamItemResponse } from '../models/dream-item-response';
 import { DreamDictionaryRequest } from '../models/dream-dictionary-request';
 import { CategoryResponse } from '../models/category-response';
-import { CategoryRequest } from '../models/category-request';
 import { CategoryItemResponse } from '../models/category-item-response';
+import { CategoryRequest } from '../models/category-request';
 @Injectable({
   providedIn: 'root',
 })
@@ -211,7 +211,7 @@ class DreamService extends __BaseService {
    * @param body undefined
    * @return Success
    */
-  postApiDreamCreateNewCategoryResponse(body?: CategoryRequest): __Observable<__StrictHttpResponse<CategoryResponse>> {
+  postApiDreamCreateNewCategoryResponse(body?: CategoryRequest): __Observable<__StrictHttpResponse<CategoryItemResponse>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -229,7 +229,7 @@ class DreamService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<CategoryResponse>;
+        return _r as __StrictHttpResponse<CategoryItemResponse>;
       })
     );
   }
@@ -237,9 +237,9 @@ class DreamService extends __BaseService {
    * @param body undefined
    * @return Success
    */
-  postApiDreamCreateNewCategory(body?: CategoryRequest): __Observable<CategoryResponse> {
+  postApiDreamCreateNewCategory(body?: CategoryRequest): __Observable<CategoryItemResponse> {
     return this.postApiDreamCreateNewCategoryResponse(body).pipe(
-      __map(_r => _r.body as CategoryResponse)
+      __map(_r => _r.body as CategoryItemResponse)
     );
   }
 
@@ -247,7 +247,7 @@ class DreamService extends __BaseService {
    * @param body undefined
    * @return Success
    */
-  postApiDreamUpdateCategoryResponse(body?: CategoryRequest): __Observable<__StrictHttpResponse<CategoryResponse>> {
+  postApiDreamUpdateCategoryResponse(body?: CategoryRequest): __Observable<__StrictHttpResponse<CategoryItemResponse>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -265,7 +265,7 @@ class DreamService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<CategoryResponse>;
+        return _r as __StrictHttpResponse<CategoryItemResponse>;
       })
     );
   }
@@ -273,9 +273,9 @@ class DreamService extends __BaseService {
    * @param body undefined
    * @return Success
    */
-  postApiDreamUpdateCategory(body?: CategoryRequest): __Observable<CategoryResponse> {
+  postApiDreamUpdateCategory(body?: CategoryRequest): __Observable<CategoryItemResponse> {
     return this.postApiDreamUpdateCategoryResponse(body).pipe(
-      __map(_r => _r.body as CategoryResponse)
+      __map(_r => _r.body as CategoryItemResponse)
     );
   }
 

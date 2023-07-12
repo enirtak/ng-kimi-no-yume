@@ -8,10 +8,12 @@ import { FormGroup } from '@angular/forms';
 })
 export class CatgoryFormComponent implements OnInit {
 
+  @Input() modalId!: string;
   @Input() formGroup!: FormGroup;
   @Output() onUpSertButtonClick: EventEmitter<void> = new EventEmitter();
 
   formTitle = '';
+  minDescriptionCount = 20;
 
   get isEditForm() {
     let id = this.formGroup.get('Id')?.value;
@@ -27,4 +29,8 @@ export class CatgoryFormComponent implements OnInit {
     this.onUpSertButtonClick.emit();
   }
 
+  get descriptionCharCount() {
+    let descValue = this.formGroup.get('description')?.value;
+    return !descValue ? 0 : descValue.length;
+  }
 }

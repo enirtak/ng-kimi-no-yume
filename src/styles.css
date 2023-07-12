@@ -54,12 +54,16 @@ body {
     background-color: #7272ff;
 }
 
-.text-purple {
+.purple-shadow {
     text-shadow: 2px 2px #e2a6e6;
 }
 
 .purple-underline {
     border-bottom: 3px solid #e2a6e6;
+}
+
+.white-underline {
+    border-bottom: 3px solid white;
 }
 
 .ngx-pagination {
@@ -89,4 +93,13 @@ body {
 .admin-link:hover {
     text-decoration: underline;
     cursor: default;
+}
+
+textarea {
+    resize: none;
+}
+
+.justify-text {
+    text-align: justify;
+    text-justify: inter-word;
 }

@@ -9,6 +9,7 @@ import { DreamCategoryDTO } from 'src/app/api/models';
 })
 export class DictionaryFormComponent implements OnInit {
 
+  @Input() modalId!: string;
   @Input() formGroup!: FormGroup;
   @Input() dreamThemeList?: Array<DreamCategoryDTO>;
   @Output() onUpSertButtonClick: EventEmitter<void> = new EventEmitter();
@@ -16,7 +17,7 @@ export class DictionaryFormComponent implements OnInit {
   minDescriptionCount = 20;
 
   get isEditForm() {
-    let id = this.formGroup.get('Id')?.value;
+    let id = this.formGroup.get('id')?.value;
     return id !== null;
   }
 
@@ -30,7 +31,7 @@ export class DictionaryFormComponent implements OnInit {
   }
 
   get descriptionCharCount() {
-    let descValue = this.formGroup.get('DreamDescription')?.value;
+    let descValue = this.formGroup.get('dreamDescription')?.value;
     return !descValue ? 0 : descValue.length;
   }
 

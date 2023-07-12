@@ -9,8 +9,11 @@ export const environment = {
 export const Settings = {
   apiUrl: 'https://localhost:7255',
   currentPage: 1,
-  itemCount: 15
+  itemCount: 15,
+  dreamListKey: "dreamList",
+  dreamThemeKey: "dreamTheme"
 }
+
 
 /*
  * For easier debugging in development mode, you can import the following file

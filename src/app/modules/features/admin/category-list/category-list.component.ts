@@ -12,7 +12,6 @@ export class CategoryListComponent implements OnInit {
   @Input() dreamThemeList?: Array<DreamCategoryDTO>;
 
   @Output() onGetDreamThemeList: EventEmitter<void> = new EventEmitter();
-  @Output() onShowEditForm: EventEmitter<void> = new EventEmitter();
   @Output() onShowAddForm: EventEmitter<void> = new EventEmitter();
   @Output() onGetSelectedDreamThemeItem: EventEmitter<number> = new EventEmitter();
 
@@ -27,10 +26,6 @@ export class CategoryListComponent implements OnInit {
 
   getDreamThemeList() {
     this.onGetDreamThemeList.emit();
-  }
-
-  showEditDreamForm() {
-    this.onShowEditForm.emit();
   }
 
   getSelectedDreamThemeItem(id: number | undefined) {

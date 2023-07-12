@@ -28,7 +28,14 @@
         ">
             <tr>
                 <th scope="row">{{theme?.id}}</th>
-                <td>{{theme?.categoryName}}</td>
+                <td>
+                    <a class="navbar-brand cursor-pointer me-1" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#viewDreamTheme"
+                        (click)="getSelectedDreamThemeItem(theme?.id)">
+                        {{theme?.categoryName}}
+                    </a>
+                </td>
                 <td>
                     <button class="btn btn-primary btn-sm me-1" 
                         data-bs-toggle="modal" 
@@ -47,6 +54,8 @@
         </tbody>
     </ng-container>
 </table>
-<div class="text-center">
-    <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
-</div>
+<ng-container *ngIf="dreamThemeList && dreamThemeList.length > itemCount">
+    <div class="text-center">
+        <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+    </div>
+</ng-container>

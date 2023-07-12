@@ -12,7 +12,6 @@ export class DictionaryListComponent implements OnInit {
   @Input() dreamList?: Array<DreamDictionaryDTO>;
 
   @Output() onGetDreamList: EventEmitter<void> = new EventEmitter();
-  @Output() onShowEditDreamForm: EventEmitter<void> = new EventEmitter();
   @Output() onShowAddDreamForm: EventEmitter<void> = new EventEmitter();
   @Output() onGetSelectedDreamItem: EventEmitter<number> = new EventEmitter();
 
@@ -27,10 +26,6 @@ export class DictionaryListComponent implements OnInit {
 
   getDreamList() {
     this.onGetDreamList.emit();
-  }
-
-  showEditDreamForm() {
-    this.onShowEditDreamForm.emit();
   }
 
   getSelectedItem(id: number | undefined) {

@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { createDreamFormGroup, createDreamCategoryFormGroup } from 'src/app/modules/features/admin/forms/admin.formgroup.create';
 import { setupDreamFormGroupHandler, setupCategoryFormGroupHandler } from 'src/app/modules/features/admin/forms/admin.formgroup.handler';
-import { dictionaryDTOToFormGroup, dreamThemeDTOToFormGroup } from 'src/app/modules/features/admin/forms/admin.formgroup.patchvalue';
+import { dictionaryDTOToFormGroup, dreamThemeDTOToFormGroup, dreamThemeFormGroupToList, yumeFormGroupToList } from 'src/app/modules/features/admin/forms/admin.formgroup.patchvalue';
 import { DreamDictionaryDTO, DreamCategoryDTO } from '../../../api/models';
 import { CategoryService } from '../../../services/category/category.service';
 import { DictionaryService } from '../../../services/dictionary/dictionary.service';
-import { AuthService } from 'src/app/services/auth/auth.service';
 import { LoadingService } from 'src/app/services/loading/loading.service';
+import { LocalStorageService } from 'src/app/services/localstorage/localstorage.service';
+import { Settings } from 'src/environments/environment';
 
 @Component({
   selector: 'app-admin',
@@ -16,13 +17,12 @@ import { LoadingService } from 'src/app/services/loading/loading.service';
 })
 export class AdminComponent implements OnInit {
   // Dictionary
-  showDreamForm: boolean = false;
   yumeFormGroup!: FormGroup;
   dreamList?: Array<DreamDictionaryDTO>;
   selectedDream?: DreamDictionaryDTO;
+  selectedDreamCategory: string | undefined = '';
 
   // Theme
-  showDreamThemeForm: boolean = false;
   dreamThemeFormGroup!: FormGroup; 
   dreamThemeList?: Array<DreamCategoryDTO>;
   selectedDreamTheme?: DreamCategoryDTO;
@@ -31,7 +31,8 @@ export class AdminComponent implements OnInit {
     private fb: FormBuilder,
     private dreamSVC: DictionaryService,
     private categorySVC: CategoryService,
-    private loader: LoadingService
+    private loader: LoadingService,
+    private storageSVC: LocalStorageService
     ) { }
 
   ngOnInit() {
@@ -45,15 +46,11 @@ export class AdminComponent implements OnInit {
   }
 
   getListOnCache() {
-    let theme = localStorage.getItem("dreamTheme");
-    if (theme && JSON.parse(theme)) {
-      this.dreamThemeList = JSON.parse(theme);
-    } else this.onGetDreamThemeList();
+    let theme = this.storageSVC.get(Settings.dreamThemeKey);
+    this.dreamThemeList = this.storageSVC.parse(theme) ?? this.onGetDreamThemeList();
 
-    let list = localStorage.getItem("dreamList");
-    if (list && JSON.parse(list)) {
-      this.dreamList = JSON.parse(list);
-    } else this.onGetDreamList();
+    let list = this.storageSVC.get(Settings.dreamListKey);
+    this.dreamList = this.storageSVC.parse(list) ?? this.onGetDreamList();
   }
 
   /* Dictionary Section - Start */
@@ -61,30 +58,36 @@ export class AdminComponent implements OnInit {
     this.dreamSVC.GetList()
       .then((data) => {
         this.dreamList = data.dictionaryList;
-        localStorage.setItem("dreamList", JSON.stringify(this.dreamList));
+        this.storageSVC.set(Settings.dreamListKey, this.dreamList);
       });
   }
 
   onUpSertDream() {
     let formValues = this.yumeFormGroup?.value;
-    console.log(formValues)
 
-    if (formValues && formValues?.Id > 0) {
+    if (formValues && formValues?.id) {
       this.dreamSVC.Update(formValues)
-        .then(() => {
+        .then((response) => {
+          this.dreamList?.map(x => {
+            if (x.id === formValues.id) {
+              yumeFormGroupToList(x, response.dreamItem as DreamDictionaryDTO);
+            }
+          });
           this.resetForm();
         });
     } else {
+      if (!formValues.id) formValues.id = 0;
       this.dreamSVC.Create(formValues)
-        .then(() => {
+        .then((response) => {
+          this.dreamList?.push(response.dreamItem as DreamDictionaryDTO);
           this.resetForm();
-          this.dreamList?.push(formValues);
         });
     }
   }
 
   onGetSelectedDreamItem(id:number) {
     this.selectedDream = this.dreamList?.find(x => x.id === id);
+    this.selectedDreamCategory = this.dreamThemeList?.find(x => x.id == this.selectedDream?.dreamCategoryId)?.categoryName;
     dictionaryDTOToFormGroup(this.yumeFormGroup, this.selectedDream);
   }
 
@@ -94,13 +97,12 @@ export class AdminComponent implements OnInit {
   }
 
   resetForm() {
+    this.dreamList?.sort((a, b) => a.dreamName!.localeCompare(b.dreamName!));
+    this.storageSVC.set(Settings.dreamListKey, this.dreamList);
     this.yumeFormGroup?.reset();
   }
 
-  onShowEditDreamForm() {
-    this.showDreamForm = !this.showDreamForm;
-  }
-
+  // resets form when Add button is clicked
   onShowAddDreamForm() {
     this.yumeFormGroup.reset();
   }
@@ -111,14 +113,11 @@ export class AdminComponent implements OnInit {
     this.categorySVC.GetList()
     .then((data) => {
       this.dreamThemeList = data.categories;
-
-      localStorage.setItem("dreamTheme", JSON.stringify(this.dreamThemeList));
+      this.storageSVC.set(Settings.dreamThemeKey, this.dreamThemeList);
     });
   }
 
-  onGetSelectedDreamThemeItem(id:number, showForm: boolean = true) {
-    if (showForm) this.onShowEditDreamThemeForm();
-
+  onGetSelectedDreamThemeItem(id:number) {
     this.selectedDreamTheme = this.dreamThemeList?.find(x => x.id === id);
     dreamThemeDTOToFormGroup(this.dreamThemeFormGroup, this.selectedDreamTheme);
   }
@@ -126,18 +125,21 @@ export class AdminComponent implements OnInit {
   onUpSertDreamTheme() {
     let formValues = this.dreamThemeFormGroup?.value;
 
-    if (formValues && formValues?.Id > 0) {
+    if (formValues && formValues?.id) {
       this.categorySVC.Update(formValues)
-        .then(() => {
+        .then((response) => {
           this.dreamThemeList?.map(x => {
-            if (x.id === formValues.Id) x.categoryName = formValues.CategoryName
+            if (x.id === formValues.id) {
+              dreamThemeFormGroupToList(x, response.category as DreamDictionaryDTO);
+            }
           });
           this.resetThemeForm();
         });
     } else {
+      if (!formValues.id) formValues.id = 0;
       this.categorySVC.Create(formValues)
-        .then(() => {
-          this.dreamThemeList?.push(formValues);
+        .then((response) => {
+          this.dreamThemeList?.push(response.category as DreamCategoryDTO);
           this.resetThemeForm();
         });
     }
@@ -149,14 +151,12 @@ export class AdminComponent implements OnInit {
   }
 
   resetThemeForm() {
-    localStorage.setItem("dreamTheme", JSON.stringify(this.dreamThemeList));
+    this.dreamThemeList?.sort((a, b) => a.categoryName!.localeCompare(b.categoryName!));
+    this.storageSVC.set(Settings.dreamThemeKey, this.dreamThemeList);
     this.dreamThemeFormGroup?.reset();
   }
 
-  onShowEditDreamThemeForm() {
-    this.showDreamThemeForm = !this.showDreamThemeForm;
-  }
-
+  // resets form when Add button is clicked
   onShowAddDreamThemeForm() {
     this.dreamThemeFormGroup.reset();
   }

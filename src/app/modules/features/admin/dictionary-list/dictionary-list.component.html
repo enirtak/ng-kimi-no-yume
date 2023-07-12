@@ -28,17 +28,26 @@
         ">
             <tr>
                 <th scope="row">{{dream?.id}}</th>
-                <td>{{dream?.dreamName}}</td>
+                <td>
+                    <a class="navbar-brand cursor-pointer me-1" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#viewDictionary"
+                        (click)="getSelectedItem(dream?.id)">
+                        {{dream?.dreamName}}
+                    </a>
+                </td>
                 <td>
                     <button class="btn btn-primary btn-sm me-1" 
                         data-bs-toggle="modal" 
                         data-bs-target="#dictionaryModalForm"
+                        data-bs-dismiss="modal"
                         (click)="getSelectedItem(dream?.id)">
                         EDIT
                     </button>
                     <button class="btn btn-primary btn-sm me-1"
                         data-bs-toggle="modal" 
                         data-bs-target="#deleteModal" 
+                        data-bs-dismiss="modal"
                         (click)="getSelectedItem(dream?.id)">
                         DELETE
                     </button>
@@ -47,6 +56,8 @@
         </tbody>
     </ng-container>
 </table>
-<div class="text-center">
-    <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
-</div>
+<ng-container *ngIf="dreamList && dreamList.length > itemCount">
+    <div class="text-center">
+        <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+    </div>
+</ng-container>

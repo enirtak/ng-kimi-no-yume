@@ -23,9 +23,9 @@ export class ErrorInterceptor implements HttpInterceptor {
     .pipe(
       tap((success) => {
         if (success instanceof HttpResponse) {
-          if (success.body && success.body.success) {
-            this.httpMessage = `Success: ${success.body.success}`;
-            this.toastrSVC.showToast(TOAST_STATE.success, success.statusText, this.httpMessage);
+          if (success.body && success.body.isSuccess) {
+            this.httpMessage = `Success: ${success.statusText}`;
+            this.toastrSVC.showToast(TOAST_STATE.success, 'Success Message', this.httpMessage);
           }
         }
       }),
@@ -55,7 +55,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           }
         }
         
-        this.toastrSVC.showToast(TOAST_STATE.danger, error.statusText , this.httpMessage);
+        this.toastrSVC.showToast(TOAST_STATE.danger, error.name , this.httpMessage);
         return throwError(() => this.httpMessage);
       })
     )

@@ -13,6 +13,6 @@ export class HomeComponent implements OnInit {
   constructor(private svc: AuthService) { }
 
   ngOnInit(): void {
-    this.routerLink = this.svc.isAuthenticated() ? 'auth' : 'login';
+    this.routerLink = this.svc.isAuthenticated() ? 'admin' : 'login';
   }
 }

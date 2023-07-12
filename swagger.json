@@ -235,7 +235,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/CategoryResponse"
+              "$ref": "#/definitions/CategoryItemResponse"
             }
           }
         }
@@ -269,7 +269,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/CategoryResponse"
+              "$ref": "#/definitions/CategoryItemResponse"
             }
           }
         }
@@ -383,6 +383,9 @@
           "type": "integer"
         },
         "categoryName": {
+          "type": "string"
+        },
+        "description": {
           "type": "string"
         }
       }

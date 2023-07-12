@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DreamDictionaryDTO } from 'src/app/api/models';
+import { DreamCategoryDTO, DreamDictionaryDTO } from 'src/app/api/models';
+import { LocalStorageService } from 'src/app/services/localstorage/localstorage.service';
 import { Settings } from 'src/environments/environment';
 
 @Component({
@@ -10,38 +11,62 @@ import { Settings } from 'src/environments/environment';
 export class ListComponent implements OnInit {
 
   alphabet =  ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-  list: Array<DreamDictionaryDTO> = [];
-  selectedLetter!: string;
+  symbolList: Array<DreamDictionaryDTO> = [];
+  dreamList: DreamDictionaryDTO[] = [];
+
+  selectedCategory: string = '';
+  description?: string = '';
+
+  themeList?: Array<DreamCategoryDTO>;
 
   itemCount = Settings.itemCount;
   currentPage = Settings.currentPage;
   
-  constructor() { }
+  constructor(
+    private storageSVC: LocalStorageService) { }
 
   ngOnInit(): void {
-    this.onClickLetter('a');
+    this.loadListFromCache();
+  }
+
+  loadListFromCache() {
+    let cachedList = this.storageSVC.get(Settings.dreamListKey);
+    this.dreamList = this.storageSVC.parse(cachedList);
+
+    let themeList = this.storageSVC.get(Settings.dreamThemeKey);
+    this.themeList = this.storageSVC.parse(themeList);
   }
 
   onClickLetter(letter: string) {
     console.log('onClickLetter ' + letter)
-    this.selectedLetter = letter;
+    
+    this.selectedCategory = `${letter}`;
+    this.description = '';
 
     // clear current list
-    this.list = [];
-
-    let cachedList = localStorage.getItem('dreamList');
-    let dreamList: DreamDictionaryDTO[];
-
-    if (cachedList) {
-      dreamList = JSON.parse(cachedList) as Array<DreamDictionaryDTO>;
-
-      dreamList?.forEach((data) => {
+    if (this.symbolList) this.symbolList = [];    
+    
+    if (this.dreamList) {
+      this.dreamList.forEach((data) => {
         if (data) {
           if (data.dreamName?.toLocaleLowerCase()?.charAt(0) === letter.toLocaleLowerCase()) {
-            this.list.push(data);
+            this.symbolList.push(data);
           }
         }
       });
     }
+  }
+
+  onClickTheme(id: number | undefined) {
+    console.log('onClickTheme ' + id);
+    let category = this.themeList?.find(x => x.id === id);
+
+    this.selectedCategory = `${category?.categoryName}`;
+    this.description = category?.description;
+    
+    // clear current list
+    if (this.symbolList) this.symbolList = [];  
+
+    this.symbolList.push(...this.dreamList.filter(x => x.dreamCategoryId === id) ?? []);
   }
 }

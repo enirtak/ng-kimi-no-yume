@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { DreamDictionaryDTO } from 'src/app/api/models';
+import { DreamCategoryDTO, DreamDictionaryDTO } from 'src/app/api/models';
+import { CategoryService } from 'src/app/services/category/category.service';
 import { DictionaryService } from 'src/app/services/dictionary/dictionary.service';
+import { SearchList } from './Search';
+import { LocalStorageService } from 'src/app/services/localstorage/localstorage.service';
+import { Settings } from 'src/environments/environment';
 
 @Component({
   selector: 'app-search',
@@ -9,23 +13,68 @@ import { DictionaryService } from 'src/app/services/dictionary/dictionary.servic
 })
 export class SearchComponent implements OnInit {
 
-  dreamList?: Array<DreamDictionaryDTO>;
+  dreamList: Array<DreamDictionaryDTO> = [];
+  themeList: Array<DreamCategoryDTO> = [];
+  combinedList: SearchList[] = [];
   searchValue = '';
 
-  constructor(private svc: DictionaryService) { }
+  constructor(
+    private svc: DictionaryService,
+    private themeSVC: CategoryService,
+    private storageSVC: LocalStorageService
+    ) { }
 
   ngOnInit() {
-    let list = localStorage.getItem("dreamList");
-    if (list) this.dreamList = JSON.parse(list);
-    else this.getDreamList();
+    this.getLists();
+    this.loadSearch();
+  }
+
+  getLists() {
+    let theme = this.storageSVC.get(Settings.dreamThemeKey);
+    this.themeList = this.storageSVC.parse(theme) ?? this.getDreamThemeList();
+
+    let list = this.storageSVC.get(Settings.dreamListKey);
+    this.dreamList = this.storageSVC.parse(list) ?? this.getDreamList();
+  }
+
+  loadSearch() {
+    this.combinedList = [
+      ...this.dreamList?.map((x, index) => {
+        return {
+          id: index,
+          name: x.dreamName,
+          description: x.dreamDescription
+        }
+      }), 
+      ...this.themeList?.map((x, index) => {
+        return {
+          id: this.dreamList.length + index,
+          name: x.categoryName,
+          description: x.description
+        }
+      })
+    ]?.sort((a, b) => (a.name ?? '').localeCompare(b.name ?? ''));
+
+    console.log(this.combinedList)
   }
 
   getDreamList() {
     this.svc.GetList()
       .then(data => {
-        this.dreamList = data.dictionaryList;
-        localStorage.setItem("dreamList", JSON.stringify(this.dreamList));
+        if (data) {
+          this.dreamList = data.dictionaryList ?? [];
+          this.storageSVC.set(Settings.dreamListKey, this.dreamList);
+        }
       });
   }
 
+  getDreamThemeList() {
+    this.themeSVC.GetList()
+      .then(data => {
+        if (data) {
+          this.themeList = data.categories ?? [];
+          this.storageSVC.set(Settings.dreamThemeKey, this.themeList);
+        }
+      });
+  }
 }

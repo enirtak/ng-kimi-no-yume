@@ -13,6 +13,7 @@ import { NavHomeComponent } from './nav-home/nav-home.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { ToastrComponent } from './toastr/toastr.component';
 import { AccordionResultComponent } from './accordion-result/accordion-result.component';
+import { ViewModalComponent } from './view-modal/view-modal.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AccordionResultComponent } from './accordion-result/accordion-result.co
     NavHomeComponent,
     SpinnerComponent,
     ToastrComponent,
-    AccordionResultComponent
+    AccordionResultComponent,
+    ViewModalComponent
   ],
   imports: [
     CommonModule,
@@ -43,6 +45,7 @@ import { AccordionResultComponent } from './accordion-result/accordion-result.co
     ToastrComponent,
     FieldErrorComponent,
     AccordionResultComponent,
+    ViewModalComponent,
 
     FormsModule,
     ReactiveFormsModule,
