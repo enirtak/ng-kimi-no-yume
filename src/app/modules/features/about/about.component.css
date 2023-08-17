@@ -1,6 +1,10 @@
 .about-bg {
-    padding: 50px;
+    padding: 20px;
     background-color: rgba(255, 255, 255, 0.65);
     color: black;
-    border-radius: 20px;
+    border-radius: 10px;
+}
+
+.em-wider {
+    letter-spacing: .75em;
 }

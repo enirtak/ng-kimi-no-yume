@@ -1,5 +1,5 @@
 <div class="d-sm-flex">
-    <h4>Dream List</h4>
+    <p class="lead">Dream List</p>
     <div class="hstack gap-1 ms-auto">
         <input type="text" class="form-control" placeholder="Search" [(ngModel)]="dreamListSearch"/>
         <button class="btn btn-primary btn-sm w-50 ms-1" (click)="getDreamList()">
@@ -61,3 +61,29 @@
         <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
     </div>
 </ng-container>
+
+<!-- Dictionary View Modal -->
+<view-description-modal
+  [modalId]="'viewDictionary'"
+  [name]="selectedDream?.dreamName"
+  [description]="selectedDream?.dreamDescription"
+  [categoryId]="selectedDreamCategory"
+  [isDreamDictionary]="true"
+></view-description-modal>
+
+<!-- Dictionary Forms Modal -->
+<dictionary-form
+  [modalId]="'dictionaryModalForm'"
+  [formGroup]="yumeFormGroup"
+  [dreamThemeList]="dreamThemeList"
+  (onResetButtonClick)="resetForm()"
+  (onUpSertButtonClick)="onUpSertDream()"
+></dictionary-form>
+
+<!-- Dictionary Delete Modal -->
+<delete-modal
+  [modalId]="'deleteModal'"
+  [selectedId] = "selectedDream?.id"
+  [selectedName] = "selectedDream?.dreamName"
+  (onDeleteConfirm)="onDeleteDreamConfirm()"
+></delete-modal>

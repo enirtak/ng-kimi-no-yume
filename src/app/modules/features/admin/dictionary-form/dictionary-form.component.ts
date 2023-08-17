@@ -18,7 +18,7 @@ export class DictionaryFormComponent implements OnInit {
 
   get isEditForm() {
     let id = this.formGroup.get('id')?.value;
-    return id !== null;
+    return id > 0;
   }
 
   constructor() { }

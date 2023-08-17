@@ -4,7 +4,7 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { DictionaryService } from 'src/app/services/dictionary/dictionary.service';
 import { SearchList } from './Search';
 import { LocalStorageService } from 'src/app/services/localstorage/localstorage.service';
-import { Settings } from 'src/environments/environment';
+import { Settings } from 'src/settings/settings';
 
 @Component({
   selector: 'app-search',
@@ -30,10 +30,10 @@ export class SearchComponent implements OnInit {
   }
 
   getLists() {
-    let theme = this.storageSVC.get(Settings.dreamThemeKey);
+    let theme = this.storageSVC.get(Settings.DreamThemeKey);
     this.themeList = this.storageSVC.parse(theme) ?? this.getDreamThemeList();
 
-    let list = this.storageSVC.get(Settings.dreamListKey);
+    let list = this.storageSVC.get(Settings.DreamListKey);
     this.dreamList = this.storageSVC.parse(list) ?? this.getDreamList();
   }
 
@@ -63,7 +63,7 @@ export class SearchComponent implements OnInit {
       .then(data => {
         if (data) {
           this.dreamList = data.dictionaryList ?? [];
-          this.storageSVC.set(Settings.dreamListKey, this.dreamList);
+          this.storageSVC.set(Settings.DreamListKey, this.dreamList);
         }
       });
   }
@@ -73,7 +73,7 @@ export class SearchComponent implements OnInit {
       .then(data => {
         if (data) {
           this.themeList = data.categories ?? [];
-          this.storageSVC.set(Settings.dreamThemeKey, this.themeList);
+          this.storageSVC.set(Settings.DreamThemeKey, this.themeList);
         }
       });
   }

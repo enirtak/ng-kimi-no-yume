@@ -4,8 +4,8 @@ import { JwtHelperService } from '@auth0/angular-jwt'
 import { lastValueFrom } from 'rxjs';
 import { AuthenticateUserRequest } from 'src/app/api/models';
 import { AuthenticateService } from 'src/app/api/services';
-import { Settings } from 'src/environments/environment';
 import { LocalStorageService } from '../localstorage/localstorage.service';
+import { Settings } from 'src/settings/settings';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class AuthService {
     private svc: AuthenticateService,
     private router: Router,
     private storageSVC: LocalStorageService) { 
-      if (this.svc && this.svc.rootUrl === '') this.svc.rootUrl = Settings.apiUrl;
+      if (this.svc && this.svc.rootUrl === '') this.svc.rootUrl = Settings.APIUrl;
     }
 
   isAuthenticated() {

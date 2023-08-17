@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DreamCategoryDTO, DreamDictionaryDTO } from 'src/app/api/models';
 import { LocalStorageService } from 'src/app/services/localstorage/localstorage.service';
-import { Settings } from 'src/environments/environment';
+import { Settings } from 'src/settings/settings';
 
 @Component({
   selector: 'app-list',
@@ -19,8 +19,8 @@ export class ListComponent implements OnInit {
 
   themeList?: Array<DreamCategoryDTO>;
 
-  itemCount = Settings.itemCount;
-  currentPage = Settings.currentPage;
+  itemCount = Settings.ItemCount;
+  currentPage = Settings.CurrentPage;
   
   constructor(
     private storageSVC: LocalStorageService) { }
@@ -30,10 +30,10 @@ export class ListComponent implements OnInit {
   }
 
   loadListFromCache() {
-    let cachedList = this.storageSVC.get(Settings.dreamListKey);
+    let cachedList = this.storageSVC.get(Settings.DreamListKey);
     this.dreamList = this.storageSVC.parse(cachedList);
 
-    let themeList = this.storageSVC.get(Settings.dreamThemeKey);
+    let themeList = this.storageSVC.get(Settings.DreamThemeKey);
     this.themeList = this.storageSVC.parse(themeList);
   }
 

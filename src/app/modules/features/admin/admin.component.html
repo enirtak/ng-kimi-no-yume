@@ -1,75 +1,35 @@
-<div class="p-3">
-  <nav-home [currentPage]="'ADMIN'"></nav-home>
-</div>
 
 <spinner></spinner>
-
-<div class="container-fluid py-3">
-  <div class="row px-5">
-    <div class="col-md-6 col-sm-12">
-      <dictionary-list
-        [dreamList]="dreamList"
-        (onGetDreamList)="onGetDreamList()"
-        (onShowAddDreamForm)="onShowAddDreamForm()"
-        (onGetSelectedDreamItem)="onGetSelectedDreamItem($event)"
-      ></dictionary-list>
+<div class="container-fluid">
+  <div class="row vh-100">
+    <div class="col-2 bg-body text-dark pt-5 d-md-block d-none border-end border-secondary border-3 d-flex flex-column h-100 position-relative">
+      <div class="align-items-center justify-content-start">
+        <div class="p-2 d-grid w-100">
+          <a class="btn btn-outline-secondary" [routerLink]="['./']">Home</a>
+        </div>
+        <div class="p-2 d-grid w-100">
+          <a class="btn btn-outline-secondary" [routerLink]="['profile']">Admin Profile</a>
+        </div>
+        <div class="p-2 d-grid w-100">
+          <a class="btn btn-outline-secondary">Manage Users</a>
+        </div>
+        <div class="p-2 d-grid w-100">
+          <a class="btn btn-outline-secondary" [routerLink]="['dictionary-list']">Dream Dictionary List</a>
+        </div>
+        <div class="p-2 d-grid w-100">
+          <a class="btn btn-outline-secondary" [routerLink]="['category-list']">Dream Category List</a>
+        </div>
+      </div>
+      <div class="p-2 position-absolute bottom-0">
+        <a class="btn btn-outline-dark mb-3 d-grid">Logout</a>
+        <p class="fs-6 text-center m-0 p-0">Version 1.0</p>
+        <p class="fs-6 text-center">Designed and built with all the love in the world by Katorin&copy;</p>
+      </div>
     </div>
-    <div class="col-md-6 col-sm-12">
-      <category-list
-        [dreamThemeList]="dreamThemeList"
-        (onGetDreamThemeList)="onGetDreamThemeList()"
-        (onShowAddForm)="onShowAddDreamThemeForm()"
-        (onGetSelectedDreamThemeItem)="onGetSelectedDreamThemeItem($event)"
-      ></category-list>
+    <div class="col-10 router-outlet-child">
+      <div class="p-5">
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </div>
 </div>
-
-<!-- Dictionary View Modal -->
-<view-description-modal
-  [modalId]="'viewDictionary'"
-  [name]="selectedDream?.dreamName"
-  [description]="selectedDream?.dreamDescription"
-  [categoryId]="selectedDreamCategory"
-  [isDreamDictionary]="true"
-></view-description-modal>
-
-<!-- Dream Theme View Modal -->
-<view-description-modal
-  [modalId]="'viewDreamTheme'"
-  [name]="selectedDreamTheme?.categoryName"
-  [description]="selectedDreamTheme?.description"
-  [isDreamDictionary]="false"
-></view-description-modal>
-
-<!-- Dictionary Forms Modal -->
-<dictionary-form
-  [modalId]="'dictionaryModalForm'"
-  [formGroup]="yumeFormGroup"
-  [dreamThemeList]="dreamThemeList"
-  (onResetButtonClick)="resetForm()"
-  (onUpSertButtonClick)="onUpSertDream()"
-></dictionary-form>
-
-<!-- Dream Theme Forms Modal -->
-<category-form
-  [modalId]="'themeModalForm'"
-  [formGroup]="dreamThemeFormGroup"
-  (onUpSertButtonClick)="onUpSertDreamTheme()"
-></category-form>
-
-<!-- Dictionary Delete Modal -->
-<delete-modal
-  [modalId]="'deleteModal'"
-  [selectedId] = "selectedDream?.id"
-  [selectedName] = "selectedDream?.dreamName"
-  (onDeleteConfirm)="onDeleteDreamConfirm()"
-></delete-modal>
-
-<!-- Dream Theme Delete Modal -->
-<delete-modal
-  [modalId]="'delThemeModal'"
-  [selectedId] = "selectedDreamTheme?.id"
-  [selectedName] = "selectedDreamTheme?.categoryName"
-  (onDeleteConfirm)="onDeleteDreamTheme()"
-></delete-modal>

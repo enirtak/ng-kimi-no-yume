@@ -1,23 +1,58 @@
 <navigation></navigation>
-<div class="position-relative" style="height: 88vh;">
-    <div class="position-absolute top-50 start-50 translate-middle about-bg">
+
+<div class="position-relative h-100">
+    <div class="position-absolute w-100 top-50 start-50 translate-middle">
         <div class="container">
-            <figure class="text-center">
-                <figcaption class="blockquote-footer">
-                    The information contained in this website is for general information purposes only.
-                </figcaption>
-                <figcaption class="blockquote-footer">
-                    All Credits to: 
-                </figcaption>
-                <blockquote class="blockquote">
-                  <p>
-                    Vigo, Michael.  (2000, Mar).  Analyzing Your Daydreams. Dream Moods. http://www.dreammoods.com/dreaminformation/dreamtypes/daydreams.htm (1 Jun 2001).
-                  </p>
-                </blockquote>
-                <figcaption class="blockquote-footer mt-3">
-                    Visit their <a href="http://www.dreammoods.com/">website</a> for more information.
-                </figcaption>
-            </figure>
+            <div class="d-flex align-items-center justify-content-center">
+                <div class="col-md-8 text-center text-md-start">
+                    <h1 class="fw-bold border-bottom border-white border-3 text-uppercase font-monospace">
+                        Hi, I am {{ currentProfile?.firstName }} 
+                    </h1>
+                    <p class="mb-4">
+                        {{ currentProfile?.aboutMe }}
+                    </p>
+                    <p class="mb-2">You can contact me at: </p>
+                    <div class="align-items-start justify-content-center text-center about-bg">
+                        <div class="row">
+                            <div class="col-sm border-end border-dark">
+                                <p><i class="bi bi-envelope"></i></p>
+                                <p>{{ currentProfile?.emailAddress }}</p>
+                            </div>
+                            <div class="col-sm border-end border-dark">
+                                <p><i class="bi bi-phone"></i></p>
+                                <p>{{ currentProfile?.phoneNumber }}</p>
+                            </div>
+                            <div class="col-sm">
+                                <p><i class="bi bi-linkedin"></i></p>
+                                <p>{{ currentProfile?.linkedIn }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="position-relative h-100 about-bg">
+    <div class="position-absolute w-100 top-50 start-50 translate-middle">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-center">
+                <div class="col-md-8 text-center text-md-start">
+                    <p class="h3 fw-bold border-bottom border-white border-3 text-uppercase">About </p>
+
+                    <p>
+                        The content provided on this website is intended for general informational purposes only. 
+                        <br> All credits for the information go to:
+                    </p>
+                    Vigo, Michael.  (2000, Mar).  Analyzing Your Daydreams. Dream Moods. 
+                    <br> http://www.dreammoods.com/dreaminformation/dreamtypes/daydreams.htm (1 Jun 2001).
+    
+                    <p class="mt-2">
+                        Please visit their <a href="http://www.dreammoods.com/">website</a> for more information.
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

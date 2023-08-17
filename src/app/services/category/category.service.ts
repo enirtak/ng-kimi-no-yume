@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { DreamCategoryDTO, CategoryRequest } from 'src/app/api/models';
 import { DreamService } from 'src/app/api/services';
-import { Settings } from 'src/environments/environment';
+import { Settings } from 'src/settings/settings';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ import { Settings } from 'src/environments/environment';
 export class CategoryService {
 
   constructor(private svc: DreamService) {
-    if (this.svc && this.svc.rootUrl === '') this.svc.rootUrl = Settings.apiUrl;
+    if (this.svc && this.svc.rootUrl === '') this.svc.rootUrl = Settings.APIUrl;
   }
 
   async GetList() {

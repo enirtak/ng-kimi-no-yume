@@ -308,9 +308,165 @@
           }
         }
       }
+    },
+    "/api/Profile/CreateProfile": {
+      "post": {
+        "tags": [
+          "Profile"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ProfileRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ProfileResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/Profile/GetProfileList": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ProfileListRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ProfileListResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/Profile/GetCurrentProfile": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ProfileResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/Profile/UpdateProfile": {
+      "put": {
+        "tags": [
+          "Profile"
+        ],
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ProfileRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ProfileResponse"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
+    "AddressDTO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "address1": {
+          "type": "string"
+        },
+        "address2": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "zip": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "personId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
     "AuthenticateUserRequest": {
       "type": "object",
       "properties": {
@@ -448,6 +604,200 @@
         }
       }
     },
+    "EmployerDTO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "companyName": {
+          "type": "string"
+        },
+        "position": {
+          "type": "string"
+        },
+        "salary": {
+          "format": "double",
+          "type": "number"
+        },
+        "address1": {
+          "type": "string"
+        },
+        "address2": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "zip": {
+          "type": "string"
+        },
+        "startDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "endDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "personId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "workExps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WorkExperienceDTO"
+          }
+        }
+      }
+    },
+    "PersonDTO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "phoneNumber": {
+          "type": "string"
+        },
+        "emailAddress": {
+          "type": "string"
+        },
+        "linkedIn": {
+          "type": "string"
+        },
+        "gitHub": {
+          "type": "string"
+        },
+        "websiteUrl": {
+          "type": "string"
+        },
+        "aboutMe": {
+          "type": "string"
+        },
+        "other": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "addresses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AddressDTO"
+          }
+        },
+        "employers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EmployerDTO"
+          }
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SkillsDTO"
+          }
+        },
+        "projects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProjectsDTO"
+          }
+        }
+      }
+    },
+    "ProfileListRequest": {
+      "type": "object",
+      "properties": {
+        "isGetAll": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ProfileListResponse": {
+      "type": "object",
+      "properties": {
+        "isSuccess": {
+          "type": "boolean"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "persons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PersonDTO"
+          }
+        }
+      }
+    },
+    "ProfileRequest": {
+      "type": "object",
+      "properties": {
+        "person": {
+          "$ref": "#/definitions/PersonDTO"
+        }
+      }
+    },
+    "ProfileResponse": {
+      "type": "object",
+      "properties": {
+        "isSuccess": {
+          "type": "boolean"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "person": {
+          "$ref": "#/definitions/PersonDTO"
+        }
+      }
+    },
+    "ProjectsDTO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "projectName": {
+          "type": "string"
+        },
+        "projectDescription": {
+          "type": "string"
+        },
+        "projectStatus": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "personId": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
     "RegisterUserRequest": {
       "type": "object",
       "properties": {
@@ -459,6 +809,48 @@
         },
         "email": {
           "type": "string"
+        }
+      }
+    },
+    "SkillsDTO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "skillName": {
+          "type": "string"
+        },
+        "skillType": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "personId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "isActive": {
+          "type": "boolean"
+        }
+      }
+    },
+    "WorkExperienceDTO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        },
+        "employerId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "isActive": {
+          "type": "boolean"
         }
       }
     }

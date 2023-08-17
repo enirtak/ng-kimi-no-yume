@@ -46,12 +46,13 @@ body {
     cursor: default;
 }
 
+/* 8080ff */
 .btn-dkpurple {
-    background-color: #8080ff;
+    background-color: #9e7cda;
 }
 
 .btn-dkpurple:hover {
-    background-color: #7272ff;
+    background-color: #dca3e8;
 }
 
 .purple-shadow {

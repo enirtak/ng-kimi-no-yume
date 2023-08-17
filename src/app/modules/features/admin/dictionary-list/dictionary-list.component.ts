@@ -1,6 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DreamDictionaryDTO } from 'src/app/api/models';
-import { Settings } from 'src/environments/environment';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { DreamCategoryDTO, DreamDictionaryDTO } from 'src/app/api/models';
+import { DictionaryService } from 'src/app/services/dictionary/dictionary.service';
+import { LocalStorageService } from 'src/app/services/localstorage/localstorage.service';
+import { Settings } from 'src/settings/settings';
+import { dictionaryDTOToFormGroup, yumeFormGroupToList } from '../forms/admin.formgroup.patchvalue';
+import { createDreamFormGroup } from '../forms/admin.formgroup.create';
+import { setupDreamFormGroupHandler } from '../forms/admin.formgroup.handler';
 
 @Component({
   selector: 'dictionary-list',
@@ -9,31 +15,85 @@ import { Settings } from 'src/environments/environment';
 })
 export class DictionaryListComponent implements OnInit {
 
-  @Input() dreamList?: Array<DreamDictionaryDTO>;
-
-  @Output() onGetDreamList: EventEmitter<void> = new EventEmitter();
-  @Output() onShowAddDreamForm: EventEmitter<void> = new EventEmitter();
-  @Output() onGetSelectedDreamItem: EventEmitter<number> = new EventEmitter();
+  yumeFormGroup!: FormGroup;
+  dreamList?: Array<DreamDictionaryDTO>;
+  selectedDream?: DreamDictionaryDTO;
+  selectedDreamCategory: string | undefined = '';
+  dreamThemeList?: Array<DreamCategoryDTO>;
 
   dreamListSearch = '';
-  itemCount = Settings.itemCount;
-  currentPage = Settings.currentPage;
+  itemCount = Settings.ItemCount;
+  currentPage = Settings.CurrentPage;
 
-  constructor() { }
+  constructor(
+    private dreamSVC: DictionaryService,
+    private storageSVC: LocalStorageService,
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit(): void {
+    if (!this.yumeFormGroup) this.yumeFormGroup = createDreamFormGroup(this.fb);
+    setupDreamFormGroupHandler(this.yumeFormGroup);
+    this.getListOnCache();
+  }
+
+  getListOnCache() {
+    let list = this.storageSVC.get(Settings.DreamListKey);
+    this.dreamList = this.storageSVC.parse(list) ?? this.getDreamList();
+
+    let theme = this.storageSVC.get(Settings.DreamThemeKey);
+    this.dreamThemeList = this.storageSVC.parse(theme);
   }
 
   getDreamList() {
-    this.onGetDreamList.emit();
+    this.dreamSVC.GetList()
+      .then((data) => {
+        this.dreamList = data.dictionaryList;
+        this.storageSVC.set(Settings.DreamListKey, this.dreamList);
+      });
   }
 
   getSelectedItem(id: number | undefined) {
-    this.onGetSelectedDreamItem.emit(id);
+    this.selectedDream = this.dreamList?.find(x => x.id === id);
+    this.selectedDreamCategory = this.dreamThemeList?.find(x => x.id == this.selectedDream?.dreamCategoryId)?.categoryName;
+    dictionaryDTOToFormGroup(this.yumeFormGroup, this.selectedDream);
   }
 
   addButtonClick() {
-    this.onShowAddDreamForm.emit();
+    this.yumeFormGroup.reset();
   }
 
+  resetForm() {
+    this.dreamList?.sort((a, b) => a.dreamName!.localeCompare(b.dreamName!));
+    this.storageSVC.set(Settings.DreamListKey, this.dreamList);
+    this.yumeFormGroup?.reset();
+  }
+
+  onUpSertDream() {
+    let formValues = this.yumeFormGroup?.value;
+
+    if (formValues && formValues?.id) {
+      this.dreamSVC.Update(formValues)
+        .then((response) => {
+          this.dreamList?.map(x => {
+            if (x.id === formValues.id) {
+              yumeFormGroupToList(x, response.dreamItem as DreamDictionaryDTO);
+            }
+          });
+          this.resetForm();
+        });
+    } else {
+      if (!formValues.id) formValues.id = 0;
+      this.dreamSVC.Create(formValues)
+        .then((response) => {
+          this.dreamList?.push(response.dreamItem as DreamDictionaryDTO);
+          this.resetForm();
+        });
+    }
+  }
+
+  onDeleteDreamConfirm() {
+    this.dreamSVC.Delete(this.yumeFormGroup.value)
+    .then(() => this.resetForm());
+  }
 }

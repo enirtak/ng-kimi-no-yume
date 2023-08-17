@@ -17,7 +17,7 @@ export class CatgoryFormComponent implements OnInit {
 
   get isEditForm() {
     let id = this.formGroup.get('Id')?.value;
-    return id !== null;
+    return id > 0;
   }
 
   constructor() { }

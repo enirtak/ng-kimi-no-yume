@@ -1,3 +1,16 @@
 textarea {
     resize: none;
 }
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+.btn-dkpurple {
+    background-color: #8080ff;
+}
+
+.router-outlet-child {
+    max-height: 100%; 
+    overflow-y: scroll;
+}

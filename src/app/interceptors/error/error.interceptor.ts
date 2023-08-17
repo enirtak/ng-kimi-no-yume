@@ -41,6 +41,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           }
         } else {
           console.log('Server-Side Error occurred.');
+          console.log(error);
           if (error?.status === 404) {
             this.httpMessage = `Not found: ${error?.message}`;
           }

@@ -5,6 +5,7 @@ import { ApiConfiguration, ApiConfigurationInterface } from './api-configuration
 
 import { AuthenticateService } from './services/authenticate.service';
 import { DreamService } from './services/dream.service';
+import { ProfileService } from './services/profile.service';
 
 /**
  * Provider for all Api services, plus ApiConfiguration
@@ -20,7 +21,8 @@ import { DreamService } from './services/dream.service';
   providers: [
     ApiConfiguration,
     AuthenticateService,
-    DreamService
+    DreamService,
+    ProfileService
   ],
 })
 export class ApiModule {

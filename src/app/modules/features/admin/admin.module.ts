@@ -9,6 +9,7 @@ import { DictionaryFormComponent } from './dictionary-form/dictionary-form.compo
 import { CatgoryFormComponent } from './catgory-form/catgory-form.component';
 import { SharedModule } from '../../shared/shared.module';
 import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { LoginComponent } from './login/login.component';
     CategoryListComponent,
     DictionaryFormComponent,
     CatgoryFormComponent,
+    ProfileComponent,
     // LoginComponent
   ],
   imports: [

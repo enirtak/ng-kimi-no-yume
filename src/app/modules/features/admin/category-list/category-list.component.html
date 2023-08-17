@@ -1,5 +1,5 @@
 <div class="d-sm-flex">
-    <h4>Dream Theme List</h4>
+    <p class="lead">Dream Theme List</p>
     <div class="hstack gap-1 ms-auto">
         <input type="text" class="form-control" placeholder="Search" [(ngModel)]="dreamCategorySearch">
         <button class="btn btn-primary btn-sm w-50 ms-1" (click)="getDreamThemeList()">
@@ -59,3 +59,28 @@
         <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
     </div>
 </ng-container>
+
+
+
+<!-- Dream Theme View Modal -->
+<view-description-modal
+  [modalId]="'viewDreamTheme'"
+  [name]="selectedDreamTheme?.categoryName"
+  [description]="selectedDreamTheme?.description"
+  [isDreamDictionary]="false"
+></view-description-modal>
+
+<!-- Dream Theme Forms Modal -->
+<category-form
+  [modalId]="'themeModalForm'"
+  [formGroup]="dreamThemeFormGroup"
+  (onUpSertButtonClick)="onUpSertDreamTheme()"
+></category-form>
+
+<!-- Dream Theme Delete Modal -->
+<delete-modal
+  [modalId]="'delThemeModal'"
+  [selectedId] = "selectedDreamTheme?.id"
+  [selectedName] = "selectedDreamTheme?.categoryName"
+  (onDeleteConfirm)="onDeleteDreamTheme()"
+></delete-modal>
