@@ -4,7 +4,7 @@ import { Settings } from 'src/settings/settings';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { LocalStorageService } from 'src/app/services/localstorage/localstorage.service';
 import { CategoryService } from 'src/app/services/category/category.service';
-import { dreamThemeDTOToFormGroup, dreamThemeFormGroupToList } from '../forms/admin.formgroup.patchvalue';
+import { dreamCategoryFormGroupToDTO, dreamThemeDTOToFormGroup, dreamThemeFormGroupToList } from '../forms/admin.formgroup.patchvalue';
 import { createDreamCategoryFormGroup } from '../forms/admin.formgroup.create';
 import { setupCategoryFormGroupHandler } from '../forms/admin.formgroup.handler';
 
@@ -64,11 +64,11 @@ export class CategoryListComponent implements OnInit {
   onUpSertDreamTheme() {
     let formValues = this.dreamThemeFormGroup?.value;
 
-    if (formValues && formValues?.id) {
+    if (this.selectedDreamTheme && this.selectedDreamTheme?.id) {
       this.categorySVC.Update(formValues)
         .then((response) => {
           this.dreamThemeList?.map(x => {
-            if (x.id === formValues.id) {
+            if (x.id === this.selectedDreamTheme?.id) {
               dreamThemeFormGroupToList(x, response.category as DreamDictionaryDTO);
             }
           });
@@ -85,12 +85,17 @@ export class CategoryListComponent implements OnInit {
   }
 
   onDeleteDreamTheme() {
-    this.categorySVC.Delete(this.dreamThemeFormGroup?.value)
-    .then(() => this.resetThemeForm());
+    this.categorySVC.Delete(this.selectedDreamTheme?.id)
+    .then(() => {
+      let themeIndex = this.dreamThemeList?.findIndex(x => x.id === this.selectedDreamTheme?.id);
+      if (themeIndex !== undefined && this.dreamThemeList) {
+        this.dreamThemeList[themeIndex]['isActive'] = false;
+      }
+    }).then(() => this.resetThemeForm());
   }
 
-  resetThemeForm() {
-    this.dreamThemeList?.sort((a, b) => a.categoryName!.localeCompare(b.categoryName!));
+  resetThemeForm() {    
+    this.dreamThemeList = this.dreamThemeList?.filter(x => x.isActive).sort((a, b) => a.categoryName!.localeCompare(b.categoryName!));
     this.storageSVC.set(Settings.DreamThemeKey, this.dreamThemeList);
     this.dreamThemeFormGroup?.reset();
   }

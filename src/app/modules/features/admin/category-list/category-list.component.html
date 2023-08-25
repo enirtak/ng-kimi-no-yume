@@ -22,7 +22,7 @@
       </tr>
     </thead>
     <ng-container *ngIf="dreamThemeList">
-        <tbody *ngFor="let theme of dreamThemeList 
+        <tbody *ngFor="let theme of dreamThemeList
         | filter: dreamCategorySearch : 'categoryName'
         | paginate : { itemsPerPage: itemCount, currentPage: currentPage }
         ">

@@ -16,20 +16,20 @@
                 </small>
                 <form [formGroup]="formGroup">
                     <div class="row py-2">
-                        <label class="col-sm-4 fw-bold">
+                        <p class="col-sm-4 fw-bold">
                             Theme Name
                             <span class="text-danger">*</span> 
-                        </label>
+                        </p>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" formControlName="categoryName"/>
                             <field-error [control]="formGroup.get('categoryName')"></field-error>
                         </div>
                     </div>
                     <div class="row py-2">
-                        <label class="col-sm-4 fw-bold">
+                        <p class="col-sm-4 fw-bold">
                             Description
                             <span class="text-danger">*</span>
-                        </label>
+                        </p>
                         <div class="col-sm-8">
                             <textarea class="form-control" rows="10" formControlName="description"></textarea>
                             <span class="text-body-secondary text-sm mt-2">

@@ -1,6 +1,7 @@
 export { AddressDTO } from './models/address-dto';
 export { AuthenticateUserRequest } from './models/authenticate-user-request';
 export { AuthenticateUserResponse } from './models/authenticate-user-response';
+export { CategoryIdRequest } from './models/category-id-request';
 export { CategoryItemResponse } from './models/category-item-response';
 export { CategoryRequest } from './models/category-request';
 export { CategoryResponse } from './models/category-response';

@@ -15,20 +15,20 @@
                 </small>
                 <form [formGroup]="formGroup">
                     <div class="row py-2">
-                        <label class="col-sm-4 fw-bold">
+                        <p class="col-sm-4 fw-bold">
                             Dream Name 
                             <span class="text-danger">*</span>
-                        </label>
+                        </p>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" formControlName="dreamName"/>
                             <field-error [control]="formGroup.get('dreamName')"></field-error>
                         </div>
                     </div>
                     <div class="row py-2">
-                        <label class="col-sm-4 fw-bold">
+                        <p class="col-sm-4 fw-bold">
                             Description
                             <span class="text-danger">*</span>
-                        </label>
+                        </p>
                         <div class="col-sm-8">
                             <textarea class="form-control" rows="10" formControlName="dreamDescription"></textarea>
                             <span *ngIf="descriptionCharCount < 20" class="text-body-secondary text-sm">
@@ -39,10 +39,10 @@
                         </div>
                     </div>
                     <div class="row py-2">
-                        <label class="col-sm-4 fw-bold">
+                        <p class="col-sm-4 fw-bold">
                             Dream Theme
                             <span class="text-danger">*</span>
-                        </label>
+                        </p>
                         <div class="col-sm-8">
                             <select class="form-select" formControlName="dreamCategoryId">
                                 <option value="null" disabled>Dream Theme</option>

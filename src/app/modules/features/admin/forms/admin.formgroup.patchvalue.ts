@@ -34,7 +34,8 @@ export function dreamCategoryFormGroupToDTO(formvalue: any) : DreamCategoryDTO {
     return {
         id: formvalue?.Id,
         categoryName: formvalue?.categoryName,
-        description: formvalue?.description
+        description: formvalue?.description,
+        isActive: formvalue?.isActive
     }
 }
 
@@ -43,6 +44,8 @@ export function dreamThemeDTOToFormGroup(formValue: FormGroup, dto: DreamCategor
         formValue.controls['id'].patchValue(dto?.id);
         formValue.controls['categoryName'].patchValue(dto?.categoryName);
         formValue.controls['description'].patchValue(dto?.description);
+        formValue.controls['description'].patchValue(dto?.description);
+        formValue.controls['isActive'].patchValue(dto?.isActive);
     }
 }
 
@@ -51,5 +54,6 @@ export function dreamThemeFormGroupToList(formValue: DreamCategoryDTO, newValue:
         formValue.id = newValue.id;
         formValue.categoryName = newValue.categoryName;
         formValue.description = newValue.description;
+        formValue.isActive = newValue.isActive;
     }
 }

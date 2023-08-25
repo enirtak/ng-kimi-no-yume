@@ -5,7 +5,7 @@ export function createDreamFormGroup(fb: FormBuilder) {
         id: 0,
         dreamName: '',
         dreamDescription: '',
-        dreamCategoryId: '0'
+        dreamCategoryId: 0
     });
 }
 
@@ -13,6 +13,7 @@ export function createDreamCategoryFormGroup(fb: FormBuilder) {
     return fb.group({
         id: 0,
         categoryName: '',
-        description: ''
+        description: '',
+        isActive: true
     });
 }
