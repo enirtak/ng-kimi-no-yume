@@ -3,9 +3,10 @@ import { FormBuilder } from "@angular/forms";
 export function createDreamFormGroup(fb: FormBuilder) {
     return fb.group({
         id: 0,
+        dreamCategoryId: 0,
         dreamName: '',
         dreamDescription: '',
-        dreamCategoryId: 0
+        isActive: true
     });
 }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { DreamCategoryDTO, CategoryRequest, CategoryIdRequest } from 'src/app/api/models';
+import { DreamCategoryDTO, CategoryRequest, DreamIdRequest } from 'src/app/api/models';
 import { DreamCategoryService } from 'src/app/api/services';
 import { Settings } from 'src/settings/settings';
 
@@ -34,7 +34,7 @@ export class CategoryService {
   }
 
   async Delete(id: any) {
-    let request: CategoryIdRequest = {
+    let request: DreamIdRequest = {
       id : id
     };
 

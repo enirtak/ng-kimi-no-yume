@@ -10,7 +10,7 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 import { CategoryResponse } from '../models/category-response';
 import { CategoryItemResponse } from '../models/category-item-response';
 import { CategoryRequest } from '../models/category-request';
-import { CategoryIdRequest } from '../models/category-id-request';
+import { DreamIdRequest } from '../models/dream-id-request';
 @Injectable({
   providedIn: 'root',
 })
@@ -136,7 +136,7 @@ class DreamCategoryService extends __BaseService {
    * @param body undefined
    * @return Success
    */
-  postApiDreamCategoryDeleteCategoryResponse(body?: CategoryIdRequest): __Observable<__StrictHttpResponse<CategoryItemResponse>> {
+  postApiDreamCategoryDeleteCategoryResponse(body?: DreamIdRequest): __Observable<__StrictHttpResponse<CategoryItemResponse>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -162,7 +162,7 @@ class DreamCategoryService extends __BaseService {
    * @param body undefined
    * @return Success
    */
-  postApiDreamCategoryDeleteCategory(body?: CategoryIdRequest): __Observable<CategoryItemResponse> {
+  postApiDreamCategoryDeleteCategory(body?: DreamIdRequest): __Observable<CategoryItemResponse> {
     return this.postApiDreamCategoryDeleteCategoryResponse(body).pipe(
       __map(_r => _r.body as CategoryItemResponse)
     );

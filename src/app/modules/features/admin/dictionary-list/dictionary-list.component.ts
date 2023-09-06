@@ -63,20 +63,14 @@ export class DictionaryListComponent implements OnInit {
     this.yumeFormGroup.reset();
   }
 
-  resetForm() {
-    this.dreamList?.sort((a, b) => a.dreamName!.localeCompare(b.dreamName!));
-    this.storageSVC.set(Settings.DreamListKey, this.dreamList);
-    this.yumeFormGroup?.reset();
-  }
-
   onUpSertDream() {
     let formValues = this.yumeFormGroup?.value;
 
-    if (formValues && formValues?.id) {
+    if (this.selectedDream && this.selectedDream?.id) {
       this.dreamSVC.Update(formValues)
         .then((response) => {
           this.dreamList?.map(x => {
-            if (x.id === formValues.id) {
+            if (x.id === this.selectedDream?.id) {
               yumeFormGroupToList(x, response.dreamItem as DreamDictionaryDTO);
             }
           });
@@ -93,7 +87,19 @@ export class DictionaryListComponent implements OnInit {
   }
 
   onDeleteDreamConfirm() {
-    this.dreamSVC.Delete(this.yumeFormGroup.value)
+    this.dreamSVC.Delete(this.selectedDream?.id)
+    .then(() => {
+      let dictionaryIndex = this.dreamList?.findIndex(x => x.id === this.selectedDream?.id);
+      if (dictionaryIndex !== undefined && this.dreamList) {
+        this.dreamList[dictionaryIndex]['isActive'] = false;
+      }
+    })
     .then(() => this.resetForm());
+  }
+
+  resetForm() {
+    this.dreamList = this.dreamList?.filter(x => x.isActive).sort((a, b) => a.dreamName!.localeCompare(b.dreamName!));
+    this.storageSVC.set(Settings.DreamListKey, this.dreamList);
+    this.yumeFormGroup?.reset();
   }
 }

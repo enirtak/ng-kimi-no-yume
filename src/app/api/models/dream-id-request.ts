@@ -1,4 +1,4 @@
 /* tslint:disable */
-export interface CategoryIdRequest {
+export interface DreamIdRequest {
   id?: number;
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { DreamDictionaryDTO, DreamDictionaryRequest } from 'src/app/api/models';
+import { DreamDictionaryDTO, DreamDictionaryRequest, DreamIdRequest } from 'src/app/api/models';
 import { DreamDictionaryService } from 'src/app/api/services';
 import { Settings } from 'src/settings/settings';
 
@@ -36,10 +36,10 @@ export class DictionaryService {
   }
 
   async Delete(data: any) {
-    let request: DreamDictionaryRequest = {
-      dreamItem : data
+    let request: DreamIdRequest = {
+      id : data
     };
 
-   return await lastValueFrom(this.svc.deleteApiDreamDictionaryDeleteDream(request));
+   return await lastValueFrom(this.svc.postApiDreamDictionaryDeleteDream(request));
   }
 }

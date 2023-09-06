@@ -10,6 +10,7 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 import { DreamListResponse } from '../models/dream-list-response';
 import { DreamItemResponse } from '../models/dream-item-response';
 import { DreamDictionaryRequest } from '../models/dream-dictionary-request';
+import { DreamIdRequest } from '../models/dream-id-request';
 @Injectable({
   providedIn: 'root',
 })
@@ -17,7 +18,7 @@ class DreamDictionaryService extends __BaseService {
   static readonly getApiDreamDictionaryGetDreamDictionaryPath = '/api/DreamDictionary/GetDreamDictionary';
   static readonly postApiDreamDictionaryCreateNewDreamPath = '/api/DreamDictionary/CreateNewDream';
   static readonly postApiDreamDictionaryUpdateDreamPath = '/api/DreamDictionary/UpdateDream';
-  static readonly deleteApiDreamDictionaryDeleteDreamPath = '/api/DreamDictionary/DeleteDream';
+  static readonly postApiDreamDictionaryDeleteDreamPath = '/api/DreamDictionary/DeleteDream';
 
   constructor(
     config: __Configuration,
@@ -135,13 +136,13 @@ class DreamDictionaryService extends __BaseService {
    * @param body undefined
    * @return Success
    */
-  deleteApiDreamDictionaryDeleteDreamResponse(body?: DreamDictionaryRequest): __Observable<__StrictHttpResponse<DreamItemResponse>> {
+  postApiDreamDictionaryDeleteDreamResponse(body?: DreamIdRequest): __Observable<__StrictHttpResponse<DreamItemResponse>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
     __body = body;
     let req = new HttpRequest<any>(
-      'DELETE',
+      'POST',
       this.rootUrl + `/api/DreamDictionary/DeleteDream`,
       __body,
       {
@@ -161,8 +162,8 @@ class DreamDictionaryService extends __BaseService {
    * @param body undefined
    * @return Success
    */
-  deleteApiDreamDictionaryDeleteDream(body?: DreamDictionaryRequest): __Observable<DreamItemResponse> {
-    return this.deleteApiDreamDictionaryDeleteDreamResponse(body).pipe(
+  postApiDreamDictionaryDeleteDream(body?: DreamIdRequest): __Observable<DreamItemResponse> {
+    return this.postApiDreamDictionaryDeleteDreamResponse(body).pipe(
       __map(_r => _r.body as DreamItemResponse)
     );
   }

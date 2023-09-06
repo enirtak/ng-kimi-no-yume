@@ -7,7 +7,8 @@ export function yumeFormGroupToDTO(formvalue: any) : DreamDictionaryDTO {
         id: formvalue?.Id,
         dreamDescription: formvalue?.dreamDescription,
         dreamName: formvalue?.dreamName,
-        dreamCategoryId: formvalue?.dreamCategoryId
+        dreamCategoryId: formvalue?.dreamCategoryId,
+        isActive: formvalue?.isActive
     }
 }
 
@@ -17,6 +18,7 @@ export function yumeFormGroupToList(formValue: DreamDictionaryDTO, newValue: Dre
         formValue.dreamName = newValue.dreamName;
         formValue.dreamDescription = newValue.dreamDescription;
         formValue.dreamCategoryId = newValue.dreamCategoryId;
+        formValue.isActive = newValue.isActive;
     }
 }
 
@@ -26,6 +28,7 @@ export function dictionaryDTOToFormGroup(formValue: FormGroup, dto: DreamDiction
         formValue.controls['dreamName'].patchValue(dto?.dreamName);
         formValue.controls['dreamDescription'].patchValue(dto?.dreamDescription);
         formValue.controls['dreamCategoryId'].patchValue(dto?.dreamCategoryId);
+        formValue.controls['isActive'].patchValue(dto?.isActive);
     }
 }
 

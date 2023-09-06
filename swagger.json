@@ -173,7 +173,7 @@
             "in": "body",
             "name": "body",
             "schema": {
-              "$ref": "#/definitions/CategoryIdRequest"
+              "$ref": "#/definitions/DreamIdRequest"
             }
           }
         ],
@@ -276,7 +276,7 @@
       }
     },
     "/api/DreamDictionary/DeleteDream": {
-      "delete": {
+      "post": {
         "tags": [
           "DreamDictionary"
         ],
@@ -295,7 +295,7 @@
             "in": "body",
             "name": "body",
             "schema": {
-              "$ref": "#/definitions/DreamDictionaryRequest"
+              "$ref": "#/definitions/DreamIdRequest"
             }
           }
         ],
@@ -492,15 +492,6 @@
         }
       }
     },
-    "CategoryIdRequest": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        }
-      }
-    },
     "CategoryItemResponse": {
       "type": "object",
       "properties": {
@@ -574,6 +565,9 @@
         "dreamCategoryId": {
           "format": "int32",
           "type": "integer"
+        },
+        "isActive": {
+          "type": "boolean"
         }
       }
     },
@@ -582,6 +576,15 @@
       "properties": {
         "dreamItem": {
           "$ref": "#/definitions/DreamDictionaryDTO"
+        }
+      }
+    },
+    "DreamIdRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
         }
       }
     },
@@ -866,5 +869,18 @@
         }
       }
     }
-  }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "JWT Authorization header using the Bearer scheme (Example: 'Bearer 12345abcdef')"
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
 }
