@@ -2,9 +2,9 @@
     padding: 20px;
     background-color: rgba(255, 255, 255, 0.65);
     color: black;
-    border-radius: 10px;
 }
 
-.em-wider {
-    letter-spacing: .75em;
+.kimi-container {
+    height: 90%;
+    min-height: 90vh;
 }

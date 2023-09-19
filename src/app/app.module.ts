@@ -15,6 +15,7 @@ import { AuthInterceptor } from './interceptors/auth/auth.interceptor';
 import { ErrorInterceptor } from './interceptors/error/error.interceptor';
 import { SpinnerInterceptor } from './interceptors/spinner/spinner.interceptor';
 import { Settings } from 'src/settings/settings';
+import { HomeDictionaryComponent } from './modules/features/home-dictionary/home-dictionary.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -25,6 +26,7 @@ export function tokenGetter() {
     AppComponent,
     HomeComponent,
     LoginComponent,
+    HomeDictionaryComponent,
   ],
   imports: [
     BrowserModule,

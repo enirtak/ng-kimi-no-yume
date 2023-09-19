@@ -1,52 +1,54 @@
-<navigation></navigation>
-
-<div class="py-4">
-    <div class="container">
-        <div class="mb-2">
-            <span>By Symbol: </span>
-            <div class="d-flex flex-wrap justify-content-between align-items-center">
-                <ng-container *ngIf="alphabet">
-                    <ng-container *ngFor="let letter of alphabet">
-                        <button class="btn badge rounded-pill text-bg-light m-1" (click)="onClickLetter(letter)">{{letter}}</button>
-                    </ng-container>
-                </ng-container>
-            </div>
-        </div>
-        <div>
-            <span class="text-start">By Theme: </span>
-            <div class="d-flex flex-wrap justify-content-between align-items-center">
-                <ng-container *ngIf="themeList">
-                    <ng-container *ngFor="let theme of themeList">
-                        <button class="btn badge rounded-pill text-bg-light m-1" (click)="onClickTheme(theme.id)">{{theme.categoryName}}</button>
-                    </ng-container>
-                </ng-container>
-            </div>
-        </div>
-        <hr class="border border-black border-2 opacity-50 my-4">
-    </div>
+<div class="dictionary-background">
+    <navigation></navigation>
     
-    <div class="container mt-4">
-        <ng-container *ngIf="selectedCategory">
-            <div class="mb-4">
-                <h2 class="purple-shadow text-white">{{selectedCategory}}</h2>
-                <p class="justify-text">{{description}}</p>
+    <div class="py-4">
+        <div class="container">
+            <div class="mb-2">
+                <span>By Symbol: </span>
+                <div class="d-flex flex-wrap justify-content-between align-items-center">
+                    <ng-container *ngIf="alphabet">
+                        <ng-container *ngFor="let letter of alphabet">
+                            <button class="btn badge rounded-pill text-bg-light m-1" (click)="onClickLetter(letter)">{{letter}}</button>
+                        </ng-container>
+                    </ng-container>
+                </div>
             </div>
-        </ng-container>
-        <div class="list-container">
-            <ng-container *ngIf="symbolList.length > 0">
-                <ng-container *ngFor="let item of symbolList | paginate : { itemsPerPage: 10, currentPage: currentPage }; let i = index; ">
-                    <accordion-result
-                        [id]="i"
-                        [title]="item.dreamName"
-                        [description]="item.dreamDescription"
-                    ></accordion-result>
-                </ng-container>
-                <ng-container *ngIf="symbolList.length > itemCount">
-                    <div class="text-center text-dark py-3">
-                        <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
-                    </div>
-                </ng-container>
+            <div>
+                <span class="text-start">By Theme: </span>
+                <div class="d-flex flex-wrap justify-content-between align-items-center">
+                    <ng-container *ngIf="themeList">
+                        <ng-container *ngFor="let theme of themeList">
+                            <button class="btn badge rounded-pill text-bg-light m-1" (click)="onClickTheme(theme.id)">{{theme.categoryName}}</button>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+            <hr class="border border-black border-2 opacity-50 my-4">
+        </div>
+        
+        <div class="container mt-4">
+            <ng-container *ngIf="selectedCategory">
+                <div class="mb-4">
+                    <h2 class="purple-shadow text-white">{{selectedCategory}}</h2>
+                    <p class="justify-text">{{description}}</p>
+                </div>
             </ng-container>
+            <div class="list-container">
+                <ng-container *ngIf="symbolList.length > 0">
+                    <ng-container *ngFor="let item of symbolList | paginate : { itemsPerPage: 10, currentPage: currentPage }; let i = index; ">
+                        <accordion-result
+                            [id]="i"
+                            [title]="item.dreamName"
+                            [description]="item.dreamDescription"
+                        ></accordion-result>
+                    </ng-container>
+                    <ng-container *ngIf="symbolList.length > itemCount">
+                        <div class="text-center text-dark py-3">
+                            <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
         </div>
     </div>
 </div>

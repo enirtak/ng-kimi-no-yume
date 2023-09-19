@@ -1,4 +1,40 @@
-.kimi-container {
-    height: 90%;
-    min-height: 90vh;
+a.btn-pink:last-child {
+    margin-right: 0px !important;
 }
+
+.home {
+    color: #3c4246;
+    font-family: 'Raleway', sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  font-weight: bold;
+}
+
+
+.progress {
+    background: #df96a7;
+    height: 3px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform-origin: 0 50%;
+    animation: scaleProgress auto linear;
+    animation-timeline: scroll(root);
+  }
+  
+  @keyframes scaleProgress {
+    0% {
+      transform: scaleX(0);
+    }
+    100% {
+      transform: scaleX(1);
+    }
+  }
+  
+  

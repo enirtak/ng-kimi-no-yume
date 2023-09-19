@@ -1,31 +1,32 @@
-<navigation></navigation>
-
-<div class="my-4">
-    <div class="container my-4">
-        <nav-home [currentPage]="'Search'"></nav-home>
-
-        <h1 class="purple-shadow">Enter a Dream</h1>
-        <div class="row">
-            <div class="col">
-                <input type="text" 
-                    class="form-control" 
-                    placeholder="What's in your dream?"
-                    [(ngModel)]="searchValue"
-                />
+<div class="dictionary-background">
+    <navigation></navigation>
+    <div class="my-4">
+        <div class="container my-4">
+            <nav-home [currentPage]="'Search'"></nav-home>
+    
+            <h1 class="purple-shadow">Enter a Dream</h1>
+            <div class="row">
+                <div class="col">
+                    <input type="text" 
+                        class="form-control" 
+                        placeholder="What's in your dream?"
+                        [(ngModel)]="searchValue"
+                    />
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container" *ngIf="searchValue">
-        <div class="text-md-start text-center">
-            <h1 class="purple-shadow">Search Results</h1>
-            <div class="row text-dark" *ngIf="combinedList">
-                <ng-container *ngFor="let dream of combinedList | filter : searchValue : 'name'">
-                    <accordion-result
-                        [id]="dream?.id"
-                        [title]="dream.name"
-                        [description]="dream?.description"
-                    ></accordion-result>
-                </ng-container>
+        <div class="container" *ngIf="searchValue">
+            <div class="text-md-start text-center">
+                <h1 class="purple-shadow">Search Results</h1>
+                <div class="row text-dark" *ngIf="combinedList">
+                    <ng-container *ngFor="let dream of combinedList | filter : searchValue : 'name'">
+                        <accordion-result
+                            [id]="dream?.id"
+                            [title]="dream.name"
+                            [description]="dream?.description"
+                        ></accordion-result>
+                    </ng-container>
+                </div>
             </div>
         </div>
     </div>

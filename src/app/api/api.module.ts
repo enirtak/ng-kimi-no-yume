@@ -4,7 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationInterface } from './api-configuration';
 
 import { AuthenticateService } from './services/authenticate.service';
-import { DreamService } from './services/dream.service';
+import { DreamCategoryService } from './services/dream-category.service';
+import { DreamDictionaryService } from './services/dream-dictionary.service';
 import { ProfileService } from './services/profile.service';
 
 /**
@@ -21,7 +22,8 @@ import { ProfileService } from './services/profile.service';
   providers: [
     ApiConfiguration,
     AuthenticateService,
-    DreamService,
+    DreamCategoryService,
+    DreamDictionaryService,
     ProfileService
   ],
 })

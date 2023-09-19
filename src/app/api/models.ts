@@ -1,12 +1,14 @@
 export { AddressDTO } from './models/address-dto';
 export { AuthenticateUserRequest } from './models/authenticate-user-request';
 export { AuthenticateUserResponse } from './models/authenticate-user-response';
+export { BaseResponse } from './models/base-response';
 export { CategoryItemResponse } from './models/category-item-response';
 export { CategoryRequest } from './models/category-request';
 export { CategoryResponse } from './models/category-response';
 export { DreamCategoryDTO } from './models/dream-category-dto';
 export { DreamDictionaryDTO } from './models/dream-dictionary-dto';
 export { DreamDictionaryRequest } from './models/dream-dictionary-request';
+export { DreamIdRequest } from './models/dream-id-request';
 export { DreamItemResponse } from './models/dream-item-response';
 export { DreamListResponse } from './models/dream-list-response';
 export { EmployerDTO } from './models/employer-dto';

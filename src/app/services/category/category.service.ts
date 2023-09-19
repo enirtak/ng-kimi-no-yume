@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { DreamCategoryDTO, CategoryRequest } from 'src/app/api/models';
-import { DreamService } from 'src/app/api/services';
+import { DreamCategoryDTO, CategoryRequest, DreamIdRequest } from 'src/app/api/models';
+import { DreamCategoryService } from 'src/app/api/services';
 import { Settings } from 'src/settings/settings';
 
 @Injectable({
@@ -9,12 +9,12 @@ import { Settings } from 'src/settings/settings';
 })
 export class CategoryService {
 
-  constructor(private svc: DreamService) {
+  constructor(private svc: DreamCategoryService) {
     if (this.svc && this.svc.rootUrl === '') this.svc.rootUrl = Settings.APIUrl;
   }
 
   async GetList() {
-    return await lastValueFrom(this.svc.getApiDreamGetCategories());
+    return await lastValueFrom(this.svc.getApiDreamCategoryGetCategories());
   }
 
   async Create(data: DreamCategoryDTO) {
@@ -22,7 +22,7 @@ export class CategoryService {
       category : data
     };
 
-   return await lastValueFrom(this.svc.postApiDreamCreateNewCategory(request));
+   return await lastValueFrom(this.svc.postApiDreamCategoryCreateNewCategory(request));
   }
 
   async Update(data: any) {
@@ -30,14 +30,14 @@ export class CategoryService {
       category : data
     };
 
-   return await lastValueFrom(this.svc.postApiDreamUpdateCategory(request));
+   return await lastValueFrom(this.svc.postApiDreamCategoryUpdateCategory(request));
   }
 
   async Delete(data: any) {
-    let request: CategoryRequest = {
-      category : data
+    let request: DreamIdRequest = {
+      id : data
     };
 
-   return await lastValueFrom(this.svc.deleteApiDreamDeleteCategory(request));
+   return await lastValueFrom(this.svc.postApiDreamCategoryDeleteCategory(request));
   }
 }

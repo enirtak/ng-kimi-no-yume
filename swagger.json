@@ -65,167 +65,45 @@
         }
       }
     },
-    "/api/Dream/GetDreamDictionary": {
+    "/api/DreamCategory/GetCategories": {
       "get": {
         "tags": [
-          "Dream"
+          "DreamCategory"
         ],
+        "summary": "Creates a list of dream category.",
         "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
+          "application/json"
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/DreamListResponse"
-            }
-          }
-        }
-      }
-    },
-    "/api/Dream/CreateNewDream": {
-      "post": {
-        "tags": [
-          "Dream"
-        ],
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/DreamDictionaryRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/DreamItemResponse"
-            }
-          }
-        }
-      }
-    },
-    "/api/Dream/UpdateDream": {
-      "put": {
-        "tags": [
-          "Dream"
-        ],
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/DreamDictionaryRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/DreamItemResponse"
-            }
-          }
-        }
-      }
-    },
-    "/api/Dream/DeleteDream": {
-      "delete": {
-        "tags": [
-          "Dream"
-        ],
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/DreamDictionaryRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/DreamItemResponse"
-            }
-          }
-        }
-      }
-    },
-    "/api/Dream/GetCategories": {
-      "get": {
-        "tags": [
-          "Dream"
-        ],
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
+            "description": "Returns the list of dream category.",
             "schema": {
               "$ref": "#/definitions/CategoryResponse"
             }
+          },
+          "500": {
+            "description": "If there is an error processing the request."
           }
         }
       }
     },
-    "/api/Dream/CreateNewCategory": {
+    "/api/DreamCategory/CreateNewCategory": {
       "post": {
         "tags": [
-          "Dream"
+          "DreamCategory"
         ],
+        "summary": "Creates a new dream category.",
         "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
+          "application/json"
         ],
         "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
+          "application/json"
         ],
         "parameters": [
           {
             "in": "body",
             "name": "body",
+            "description": "Create New Dream Category Request",
             "schema": {
               "$ref": "#/definitions/CategoryRequest"
             }
@@ -237,29 +115,33 @@
             "schema": {
               "$ref": "#/definitions/CategoryItemResponse"
             }
+          },
+          "201": {
+            "description": "Returns the new dream category."
+          },
+          "500": {
+            "description": "If there is an error processing the request."
           }
         }
       }
     },
-    "/api/Dream/UpdateCategory": {
+    "/api/DreamCategory/UpdateCategory": {
       "post": {
         "tags": [
-          "Dream"
+          "DreamCategory"
         ],
+        "summary": "Updates a dream category.",
         "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
+          "application/json"
         ],
         "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
+          "application/json"
         ],
         "parameters": [
           {
             "in": "body",
             "name": "body",
+            "description": "Update Dream Category Request",
             "schema": {
               "$ref": "#/definitions/CategoryRequest"
             }
@@ -267,44 +149,175 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Returns the updated dream category.",
             "schema": {
               "$ref": "#/definitions/CategoryItemResponse"
             }
+          },
+          "500": {
+            "description": "If there is an error processing the request."
           }
         }
       }
     },
-    "/api/Dream/DeleteCategory": {
-      "delete": {
+    "/api/DreamCategory/DeleteCategory": {
+      "post": {
         "tags": [
-          "Dream"
+          "DreamCategory"
         ],
+        "summary": "Performs soft delete on Dream Category entry.",
         "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
+          "application/json"
         ],
         "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
+          "application/json"
         ],
         "parameters": [
           {
             "in": "body",
             "name": "body",
+            "description": "Delete Dream Category Request",
             "schema": {
-              "$ref": "#/definitions/CategoryRequest"
+              "$ref": "#/definitions/DreamIdRequest"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Returns IsSuccess",
             "schema": {
-              "$ref": "#/definitions/CategoryItemResponse"
+              "$ref": "#/definitions/BaseResponse"
             }
+          },
+          "500": {
+            "description": "If there is an error processing the request."
+          }
+        }
+      }
+    },
+    "/api/DreamDictionary/GetDreamDictionary": {
+      "get": {
+        "tags": [
+          "DreamDictionary"
+        ],
+        "summary": "Returns a list of dictionary of dreams.",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the list.",
+            "schema": {
+              "$ref": "#/definitions/DreamListResponse"
+            }
+          },
+          "500": {
+            "description": "If there is an error processing the request."
+          }
+        }
+      }
+    },
+    "/api/DreamDictionary/CreateNewDream": {
+      "post": {
+        "tags": [
+          "DreamDictionary"
+        ],
+        "summary": "Creates a new dream dictionary.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Create New Dream Request",
+            "schema": {
+              "$ref": "#/definitions/DreamDictionaryRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Returns the new dream.",
+            "schema": {
+              "$ref": "#/definitions/DreamItemResponse"
+            }
+          },
+          "500": {
+            "description": "If there is an error processing the request."
+          }
+        }
+      }
+    },
+    "/api/DreamDictionary/UpdateDream": {
+      "post": {
+        "tags": [
+          "DreamDictionary"
+        ],
+        "summary": "Updates a dream dictionary.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update Dream Request",
+            "schema": {
+              "$ref": "#/definitions/DreamDictionaryRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the updated dream.",
+            "schema": {
+              "$ref": "#/definitions/DreamItemResponse"
+            }
+          },
+          "500": {
+            "description": "If there is an error processing the request."
+          }
+        }
+      }
+    },
+    "/api/DreamDictionary/DeleteDream": {
+      "post": {
+        "tags": [
+          "DreamDictionary"
+        ],
+        "summary": "Performs soft delete on Dream Dictionary entry.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Delete Dream Request",
+            "schema": {
+              "$ref": "#/definitions/DreamIdRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns IsSuccess",
+            "schema": {
+              "$ref": "#/definitions/BaseResponse"
+            }
+          },
+          "500": {
+            "description": "If there is an error processing the request."
           }
         }
       }
@@ -492,6 +505,17 @@
         }
       }
     },
+    "BaseResponse": {
+      "type": "object",
+      "properties": {
+        "isSuccess": {
+          "type": "boolean"
+        },
+        "errorMessage": {
+          "type": "string"
+        }
+      }
+    },
     "CategoryItemResponse": {
       "type": "object",
       "properties": {
@@ -538,6 +562,9 @@
           "format": "int32",
           "type": "integer"
         },
+        "isActive": {
+          "type": "boolean"
+        },
         "categoryName": {
           "type": "string"
         },
@@ -552,6 +579,9 @@
         "id": {
           "format": "int32",
           "type": "integer"
+        },
+        "isActive": {
+          "type": "boolean"
         },
         "dreamName": {
           "type": "string"
@@ -570,6 +600,15 @@
       "properties": {
         "dreamItem": {
           "$ref": "#/definitions/DreamDictionaryDTO"
+        }
+      }
+    },
+    "DreamIdRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
         }
       }
     },

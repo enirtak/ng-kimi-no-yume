@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { DreamDictionaryDTO, DreamDictionaryRequest } from 'src/app/api/models';
-import { DreamService } from 'src/app/api/services';
+import { DreamDictionaryDTO, DreamDictionaryRequest, DreamIdRequest } from 'src/app/api/models';
+import { DreamDictionaryService } from 'src/app/api/services';
 import { Settings } from 'src/settings/settings';
 
 @Injectable({
@@ -10,13 +10,13 @@ import { Settings } from 'src/settings/settings';
 export class DictionaryService {
 
   constructor(
-    private svc : DreamService
+    private svc : DreamDictionaryService
   ) {
     if (this.svc && this.svc.rootUrl === '') this.svc.rootUrl = Settings.APIUrl;
    }
 
   async GetList() {
-    return await lastValueFrom(this.svc.getApiDreamGetDreamDictionary());
+    return await lastValueFrom(this.svc.getApiDreamDictionaryGetDreamDictionary());
   }
 
   async Create(data: DreamDictionaryDTO) {
@@ -24,7 +24,7 @@ export class DictionaryService {
       dreamItem : data
     };
 
-   return await lastValueFrom(this.svc.postApiDreamCreateNewDream(request));
+   return await lastValueFrom(this.svc.postApiDreamDictionaryCreateNewDream(request));
   }
 
   async Update(data: any) {
@@ -32,14 +32,14 @@ export class DictionaryService {
       dreamItem : data
     };
 
-   return await lastValueFrom(this.svc.putApiDreamUpdateDream(request));
+   return await lastValueFrom(this.svc.postApiDreamDictionaryUpdateDream(request));
   }
 
   async Delete(data: any) {
-    let request: DreamDictionaryRequest = {
-      dreamItem : data
+    let request: DreamIdRequest = {
+      id : data
     };
 
-   return await lastValueFrom(this.svc.deleteApiDreamDeleteDream(request));
+   return await lastValueFrom(this.svc.postApiDreamDictionaryDeleteDream(request));
   }
 }

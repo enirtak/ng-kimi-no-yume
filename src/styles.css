@@ -1,6 +1,8 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Slab&display=swap')
+;@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
 
 .handlee {
     font-family: 'Handlee';
@@ -10,9 +12,20 @@
     font-family: 'Marcellus';
 }
 
+.josefin-slab {
+    font-family: 'Josefin Slab', serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
+    height: 100%;
+}
+
+.dictionary-background {
     font-family: 'Marcellus';
-    /* color: white; */
     background-image: url('src/assets/images/dreamy.jpg');
     background-repeat: no-repeat;
     position: relative; 
@@ -34,7 +47,7 @@ body {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    text-align: center;
+    /* text-align: center; */
     width: 100%;
 }
 
@@ -46,9 +59,8 @@ body {
     cursor: default;
 }
 
-/* 8080ff */
 .btn-dkpurple {
-    background-color: #9e7cda;
+    background-color: #8080ff;
 }
 
 .btn-dkpurple:hover {
@@ -103,4 +115,20 @@ textarea {
 .justify-text {
     text-align: justify;
     text-justify: inter-word;
+}
+
+.text-pink {
+    color: #df96a7;
+}
+
+.btn-pink {
+    background-color: #df96a7;
+}
+
+.btn-pink:hover{
+    background-color: #E15373;
+}
+
+.pink-shadow {
+    text-shadow: 2px 2px #df96a7;
 }
