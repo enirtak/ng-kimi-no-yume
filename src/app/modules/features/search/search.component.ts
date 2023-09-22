@@ -1,80 +1,59 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentChecked , ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { DreamCategoryDTO, DreamDictionaryDTO } from 'src/app/api/models';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { DictionaryService } from 'src/app/services/dictionary/dictionary.service';
 import { SearchList } from './Search';
-import { LocalStorageService } from 'src/app/services/localstorage/localstorage.service';
-import { Settings } from 'src/settings/settings';
+import { MapDreamCategoryListToCombinedList, MapDreamListToCombinedList, SortCombinedList } from 'src/app/helpers/dream-helper';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, AfterContentChecked   {
 
   dreamList: Array<DreamDictionaryDTO> = [];
-  themeList: Array<DreamCategoryDTO> = [];
+  categoryList: Array<DreamCategoryDTO> = [];
   combinedList: SearchList[] = [];
   searchValue = '';
-
+  filterMetadata = { count: 0 };
+  
   constructor(
-    private svc: DictionaryService,
-    private themeSVC: CategoryService,
-    private storageSVC: LocalStorageService
+    private dreamSVC: DictionaryService,
+    private categorySVC: CategoryService,
+    private cd: ChangeDetectorRef
     ) { }
 
+  ngAfterContentChecked() {
+    this.filteredResultCount();
+    this.cd.detectChanges();
+  }
+  
   ngOnInit() {
-    this.getLists();
-    this.loadSearch();
+    this.getLists()
+      .then(() => this.loadSearch()) ;
   }
 
-  getLists() {
-    let theme = this.storageSVC.get(Settings.DreamThemeKey);
-    this.themeList = this.storageSVC.parse(theme) ?? this.getDreamThemeList();
+  filteredResultCount() {
+    return this.filterMetadata?.count;
+  }
 
-    let list = this.storageSVC.get(Settings.DreamListKey);
-    this.dreamList = this.storageSVC.parse(list) ?? this.getDreamList();
+  async getLists() {
+    this.dreamList = await this.dreamSVC.GetListFromCache();
+    this.categoryList = await this.categorySVC.GetListFromCache();
   }
 
   loadSearch() {
-    this.combinedList = [
-      ...this.dreamList?.map((x, index) => {
-        return {
-          id: index,
-          name: x.dreamName,
-          description: x.dreamDescription
-        }
-      }), 
-      ...this.themeList?.map((x, index) => {
-        return {
-          id: this.dreamList.length + index,
-          name: x.categoryName,
-          description: x.description
-        }
-      })
-    ]?.sort((a, b) => (a.name ?? '').localeCompare(b.name ?? ''));
+    let dreamList : any[] = [];
+    if (this.dreamList) {
+      dreamList = MapDreamListToCombinedList(this.dreamList);
+    }
 
-    console.log(this.combinedList)
-  }
+    let categoryList: any[] = [];
+    if (this.categoryList) {
+      categoryList = MapDreamCategoryListToCombinedList(this.categoryList, this.dreamList.length);
+    }
 
-  getDreamList() {
-    this.svc.GetList()
-      .then(data => {
-        if (data) {
-          this.dreamList = data.dictionaryList ?? [];
-          this.storageSVC.set(Settings.DreamListKey, this.dreamList);
-        }
-      });
-  }
-
-  getDreamThemeList() {
-    this.themeSVC.GetList()
-      .then(data => {
-        if (data) {
-          this.themeList = data.categories ?? [];
-          this.storageSVC.set(Settings.DreamThemeKey, this.themeList);
-        }
-      });
+    this.combinedList = SortCombinedList(dreamList, categoryList);
   }
 }

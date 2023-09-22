@@ -23,6 +23,7 @@ export class DictionaryListComponent implements OnInit {
   dreamThemeList?: Array<DreamCategoryDTO>;
 
   dreamListSearch = '';
+  filterMetadata = { count: 0 };
   itemCount = Settings.ItemCount;
   currentPage = Settings.CurrentPage;
 
@@ -43,7 +44,7 @@ export class DictionaryListComponent implements OnInit {
     let list = this.storageSVC.get(Settings.DreamListKey);
     this.dreamList = this.storageSVC.parse(list) ?? this.getDreamList();
 
-    let theme = this.storageSVC.get(Settings.DreamThemeKey);
+    let theme = this.storageSVC.get(Settings.DreamCategoryListKey);
     this.dreamThemeList = this.storageSVC.parse(theme) ?? this.getDreamCategoryList();
   }
 
@@ -59,7 +60,7 @@ export class DictionaryListComponent implements OnInit {
     this.categorySVC.GetList()
       .then((data) => {
         this.dreamThemeList = data.categories;
-        this.storageSVC.set(Settings.DreamThemeKey, this.dreamThemeList);
+        this.storageSVC.set(Settings.DreamCategoryListKey, this.dreamThemeList);
       });
   }
 

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { DreamDictionaryDTO, DreamDictionaryRequest, DreamIdRequest } from 'src/app/api/models';
+import { DreamDictionaryDTO, DreamDictionaryRequest, DreamIdRequest, DreamListResponse } from 'src/app/api/models';
 import { DreamDictionaryService } from 'src/app/api/services';
 import { Settings } from 'src/settings/settings';
+import { LocalStorageService } from '../localstorage/localstorage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,30 @@ import { Settings } from 'src/settings/settings';
 export class DictionaryService {
 
   constructor(
-    private svc : DreamDictionaryService
+    private svc : DreamDictionaryService,
+    private storageSVC: LocalStorageService
   ) {
     if (this.svc && this.svc.rootUrl === '') this.svc.rootUrl = Settings.APIUrl;
    }
+
+   async GetListFromCache() {
+    let list = this.storageSVC.get(Settings.DreamListKey);
+    let result = this.storageSVC.parse(list) ?? await this.GetDreamList();
+
+    return result;
+   }
+
+  async GetDreamList() {
+    let response: DreamListResponse = {};
+
+    await this.GetList()
+      .then((result) => {
+        response = result;
+        this.storageSVC.set(Settings.DreamListKey, response.dictionaryList);
+      });
+
+    return response.dictionaryList;
+  }
 
   async GetList() {
     return await lastValueFrom(this.svc.getApiDreamDictionaryGetDreamDictionary());

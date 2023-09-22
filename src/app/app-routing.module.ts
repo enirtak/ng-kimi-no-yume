@@ -8,39 +8,54 @@ import { HomeDictionaryComponent } from './modules/features/home-dictionary/home
 const routes: Routes = [
   { 
     path: '', 
+    title: 'Welcome',
     component: HomeComponent
   },
   { 
-    path: 'dictionary', 
-    component: HomeDictionaryComponent
+    path: 'kiminoyume', 
+    title: 'KimiNoYume - Your Dream',
+    children: [
+      { 
+        path: '', 
+        title: 'KimiNoYume - Home',
+        component: HomeDictionaryComponent,
+        pathMatch: 'full'
+      },
+      { 
+        path: 'search', 
+        title: 'KimiNoYume - Search',
+        loadChildren: () => 
+          import('./modules/features/search/search.module').then(m => m.SearchModule) 
+      },  
+      { 
+        path: 'list', 
+        title: 'KimiNoYume - Dream List',
+        loadChildren: () => 
+          import('./modules/features/list/list.module').then(m => m.ListModule) 
+      },  
+      { 
+        path: 'about', 
+        title: 'KimiNoYume - About',
+        loadChildren: () => 
+          import('./modules/features/about-dictionary/about-dictionary.module').then(m => m.AboutDictionaryModule) 
+      }
+    ]
   },
   { 
     path: 'login', 
+    title: 'Login',
     component: LoginComponent
-  },
-  { 
-    path: 'search', 
-    loadChildren: () => 
-      import('./modules/features/search/search.module').then(m => m.SearchModule) 
-  },
-  { 
-    path: 'list', 
-    loadChildren: () => 
-      import('./modules/features/list/list.module').then(m => m.ListModule) 
-  },
-  { 
-    path: 'about', 
-    loadChildren: () => 
-      import('./modules/features/about-dictionary/about-dictionary.module').then(m => m.AboutDictionaryModule) 
   },
   {
     path: 'admin', 
+    title: 'Admin',
     // canLoad: [AuthGuardService],
     loadChildren: () => 
       import('./modules/features/admin/admin.module').then(m => m.AdminModule)
   },
   {
     path: '**',
+    title: '404 - Page Not Found',
     component: PageNotFoundComponent
   }
 ];

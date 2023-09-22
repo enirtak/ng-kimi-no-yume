@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { PersonDTO } from 'src/app/api/models';
 
 @Component({
-  selector: 'app-about-dictionary',
+  selector: 'about-dictionary',
   templateUrl: './about-dictionary.component.html',
   styleUrls: ['./about-dictionary.component.css']
 })

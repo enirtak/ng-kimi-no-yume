@@ -1,9 +1,28 @@
 <div class="progress"></div>
-<p class="text-end p-3">
-    <a class="text-secondary" [href]="routerLink">
-        <i class="bi bi-person-lock" title="login"></i>
-    </a>
-</p>
+<ul class="nav justify-content-end">
+    <li>
+        <p class="p-3 m-2">
+            <a class="text-secondary" href="#">
+                Home
+            </a>
+        </p>
+    </li>
+    <li>
+        <p class="p-3 m-2">
+            <a class="text-secondary" href="#about-me">
+                About Me
+            </a>
+        </p>
+    </li>
+    <li>
+        <p class="p-3 m-2">
+            <a class="text-secondary" [href]="routerLink">
+                <i class="bi bi-person-lock" title="login"></i>
+            </a>
+        </p>
+    </li>
+  </ul>
+
 <div class="home josefin-slab">
     <div class="position-relative vh-100">
         <div class="position-absolute top-50 start-50 translate-middle">
@@ -18,8 +37,7 @@
                         </p>
                         <div>
                             <a class="text-secondary" title="About" href="#about-me">
-                                <span class="p-3 badge rounded-pill btn-pink me-1"><i class="bi bi-arrow-down"></i></span>
-                                about me 
+                                <span class="p-3 badge rounded-pill btn-pink me-2"><i class="bi bi-arrow-down"></i></span>about me 
                             </a>
                         </div>
                     </div>
@@ -53,7 +71,7 @@
                         </div>
                         <div class="my-4 d-md-block">
                             <a class="badge rounded-pill btn-pink p-3 m-2" title="Email" [href]="emailTo">
-                                <i class="bi bi-envelope"></i>
+                                <span class=""><i class="bi bi-envelope"></i></span>
                             </a>
                             <a class="badge rounded-pill btn-pink p-3 m-2" title="LinkedIn" [href]="linkedInURL" target="_blank">
                                 <i class="bi bi-linkedin"></i>
@@ -61,7 +79,7 @@
                             <a class="badge rounded-pill btn-pink p-3 m-2" title="GitHub" [href]="githubURL" target="_blank">
                                 <i class="bi bi-github"></i>
                             </a>
-                            <a class="badge rounded-pill btn-pink p-3 m-2" title="KimiNoYume" [routerLink]="['dictionary']" target="_blank">
+                            <a class="badge rounded-pill btn-pink p-3 m-2" title="KimiNoYume" [routerLink]="['kiminoyume']" target="_blank">
                                 <i class="bi bi-cloud"></i>
                             </a>
                         </div>

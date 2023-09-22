@@ -12,7 +12,8 @@ a {
 }
 
 a:hover {
-  font-weight: bold;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 

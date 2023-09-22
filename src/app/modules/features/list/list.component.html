@@ -1,4 +1,4 @@
-<div class="dictionary-background">
+<div class="dictionary-background h-100">
     <navigation></navigation>
     
     <div class="py-4">
@@ -16,8 +16,8 @@
             <div>
                 <span class="text-start">By Theme: </span>
                 <div class="d-flex flex-wrap justify-content-between align-items-center">
-                    <ng-container *ngIf="themeList">
-                        <ng-container *ngFor="let theme of themeList">
+                    <ng-container *ngIf="categoryList">
+                        <ng-container *ngFor="let theme of categoryList">
                             <button class="btn badge rounded-pill text-bg-light m-1" (click)="onClickTheme(theme.id)">{{theme.categoryName}}</button>
                         </ng-container>
                     </ng-container>
@@ -30,7 +30,7 @@
             <ng-container *ngIf="selectedCategory">
                 <div class="mb-4">
                     <h2 class="purple-shadow text-white">{{selectedCategory}}</h2>
-                    <p class="justify-text">{{description}}</p>
+                    <p class="justify-text">{{categoryDescription}}</p>
                 </div>
             </ng-container>
             <div class="list-container">

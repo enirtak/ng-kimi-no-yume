@@ -1,28 +1,31 @@
 
-<spinner></spinner>
-<div id="container-relative">
+<div class="position-relative vh-100 raleway">    
     <div class="p-3">
-        <nav-home [currentPage]="'LOGIN'"></nav-home>
-    </div>
-    <div class="container-relative bg-white">
-        <div class="p-5 d-flex justify-content-center align-items-center">
-            <div class="col col-lg-3">
-                <h3 class="mb-3 text-start pink-shadow">LOGIN</h3>
-                <form [formGroup]="loginFormGroup">
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="emailAddr" placeholder="name@example.com" formControlName="Username">
-                        <label for="emailAddr">Email Address</label>
+    <nav-home [currentPage]="'LOGIN'"></nav-home>
+</div>
+    <div class="position-absolute top-50 start-50 translate-middle">
+        <div class="container">
+            <div class="d-sm-flex align-items-center justify-content-center">
+                <div class="col-8 p-5">
+                    <h3 class="mb-3 text-start">LOGIN</h3>
+                    <form [formGroup]="loginFormGroup">
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="emailAddr" placeholder="name@example.com" formControlName="Username">
+                            <label for="emailAddr">Email Address</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="password" placeholder="Password" formControlName="Password">
+                            <label for="password">Password</label>
+                        </div>
+                    </form>
+                    <div class="d-grid">
+                        <button class="btn btn-pink text-white" (click)="onLoginButtonClick()">LOGIN</button>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="password" placeholder="Password" formControlName="Password">
-                        <label for="password">Password</label>
-                    </div>
-                </form>
-                <div class="d-grid">
-                    <button class="btn btn-pink text-white" (click)="onLoginButtonClick()">LOGIN</button>
+                </div>
+                <div class="d-none d-md-block w-50">
+                    <img [src]="loginImageURL" alt="" class="img-fluid">
                 </div>
             </div>
-            <img [src]="loginImageURL" alt="" class="img-fluid w-25 mx-5 d-none d-lg-block">
         </div>
     </div>
 </div>

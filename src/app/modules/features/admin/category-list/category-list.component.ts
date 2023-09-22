@@ -23,6 +23,7 @@ export class CategoryListComponent implements OnInit {
   selectedDreamTheme?: DreamCategoryDTO;
 
   dreamCategorySearch = '';
+  filterMetadata = { count: 0 };
   itemCount = Settings.ItemCount;
   currentPage = Settings.CurrentPage;
 
@@ -40,7 +41,7 @@ export class CategoryListComponent implements OnInit {
   }
 
   getListOnCache() {
-    let theme = this.storageSVC.get(Settings.DreamThemeKey);
+    let theme = this.storageSVC.get(Settings.DreamCategoryListKey);
     this.dreamThemeList = this.storageSVC.parse(theme) ?? this.getDreamThemeList();
   }
 
@@ -48,7 +49,7 @@ export class CategoryListComponent implements OnInit {
     this.categorySVC.GetList()
     .then((data) => {
       this.dreamThemeList = data.categories;
-      this.storageSVC.set(Settings.DreamThemeKey, this.dreamThemeList);
+      this.storageSVC.set(Settings.DreamCategoryListKey, this.dreamThemeList);
     });
   }
 
@@ -91,7 +92,7 @@ export class CategoryListComponent implements OnInit {
 
   resetThemeForm() {
     this.dreamThemeList?.sort((a, b) => a.categoryName!.localeCompare(b.categoryName!));
-    this.storageSVC.set(Settings.DreamThemeKey, this.dreamThemeList);
+    this.storageSVC.set(Settings.DreamCategoryListKey, this.dreamThemeList);
     this.dreamThemeFormGroup?.reset();
   }
 }

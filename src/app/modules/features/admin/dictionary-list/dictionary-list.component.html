@@ -23,7 +23,7 @@
     </thead>
     <ng-container *ngIf="dreamList">
         <tbody *ngFor="let dream of dreamList
-        | filter : dreamListSearch : 'dreamName'
+        | filter : dreamListSearch : 'dreamName' : filterMetadata
         | paginate : { itemsPerPage: itemCount, currentPage: currentPage }
         ">
             <tr>

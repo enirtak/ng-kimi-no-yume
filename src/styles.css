@@ -16,12 +16,13 @@
     font-family: 'Josefin Slab', serif;
 }
 
-html {
-    scroll-behavior: smooth;
+.raleway {
+    font-family: 'Raleway', serif;
 }
 
-body {
-    height: 100%;
+html {
+    scroll-behavior: smooth;
+    height: 100vh !important;
 }
 
 .dictionary-background {
@@ -33,21 +34,21 @@ body {
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;
-    height: 100vh !important;
-    width: 100%;
+    
+    height: 100vh;
+    min-height: 100vh;
 }
 
 #container-relative {
+    font-family: 'Raleway', sans-serif;
     position: relative;
-    height: 100vh;
 }
 
-.container-relative {
+.container-absolute {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    /* text-align: center; */
     width: 100%;
 }
 
@@ -64,7 +65,7 @@ body {
 }
 
 .btn-dkpurple:hover {
-    background-color: #dca3e8;
+    background-color: #6e6efc;
 }
 
 .purple-shadow {

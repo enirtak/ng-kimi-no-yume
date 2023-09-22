@@ -1,4 +1,4 @@
-<div class="dictionary-background">
+<div class="dictionary-background h-100">
     <navigation></navigation>
     <div class="my-4">
         <div class="container my-4">
@@ -17,15 +17,19 @@
         </div>
         <div class="container" *ngIf="searchValue">
             <div class="text-md-start text-center">
-                <h1 class="purple-shadow">Search Results</h1>
+                <p class="h1 purple-shadow">
+                    <span class="me-2">Search Results Found:</span>
+                    <span class="font-monospace">{{ filteredResultCount() }}</span>
+                </p>
                 <div class="row text-dark" *ngIf="combinedList">
-                    <ng-container *ngFor="let dream of combinedList | filter : searchValue : 'name'">
+                    <ng-container *ngFor="let dream of combinedList | filter : searchValue : 'name': filterMetadata">
                         <accordion-result
                             [id]="dream?.id"
                             [title]="dream.name"
                             [description]="dream?.description"
                         ></accordion-result>
                     </ng-container>
+                    <div class="mb-4"></div>
                 </div>
             </div>
         </div>
