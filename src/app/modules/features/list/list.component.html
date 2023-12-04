@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-4 g-2 py-2 py-md-0 ">
                     <span>By Symbol: </span>
-                    <select class="form-select" formControlName="selectedLetter">
+                    <select class="form-select" formControlName="selectedLetter" >
                         <option value="null" disabled>Dream Symbol</option>
                         <option *ngFor="let letter of alphabet" [ngValue]="letter">
                             <span>{{letter}}</span>

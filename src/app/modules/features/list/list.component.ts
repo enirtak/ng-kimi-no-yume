@@ -41,24 +41,27 @@ export class ListComponent implements OnInit {
         selectedLetter: new FormControl(),
         selectedTheme: new FormControl()
       });
-
-      this.subscribeToFormChanges();
     }
+
+    this.subscribeToFormChanges();
   }
 
   subscribeToFormChanges() {
-    this.form.get('selectedLetter')?.valueChanges.subscribe((letter) => {
+    this.form.get('selectedLetter')?.valueChanges
+    .subscribe((letter) => {
       this.onLetterChange(letter);
+      this.form.get('selectedTheme')?.setValue(null, { emitEvent: false });
     });
 
-    this.form.get('selectedTheme')?.valueChanges.subscribe((theme) => {
+    this.form.get('selectedTheme')?.valueChanges
+    .subscribe((theme) => {
       this.onThemeChange(theme);
-      console.log(theme)
+      this.form.get('selectedLetter')?.setValue(null, { emitEvent: false });
     });
   }
 
   onThemeChange(id: any) {
-    if (this.symbolList) this.symbolList = [];  
+    this.symbolList = [];  
 
     let category = this.categoryList?.find(x => x.id === id);
 
@@ -69,21 +72,19 @@ export class ListComponent implements OnInit {
   }
 
   onLetterChange(letter: any) {
-    if (this.symbolList) this.symbolList = []; 
-    if (this.categoryDescription) this.categoryDescription = '';
-
+    this.symbolList = []; 
+    this.categoryDescription = '';
     this.selectedCategory = `${letter}`;
-
+    
     if (this.combinedList) {
-      this.combinedList.forEach((data) => {
-        if (data && data.name?.toLocaleLowerCase()?.charAt(0) === letter.toLocaleLowerCase()) {
-          this.symbolList.push({
-            dreamName: data.name,
-            dreamDescription: data.description,
-            id: data.id
-          });
-        }
-      });
+      this.symbolList = this.combinedList
+        .filter(data => data && data.name?.toLowerCase()?.charAt(0) === letter.toLowerCase())
+        .map(data => ({
+          dreamName: data.name,
+          dreamDescription: data.description,
+          id: data.id
+        })
+      );
     }
   }
 

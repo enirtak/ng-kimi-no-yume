@@ -4,6 +4,8 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { DictionaryService } from 'src/app/services/dictionary/dictionary.service';
 import { SearchList } from './Search';
 import { MapDreamCategoryListToCombinedList, MapDreamListToCombinedList, SortCombinedList } from 'src/app/helpers/dream-helper';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Observable, Subject, debounceTime, of } from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -15,27 +17,54 @@ export class SearchComponent implements OnInit, AfterContentChecked   {
   dreamList: Array<DreamDictionaryDTO> = [];
   categoryList: Array<DreamCategoryDTO> = [];
   combinedList: SearchList[] = [];
-  searchValue = '';
-  filterMetadata = { count: 0 };
+  
+  searchResultCount: number = 0;
+  searchForm!: FormGroup;
+  searchFormResult!: Observable<any[]>;
   
   constructor(
     private dreamSVC: DictionaryService,
     private categorySVC: CategoryService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private fb: FormBuilder
     ) { }
 
   ngAfterContentChecked() {
-    this.filteredResultCount();
     this.cd.detectChanges();
   }
   
   ngOnInit() {
     this.getLists()
       .then(() => this.loadSearch()) ;
+
+    if (!this.searchForm) {
+      this.searchForm = this.fb.group({
+        searchInput: ['']
+      });
+    }
+
+    this.searchForm.get('searchInput')?.valueChanges
+      .pipe(
+        debounceTime(1000)
+      )
+      .subscribe((data) => {
+        this.searchFormResult = of(this.getSearchResult(data));
+    });
   }
 
-  filteredResultCount() {
-    return this.filterMetadata?.count;
+  getSearchResult(search: any): any[] {
+    if (!this.combinedList) return[];
+    if (!search) return this.combinedList;
+
+    let result = this.combinedList
+      .filter((key: any) => {
+        return key &&
+        key['name'] &&
+        key['name'].toLowerCase().includes(search.toLowerCase())
+      });
+
+    this.searchResultCount = result.length;
+    return result;
   }
 
   async getLists() {
