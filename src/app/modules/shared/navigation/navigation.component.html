@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg text-dark" id="transparentBg">
+<nav class="navbar navbar-expand-lg" id="transparentBg">
     <div class="container">
         <h4 class="navbar-brand fs-1 purple-shadow text-light handlee">
             <a class="nav-link d-sm-block" [routerLink]="['../']">
@@ -20,7 +20,7 @@
         <div class="collapse navbar-collapse d-lg-flex justify-content-lg-end" id="navigationBar">
             <ul class="navbar-nav mb-lg-0 fs-6">
                 <li class="nav-item m-md-3 m-2">
-                    <a class="nav-link link-light" [routerLink]="['../']">
+                    <a class="nav-link link-light" [routerLink]="['/']">
                         HOME
                     </a>
                 </li>
@@ -43,3 +43,5 @@
         </div>
     </div>
 </nav>
+
+<router-outlet></router-outlet>

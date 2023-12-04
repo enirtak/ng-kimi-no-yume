@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { DreamDictionaryDTO, DreamDictionaryRequest, DreamIdRequest, DreamListResponse } from 'src/app/api/models';
+import { DictionaryResponse, DreamDictionaryDTO, DreamDictionaryRequest } from 'src/app/api/models';
 import { DreamDictionaryService } from 'src/app/api/services';
 import { Settings } from 'src/settings/settings';
 import { LocalStorageService } from '../localstorage/localstorage.service';
@@ -25,7 +25,7 @@ export class DictionaryService {
    }
 
   async GetDreamList() {
-    let response: DreamListResponse = {};
+    let response: DictionaryResponse = {};
 
     await this.GetList()
       .then((result) => {
@@ -56,11 +56,7 @@ export class DictionaryService {
    return await lastValueFrom(this.svc.postApiDreamDictionaryUpdateDream(request));
   }
 
-  async Delete(data: any) {
-    let request: DreamIdRequest = {
-      id : data
-    };
-
-   return await lastValueFrom(this.svc.postApiDreamDictionaryDeleteDream(request));
+  async Delete(id: number) {
+   return await lastValueFrom(this.svc.putApiDreamDictionaryDeleteDream(id));
   }
 }

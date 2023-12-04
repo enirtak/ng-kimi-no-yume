@@ -7,11 +7,10 @@ import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-respo
 import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
-import { DreamListResponse } from '../models/dream-list-response';
-import { DreamItemResponse } from '../models/dream-item-response';
+import { DictionaryResponse } from '../models/dictionary-response';
+import { DictionarytemResponse } from '../models/dictionarytem-response';
 import { DreamDictionaryRequest } from '../models/dream-dictionary-request';
 import { BaseResponse } from '../models/base-response';
-import { DreamIdRequest } from '../models/dream-id-request';
 @Injectable({
   providedIn: 'root',
 })
@@ -19,7 +18,7 @@ class DreamDictionaryService extends __BaseService {
   static readonly getApiDreamDictionaryGetDreamDictionaryPath = '/api/DreamDictionary/GetDreamDictionary';
   static readonly postApiDreamDictionaryCreateNewDreamPath = '/api/DreamDictionary/CreateNewDream';
   static readonly postApiDreamDictionaryUpdateDreamPath = '/api/DreamDictionary/UpdateDream';
-  static readonly postApiDreamDictionaryDeleteDreamPath = '/api/DreamDictionary/DeleteDream';
+  static readonly putApiDreamDictionaryDeleteDreamPath = '/api/DreamDictionary/DeleteDream';
 
   constructor(
     config: __Configuration,
@@ -29,10 +28,9 @@ class DreamDictionaryService extends __BaseService {
   }
 
   /**
-   * Returns a list of dictionary of dreams.
-   * @return Returns the list.
+   * @return Success
    */
-  getApiDreamDictionaryGetDreamDictionaryResponse(): __Observable<__StrictHttpResponse<DreamListResponse>> {
+  getApiDreamDictionaryGetDreamDictionaryResponse(): __Observable<__StrictHttpResponse<DictionaryResponse>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -49,26 +47,24 @@ class DreamDictionaryService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<DreamListResponse>;
+        return _r as __StrictHttpResponse<DictionaryResponse>;
       })
     );
   }
   /**
-   * Returns a list of dictionary of dreams.
-   * @return Returns the list.
+   * @return Success
    */
-  getApiDreamDictionaryGetDreamDictionary(): __Observable<DreamListResponse> {
+  getApiDreamDictionaryGetDreamDictionary(): __Observable<DictionaryResponse> {
     return this.getApiDreamDictionaryGetDreamDictionaryResponse().pipe(
-      __map(_r => _r.body as DreamListResponse)
+      __map(_r => _r.body as DictionaryResponse)
     );
   }
 
   /**
-   * Creates a new dream dictionary.
-   * @param body Create New Dream Request
-   * @return Returns the new dream.
+   * @param body undefined
+   * @return Success
    */
-  postApiDreamDictionaryCreateNewDreamResponse(body?: DreamDictionaryRequest): __Observable<__StrictHttpResponse<DreamItemResponse>> {
+  postApiDreamDictionaryCreateNewDreamResponse(body?: DreamDictionaryRequest): __Observable<__StrictHttpResponse<DictionarytemResponse>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -86,27 +82,25 @@ class DreamDictionaryService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<DreamItemResponse>;
+        return _r as __StrictHttpResponse<DictionarytemResponse>;
       })
     );
   }
   /**
-   * Creates a new dream dictionary.
-   * @param body Create New Dream Request
-   * @return Returns the new dream.
+   * @param body undefined
+   * @return Success
    */
-  postApiDreamDictionaryCreateNewDream(body?: DreamDictionaryRequest): __Observable<DreamItemResponse> {
+  postApiDreamDictionaryCreateNewDream(body?: DreamDictionaryRequest): __Observable<DictionarytemResponse> {
     return this.postApiDreamDictionaryCreateNewDreamResponse(body).pipe(
-      __map(_r => _r.body as DreamItemResponse)
+      __map(_r => _r.body as DictionarytemResponse)
     );
   }
 
   /**
-   * Updates a dream dictionary.
-   * @param body Update Dream Request
-   * @return Returns the updated dream.
+   * @param body undefined
+   * @return Success
    */
-  postApiDreamDictionaryUpdateDreamResponse(body?: DreamDictionaryRequest): __Observable<__StrictHttpResponse<DreamItemResponse>> {
+  postApiDreamDictionaryUpdateDreamResponse(body?: DreamDictionaryRequest): __Observable<__StrictHttpResponse<DictionarytemResponse>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -124,33 +118,31 @@ class DreamDictionaryService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<DreamItemResponse>;
+        return _r as __StrictHttpResponse<DictionarytemResponse>;
       })
     );
   }
   /**
-   * Updates a dream dictionary.
-   * @param body Update Dream Request
-   * @return Returns the updated dream.
+   * @param body undefined
+   * @return Success
    */
-  postApiDreamDictionaryUpdateDream(body?: DreamDictionaryRequest): __Observable<DreamItemResponse> {
+  postApiDreamDictionaryUpdateDream(body?: DreamDictionaryRequest): __Observable<DictionarytemResponse> {
     return this.postApiDreamDictionaryUpdateDreamResponse(body).pipe(
-      __map(_r => _r.body as DreamItemResponse)
+      __map(_r => _r.body as DictionarytemResponse)
     );
   }
 
   /**
-   * Performs soft delete on Dream Dictionary entry.
-   * @param body Delete Dream Request
-   * @return Returns IsSuccess
+   * @param body undefined
+   * @return Success
    */
-  postApiDreamDictionaryDeleteDreamResponse(body?: DreamIdRequest): __Observable<__StrictHttpResponse<BaseResponse>> {
+  putApiDreamDictionaryDeleteDreamResponse(body?: number): __Observable<__StrictHttpResponse<BaseResponse>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
     __body = body;
     let req = new HttpRequest<any>(
-      'POST',
+      'PUT',
       this.rootUrl + `/api/DreamDictionary/DeleteDream`,
       __body,
       {
@@ -167,12 +159,11 @@ class DreamDictionaryService extends __BaseService {
     );
   }
   /**
-   * Performs soft delete on Dream Dictionary entry.
-   * @param body Delete Dream Request
-   * @return Returns IsSuccess
+   * @param body undefined
+   * @return Success
    */
-  postApiDreamDictionaryDeleteDream(body?: DreamIdRequest): __Observable<BaseResponse> {
-    return this.postApiDreamDictionaryDeleteDreamResponse(body).pipe(
+  putApiDreamDictionaryDeleteDream(body?: number): __Observable<BaseResponse> {
+    return this.putApiDreamDictionaryDeleteDreamResponse(body).pipe(
       __map(_r => _r.body as BaseResponse)
     );
   }

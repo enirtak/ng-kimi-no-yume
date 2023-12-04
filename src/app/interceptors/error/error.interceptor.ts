@@ -36,19 +36,17 @@ export class ErrorInterceptor implements HttpInterceptor {
           if (error?.status === 401) {
             this.httpMessage = `Unauthorized: ${error?.message}`;
             this.authSVC.logout();
+          } else if (error?.status === 404) {
+            this.httpMessage = `Not found: ${error?.message}`;
+          } else if (error?.status === 403) {
+            this.httpMessage = `Access Denied: ${error?.message}`;
           } else {
             this.httpMessage = `Client Error: ${error?.message}`;
           }
         } else {
           console.log('Server-Side Error occurred.');
           console.log(error);
-          if (error?.status === 404) {
-            this.httpMessage = `Not found: ${error?.message}`;
-          }
-          else if (error?.status === 403) {
-            this.httpMessage = `Access Denied: ${error?.message}`;
-          }
-          else if (error?.status === 500) {
+          if (error?.status === 500) {
             this.httpMessage = `Internal Server Error: ${error?.message}`;
           }
           else {

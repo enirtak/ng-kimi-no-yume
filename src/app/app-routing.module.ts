@@ -8,11 +8,6 @@ import { HomeDictionaryComponent } from './modules/features/home-dictionary/home
 const routes: Routes = [
   { 
     path: '', 
-    title: 'Welcome',
-    component: HomeComponent
-  },
-  { 
-    path: 'kiminoyume', 
     title: 'KimiNoYume - Your Dream',
     children: [
       { 
@@ -42,10 +37,21 @@ const routes: Routes = [
     ]
   },
   { 
+    path: 'contact-me', 
+    title: 'Welcome',
+    component: HomeComponent
+  },
+  { 
     path: 'login', 
     title: 'Login',
     component: LoginComponent
   },
+  { 
+    path: 'shiigoto', 
+    title: 'shIIgoto - Job Application Tracker',
+    loadChildren: () => 
+      import('./modules/features/job-app-tracker/job-app-tracker.module').then(m => m.JobAppTrackerModule) 
+    },
   {
     path: 'admin', 
     title: 'Admin',

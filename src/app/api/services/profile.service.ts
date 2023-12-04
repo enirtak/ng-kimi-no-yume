@@ -10,7 +10,7 @@ import { map as __map, filter as __filter } from 'rxjs/operators';
 import { ProfileResponse } from '../models/profile-response';
 import { ProfileRequest } from '../models/profile-request';
 import { ProfileListResponse } from '../models/profile-list-response';
-import { ProfileListRequest } from '../models/profile-list-request';
+import { BaseResponse } from '../models/base-response';
 @Injectable({
   providedIn: 'root',
 })
@@ -19,6 +19,7 @@ class ProfileService extends __BaseService {
   static readonly getApiProfileGetProfileListPath = '/api/Profile/GetProfileList';
   static readonly getApiProfileGetCurrentProfilePath = '/api/Profile/GetCurrentProfile';
   static readonly putApiProfileUpdateProfilePath = '/api/Profile/UpdateProfile';
+  static readonly putApiProfileDeleteProfilePath = '/api/Profile/DeleteProfile';
 
   constructor(
     config: __Configuration,
@@ -64,14 +65,12 @@ class ProfileService extends __BaseService {
   }
 
   /**
-   * @param body undefined
    * @return Success
    */
-  getApiProfileGetProfileListResponse(body?: ProfileListRequest): __Observable<__StrictHttpResponse<ProfileListResponse>> {
+  getApiProfileGetProfileListResponse(): __Observable<__StrictHttpResponse<ProfileListResponse>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = body;
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/api/Profile/GetProfileList`,
@@ -90,11 +89,10 @@ class ProfileService extends __BaseService {
     );
   }
   /**
-   * @param body undefined
    * @return Success
    */
-  getApiProfileGetProfileList(body?: ProfileListRequest): __Observable<ProfileListResponse> {
-    return this.getApiProfileGetProfileListResponse(body).pipe(
+  getApiProfileGetProfileList(): __Observable<ProfileListResponse> {
+    return this.getApiProfileGetProfileListResponse().pipe(
       __map(_r => _r.body as ProfileListResponse)
     );
   }
@@ -165,6 +163,42 @@ class ProfileService extends __BaseService {
   putApiProfileUpdateProfile(body?: ProfileRequest): __Observable<ProfileResponse> {
     return this.putApiProfileUpdateProfileResponse(body).pipe(
       __map(_r => _r.body as ProfileResponse)
+    );
+  }
+
+  /**
+   * @param body undefined
+   * @return Success
+   */
+  putApiProfileDeleteProfileResponse(body?: number): __Observable<__StrictHttpResponse<BaseResponse>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = body;
+    let req = new HttpRequest<any>(
+      'PUT',
+      this.rootUrl + `/api/Profile/DeleteProfile`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<BaseResponse>;
+      })
+    );
+  }
+  /**
+   * @param body undefined
+   * @return Success
+   */
+  putApiProfileDeleteProfile(body?: number): __Observable<BaseResponse> {
+    return this.putApiProfileDeleteProfileResponse(body).pipe(
+      __map(_r => _r.body as BaseResponse)
     );
   }
 }

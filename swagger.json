@@ -70,19 +70,18 @@
         "tags": [
           "DreamCategory"
         ],
-        "summary": "Creates a list of dream category.",
         "produces": [
           "application/json"
         ],
         "responses": {
           "200": {
-            "description": "Returns the list of dream category.",
+            "description": "Success",
             "schema": {
               "$ref": "#/definitions/CategoryResponse"
             }
           },
           "500": {
-            "description": "If there is an error processing the request."
+            "description": "Server Error"
           }
         }
       }
@@ -92,7 +91,6 @@
         "tags": [
           "DreamCategory"
         ],
-        "summary": "Creates a new dream category.",
         "consumes": [
           "application/json"
         ],
@@ -103,9 +101,38 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Create New Dream Category Request",
             "schema": {
-              "$ref": "#/definitions/CategoryRequest"
+              "$ref": "#/definitions/DreamCategoryRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CategoryItemResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/DreamCategory/UpdateCategory": {
+      "post": {
+        "tags": [
+          "DreamCategory"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/DreamCategoryRequest"
             }
           }
         ],
@@ -116,56 +143,17 @@
               "$ref": "#/definitions/CategoryItemResponse"
             }
           },
-          "201": {
-            "description": "Returns the new dream category."
-          },
           "500": {
-            "description": "If there is an error processing the request."
-          }
-        }
-      }
-    },
-    "/api/DreamCategory/UpdateCategory": {
-      "post": {
-        "tags": [
-          "DreamCategory"
-        ],
-        "summary": "Updates a dream category.",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Update Dream Category Request",
-            "schema": {
-              "$ref": "#/definitions/CategoryRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Returns the updated dream category.",
-            "schema": {
-              "$ref": "#/definitions/CategoryItemResponse"
-            }
-          },
-          "500": {
-            "description": "If there is an error processing the request."
+            "description": "Server Error"
           }
         }
       }
     },
     "/api/DreamCategory/DeleteCategory": {
-      "post": {
+      "put": {
         "tags": [
           "DreamCategory"
         ],
-        "summary": "Performs soft delete on Dream Category entry.",
         "consumes": [
           "application/json"
         ],
@@ -176,21 +164,21 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Delete Dream Category Request",
             "schema": {
-              "$ref": "#/definitions/DreamIdRequest"
+              "format": "int32",
+              "type": "integer"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Returns IsSuccess",
+            "description": "Success",
             "schema": {
               "$ref": "#/definitions/BaseResponse"
             }
           },
           "500": {
-            "description": "If there is an error processing the request."
+            "description": "Server Error"
           }
         }
       }
@@ -200,19 +188,18 @@
         "tags": [
           "DreamDictionary"
         ],
-        "summary": "Returns a list of dictionary of dreams.",
         "produces": [
           "application/json"
         ],
         "responses": {
           "200": {
-            "description": "Returns the list.",
+            "description": "Success",
             "schema": {
-              "$ref": "#/definitions/DreamListResponse"
+              "$ref": "#/definitions/DictionaryResponse"
             }
           },
           "500": {
-            "description": "If there is an error processing the request."
+            "description": "Server Error"
           }
         }
       }
@@ -222,7 +209,6 @@
         "tags": [
           "DreamDictionary"
         ],
-        "summary": "Creates a new dream dictionary.",
         "consumes": [
           "application/json"
         ],
@@ -233,7 +219,6 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Create New Dream Request",
             "schema": {
               "$ref": "#/definitions/DreamDictionaryRequest"
             }
@@ -241,13 +226,13 @@
         ],
         "responses": {
           "201": {
-            "description": "Returns the new dream.",
+            "description": "Success",
             "schema": {
-              "$ref": "#/definitions/DreamItemResponse"
+              "$ref": "#/definitions/DictionarytemResponse"
             }
           },
           "500": {
-            "description": "If there is an error processing the request."
+            "description": "Server Error"
           }
         }
       }
@@ -257,7 +242,6 @@
         "tags": [
           "DreamDictionary"
         ],
-        "summary": "Updates a dream dictionary.",
         "consumes": [
           "application/json"
         ],
@@ -268,7 +252,6 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Update Dream Request",
             "schema": {
               "$ref": "#/definitions/DreamDictionaryRequest"
             }
@@ -276,23 +259,22 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the updated dream.",
+            "description": "Success",
             "schema": {
-              "$ref": "#/definitions/DreamItemResponse"
+              "$ref": "#/definitions/DictionarytemResponse"
             }
           },
           "500": {
-            "description": "If there is an error processing the request."
+            "description": "Server Error"
           }
         }
       }
     },
     "/api/DreamDictionary/DeleteDream": {
-      "post": {
+      "put": {
         "tags": [
           "DreamDictionary"
         ],
-        "summary": "Performs soft delete on Dream Dictionary entry.",
         "consumes": [
           "application/json"
         ],
@@ -303,21 +285,21 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Delete Dream Request",
             "schema": {
-              "$ref": "#/definitions/DreamIdRequest"
+              "format": "int32",
+              "type": "integer"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Returns IsSuccess",
+            "description": "Success",
             "schema": {
               "$ref": "#/definitions/BaseResponse"
             }
           },
           "500": {
-            "description": "If there is an error processing the request."
+            "description": "Server Error"
           }
         }
       }
@@ -328,14 +310,10 @@
           "Profile"
         ],
         "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
+          "application/json"
         ],
         "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
+          "application/json"
         ],
         "parameters": [
           {
@@ -361,24 +339,8 @@
         "tags": [
           "Profile"
         ],
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
         "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/ProfileListRequest"
-            }
-          }
+          "application/json"
         ],
         "responses": {
           "200": {
@@ -386,6 +348,9 @@
             "schema": {
               "$ref": "#/definitions/ProfileListResponse"
             }
+          },
+          "500": {
+            "description": "Server Error"
           }
         }
       }
@@ -396,9 +361,7 @@
           "Profile"
         ],
         "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
+          "application/json"
         ],
         "responses": {
           "200": {
@@ -406,6 +369,9 @@
             "schema": {
               "$ref": "#/definitions/ProfileResponse"
             }
+          },
+          "500": {
+            "description": "Server Error"
           }
         }
       }
@@ -416,14 +382,10 @@
           "Profile"
         ],
         "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
+          "application/json"
         ],
         "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
+          "application/json"
         ],
         "parameters": [
           {
@@ -440,6 +402,43 @@
             "schema": {
               "$ref": "#/definitions/ProfileResponse"
             }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Profile/DeleteProfile": {
+      "put": {
+        "tags": [
+          "Profile"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/BaseResponse"
+            }
+          },
+          "500": {
+            "description": "Server Error"
           }
         }
       }
@@ -530,14 +529,6 @@
         }
       }
     },
-    "CategoryRequest": {
-      "type": "object",
-      "properties": {
-        "category": {
-          "$ref": "#/definitions/DreamCategoryDTO"
-        }
-      }
-    },
     "CategoryResponse": {
       "type": "object",
       "properties": {
@@ -552,6 +543,37 @@
           "items": {
             "$ref": "#/definitions/DreamCategoryDTO"
           }
+        }
+      }
+    },
+    "DictionaryResponse": {
+      "type": "object",
+      "properties": {
+        "isSuccess": {
+          "type": "boolean"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "dictionaryList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DreamDictionaryDTO"
+          }
+        }
+      }
+    },
+    "DictionarytemResponse": {
+      "type": "object",
+      "properties": {
+        "isSuccess": {
+          "type": "boolean"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "dreamItem": {
+          "$ref": "#/definitions/DreamDictionaryDTO"
         }
       }
     },
@@ -570,6 +592,14 @@
         },
         "description": {
           "type": "string"
+        }
+      }
+    },
+    "DreamCategoryRequest": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "$ref": "#/definitions/DreamCategoryDTO"
         }
       }
     },
@@ -600,46 +630,6 @@
       "properties": {
         "dreamItem": {
           "$ref": "#/definitions/DreamDictionaryDTO"
-        }
-      }
-    },
-    "DreamIdRequest": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int32",
-          "type": "integer"
-        }
-      }
-    },
-    "DreamItemResponse": {
-      "type": "object",
-      "properties": {
-        "isSuccess": {
-          "type": "boolean"
-        },
-        "errorMessage": {
-          "type": "string"
-        },
-        "dreamItem": {
-          "$ref": "#/definitions/DreamDictionaryDTO"
-        }
-      }
-    },
-    "DreamListResponse": {
-      "type": "object",
-      "properties": {
-        "isSuccess": {
-          "type": "boolean"
-        },
-        "errorMessage": {
-          "type": "string"
-        },
-        "dictionaryList": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/DreamDictionaryDTO"
-          }
         }
       }
     },
@@ -761,14 +751,6 @@
           "items": {
             "$ref": "#/definitions/ProjectsDTO"
           }
-        }
-      }
-    },
-    "ProfileListRequest": {
-      "type": "object",
-      "properties": {
-        "isGetAll": {
-          "type": "boolean"
         }
       }
     },

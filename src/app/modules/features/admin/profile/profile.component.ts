@@ -88,11 +88,20 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  // If you want to handle the response directly within the testmethod function, 
+  // you can use the async/await syntax. 
+  // use try catch
+  async testmethod(){
+    let result = await this.svc.Update(this.profileFormGroup?.value);
+  }
+
   submitForm() {
     let formValues = this.profileFormGroup?.value;
     // console.log(formValues)
 
     if (formValues.id && formValues.id > 0) {
+      // If you want to chain the Create method with other asynchronous operations, 
+      // you can use the then() method to handle the response. 
       this.svc.Update(formValues)
         .then((response) => {
           if (response && response.person) {

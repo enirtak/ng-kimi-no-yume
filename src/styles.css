@@ -1,8 +1,9 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Slab&display=swap')
-;@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Raleway&display=swap');
 
 .handlee {
     font-family: 'Handlee';
@@ -20,6 +21,11 @@
     font-family: 'Raleway', serif;
 }
 
+.montserrat {
+    font-family: 'Montserrat', serif;
+}
+
+
 html {
     scroll-behavior: smooth;
     height: 100vh !important;
@@ -35,8 +41,24 @@ html {
     background-position: center center;
     background-attachment: fixed;
     
+    /* height: 100vh;
+    min-height: 100vh; */
+}
+
+.d-relative {
+    position: relative; 
     height: 100vh;
-    min-height: 100vh;
+}
+
+.d-absolute {
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+}
+
+.p-vh-2 {
+    padding: 2vh;
 }
 
 #container-relative {

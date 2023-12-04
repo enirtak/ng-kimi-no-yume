@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { DreamCategoryDTO, CategoryRequest, DreamIdRequest, CategoryResponse } from 'src/app/api/models';
+import { DreamCategoryDTO, CategoryResponse, DreamCategoryRequest } from 'src/app/api/models';
 import { DreamCategoryService } from 'src/app/api/services';
 import { Settings } from 'src/settings/settings';
 import { LocalStorageService } from '../localstorage/localstorage.service';
@@ -41,7 +41,7 @@ export class CategoryService {
   }
 
   async Create(data: DreamCategoryDTO) {
-    let request: CategoryRequest = {
+    let request: DreamCategoryRequest = {
       category : data
     };
 
@@ -49,18 +49,14 @@ export class CategoryService {
   }
 
   async Update(data: any) {
-    let request: CategoryRequest = {
+    let request: DreamCategoryRequest = {
       category : data
     };
 
    return await lastValueFrom(this.svc.postApiDreamCategoryUpdateCategory(request));
   }
 
-  async Delete(data: any) {
-    let request: DreamIdRequest = {
-      id : data
-    };
-
-   return await lastValueFrom(this.svc.postApiDreamCategoryDeleteCategory(request));
+  async Delete(id: number) {
+   return await lastValueFrom(this.svc.putApiDreamCategoryDeleteCategory(id));
   }
 }
