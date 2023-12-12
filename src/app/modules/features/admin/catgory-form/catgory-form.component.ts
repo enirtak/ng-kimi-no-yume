@@ -12,17 +12,18 @@ export class CatgoryFormComponent implements OnInit {
   @Input() formGroup!: FormGroup;
   @Output() onUpSertButtonClick: EventEmitter<void> = new EventEmitter();
 
-  formTitle = '';
   minDescriptionCount = 20;
 
   get isEditForm() {
-    let id = this.formGroup.get('Id')?.value;
+    let id = this.formGroup.get('id')?.value;
+    console.log('category form edit ' + id);
     return id > 0;
   }
 
   constructor() { }
 
   ngOnInit(): void {
+    
   }
 
   upsertClickButtonClick() {

@@ -17,13 +17,14 @@ import { CategoryService } from 'src/app/services/category/category.service';
 export class DictionaryListComponent implements OnInit {
 
   yumeFormGroup!: FormGroup;
-  dreamList?: Array<DreamDictionaryDTO>;
+
+  dreamList: Array<DreamDictionaryDTO> | undefined = [];
+  dreamThemeList?: Array<DreamCategoryDTO> = [];
+
   selectedDream?: DreamDictionaryDTO;
   selectedDreamCategory: string | undefined = '';
-  dreamThemeList?: Array<DreamCategoryDTO>;
 
   dreamListSearch = '';
-  filterMetadata = { count: 0 };
   itemCount = Settings.ItemCount;
   currentPage = Settings.CurrentPage;
 
@@ -36,11 +37,13 @@ export class DictionaryListComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.yumeFormGroup) this.yumeFormGroup = createDreamFormGroup(this.fb);
+
     setupDreamFormGroupHandler(this.yumeFormGroup);
-    this.getListOnCache();
+
+    this.getDictionaryList();
   }
 
-  getListOnCache() {
+  getDictionaryList() {
     let list = this.storageSVC.get(Settings.DreamListKey);
     this.dreamList = this.storageSVC.parse(list) ?? this.getDreamList();
 
@@ -83,7 +86,7 @@ export class DictionaryListComponent implements OnInit {
   onUpSertDream() {
     let formValues = this.yumeFormGroup?.value;
 
-    if (formValues && formValues?.id) {
+    if (formValues && formValues.id) {
       this.dreamSVC.Update(formValues)
         .then((response) => {
           this.dreamList?.map(x => {

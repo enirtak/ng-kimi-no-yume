@@ -1,32 +1,37 @@
-<div class="container-fluid dictionary-background">
-  <div class="row h-100">
-    <div class="col-2 bg-body text-dark pt-5 d-md-block d-none border-end border-secondary border-3 d-flex flex-column  position-relative">
-      <div class="align-items-center justify-content-start">
-        <div class="p-2 d-grid w-100">
-          <a class="btn btn-outline-secondary" [routerLink]="['./']">Home</a>
+<div class="dictionary-background">
+  <div class="container-fluid">
+    <div class="row" style="height: 100vh;">
+      <div class="col-2 bg-body text-dark pt-5 d-md-block d-none border-end border-secondary border-3 d-flex flex-column  position-relative">
+        <div class="align-items-center justify-content-start">
+          <p class="p-2 d-grid w-100">
+            <a class="btn btn-outline-secondary" [routerLink]="['/']">Main Page</a>
+          </p>
+          <p class="p-2 d-grid w-100">
+            <a class="btn btn-outline-secondary" [routerLink]="['./']">Home</a>
+          </p>
+          <p class="p-2 d-grid w-100">
+            <a class="btn btn-outline-secondary" [routerLink]="['profile']">Admin Profile</a>
+          </p>
+          <p class="p-2 d-grid w-100">
+            <a class="btn btn-outline-secondary disabled">Manage Users</a>
+          </p>
+          <p class="p-2 d-grid w-100">
+            <a class="btn btn-outline-secondary" [routerLink]="['dictionary-list']">Dream Dictionary List</a>
+          </p>
+          <p class="p-2 d-grid w-100">
+            <a class="btn btn-outline-secondary" [routerLink]="['category-list']">Dream Category List</a>
+          </p>
         </div>
-        <div class="p-2 d-grid w-100">
-          <a class="btn btn-outline-secondary" [routerLink]="['profile']">Admin Profile</a>
-        </div>
-        <div class="p-2 d-grid w-100">
-          <a class="btn btn-outline-secondary disabled">Manage Users</a>
-        </div>
-        <div class="p-2 d-grid w-100">
-          <a class="btn btn-outline-secondary" [routerLink]="['dictionary-list']">Dream Dictionary List</a>
-        </div>
-        <div class="p-2 d-grid w-100">
-          <a class="btn btn-outline-secondary" [routerLink]="['category-list']">Dream Category List</a>
+        <div class="p-2 position-absolute bottom-0">
+          <a class="btn btn-outline-dark mb-3 d-grid">Logout</a>
+          <p class="fs-6 text-center m-0 p-0">Version 1.0</p>
+          <p class="fs-6 text-center">Designed and built with all the love in the world by Katorin&copy;</p>
         </div>
       </div>
-      <div class="p-2 position-absolute bottom-0">
-        <a class="btn btn-outline-dark mb-3 d-grid">Logout</a>
-        <p class="fs-6 text-center m-0 p-0">Version 1.0</p>
-        <p class="fs-6 text-center">Designed and built with all the love in the world by Katorin&copy;</p>
-      </div>
-    </div>
-    <div class="col-10 router-outlet-child">
-      <div class="p-5">
-        <router-outlet></router-outlet>
+      <div class="col-10 router-outlet-child">
+        <div class="p-5">
+          <router-outlet></router-outlet>
+        </div>
       </div>
     </div>
   </div>

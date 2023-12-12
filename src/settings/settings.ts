@@ -542,5 +542,8 @@ export const Settings = {
     DreamCategoryListKey: "dreamListCategory",
     PHProvinceList: phProvinceList,
     USStateList: usStateList,
-    AlphabetList: alphabetList
+    AlphabetList: alphabetList,
+    CountryList: ["Philippines", "United States"],
+    EditModalLabel: 'Edit a record',
+    AddModalLabel: 'Add a new record'
 }

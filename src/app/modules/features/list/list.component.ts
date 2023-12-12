@@ -17,7 +17,7 @@ export class ListComponent implements OnInit {
   itemCount = Settings.ItemCount;
   currentPage = Settings.CurrentPage;
 
-  categoryList?: Array<DreamCategoryDTO>;
+  categoryList: Array<DreamCategoryDTO> = [];
   symbolList: Array<DreamDictionaryDTO> = [];
   dreamList: DreamDictionaryDTO[] = [];
   combinedList: SearchList[] = [];

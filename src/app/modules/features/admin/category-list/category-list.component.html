@@ -1,8 +1,8 @@
 <div class="d-sm-flex">
-    <p class="lead">Dream Theme List</p>
+    <p class="lead">Dream Category List</p>
     <div class="hstack gap-1 ms-auto">
         <input type="text" class="form-control" placeholder="Search" [(ngModel)]="dreamCategorySearch">
-        <button class="btn btn-primary btn-sm w-50 ms-1" (click)="getDreamThemeList()">
+        <button class="btn btn-primary btn-sm w-50 ms-1" (click)="getDreamCategoryList()">
             Get List
         </button> 
         <button class="btn btn-primary btn-sm ms-1" 
@@ -17,13 +17,13 @@
     <thead>
       <tr>
         <th scope="col">ID</th>
-        <th scope="col">Dream Theme</th>
+        <th scope="col">Dream Category</th>
         <th scope="col">Action</th>
       </tr>
     </thead>
-    <ng-container *ngIf="dreamThemeList">
-        <tbody *ngFor="let theme of dreamThemeList 
-        | filter: dreamCategorySearch : 'categoryName': filterMetadata
+    <ng-container *ngIf="dreamCategoryList">
+        <tbody *ngFor="let theme of dreamCategoryList 
+        | filter: dreamCategorySearch : 'categoryName'
         | paginate : { itemsPerPage: itemCount, currentPage: currentPage }
         ">
             <tr>
@@ -32,7 +32,7 @@
                     <a class="navbar-brand cursor-pointer me-1" 
                         data-bs-toggle="modal" 
                         data-bs-target="#viewDreamTheme"
-                        (click)="getSelectedDreamThemeItem(theme?.id)">
+                        (click)="getSelectedDreamCategory(theme?.id)">
                         {{theme?.categoryName}}
                     </a>
                 </td>
@@ -40,13 +40,13 @@
                     <button class="btn btn-primary btn-sm me-1" 
                         data-bs-toggle="modal" 
                         data-bs-target="#themeModalForm"
-                        (click)="getSelectedDreamThemeItem(theme?.id)">
+                        (click)="getSelectedDreamCategory(theme?.id)">
                         EDIT
                     </button>
                     <button class="btn btn-primary btn-sm me-1" 
                         data-bs-toggle="modal" 
                         data-bs-target="#delThemeModal" 
-                        (click)="getSelectedDreamThemeItem(theme?.id)">
+                        (click)="getSelectedDreamCategory(theme?.id)">
                         DELETE
                     </button>
                 </td>
@@ -54,33 +54,31 @@
         </tbody>
     </ng-container>
 </table>
-<ng-container *ngIf="dreamThemeList && dreamThemeList.length > itemCount">
+<ng-container *ngIf="dreamCategoryList && dreamCategoryList.length > itemCount">
     <div class="text-center">
         <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
     </div>
 </ng-container>
 
-
-
-<!-- Dream Theme View Modal -->
+<!-- Dream Category View Modal -->
 <view-description-modal
   [modalId]="'viewDreamTheme'"
-  [name]="selectedDreamTheme?.categoryName"
-  [description]="selectedDreamTheme?.description"
+  [name]="selectedDreamCategory?.categoryName"
+  [description]="selectedDreamCategory?.description"
   [isDreamDictionary]="false"
 ></view-description-modal>
 
-<!-- Dream Theme Forms Modal -->
+<!-- Dream Category Forms Modal -->
 <category-form
   [modalId]="'themeModalForm'"
-  [formGroup]="dreamThemeFormGroup"
-  (onUpSertButtonClick)="onUpSertDreamTheme()"
+  [formGroup]="dreamCategoryFormGroup"
+  (onUpSertButtonClick)="onUpSertDreamCategory()"
 ></category-form>
 
-<!-- Dream Theme Delete Modal -->
+<!-- Dream Category Delete Modal -->
 <delete-modal
   [modalId]="'delThemeModal'"
-  [selectedId] = "selectedDreamTheme?.id"
-  [selectedName] = "selectedDreamTheme?.categoryName"
-  (onDeleteConfirm)="onDeleteDreamTheme()"
+  [selectedId] = "selectedDreamCategory?.id"
+  [selectedName] = "selectedDreamCategory?.categoryName"
+  (onDeleteConfirm)="onDeleteDreamCategory()"
 ></delete-modal>

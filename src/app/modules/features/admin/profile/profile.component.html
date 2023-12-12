@@ -29,8 +29,8 @@
                 <label class="form-label">Email Address</label>
                 <input type="text" class="form-control" formControlName="emailAddress">
             </div>
-            <ng-container *ngFor="let addr of addressesFormArray.controls; let i = index" formArrayName="addresses">
-                <ng-container [formGroupName] = "i">
+            <ng-container *ngFor="let addr of addressesFormArray.controls; let addressIndex = index" formArrayName="addresses">
+                <ng-container [formGroupName] = "addressIndex">
                     <div class="col-md-6 mb-2">
                         <label class="form-label">Address</label>
                         <input type="text" class="form-control" placeholder="1234 Main St" formControlName="address1">
@@ -41,7 +41,7 @@
                     </div>
                     <div class="col-md-3 mb-2">
                         <label class="form-label">Country</label>
-                        <select class="form-select" formControlName="country" (change)="onChangeAddressCountry($event, i)">
+                        <select class="form-select" formControlName="country" (change)="onProfileAddressCountryChange($event, addressIndex)">
                             <option selected disabled>Country</option>
                             <option *ngFor="let country of countryList" [value]="country">{{country}}</option>
                         </select>
@@ -49,8 +49,8 @@
                     <div class="col-md-3 mb-2">
                         <label class="form-label">State/Province</label>
                         <select class="form-select" formControlName="state">
-                            <option selected disabled>Country</option>
-                            <option *ngFor="let state of selectedAddressState[i]" [value]="state.abbreviation">{{state.name}}</option>
+                            <option selected disabled>State/Province</option>
+                            <option *ngFor="let state of selectedAddress[addressIndex]" [value]="state.abbreviation">{{state.name}}</option>
                         </select>
                     </div>
                     <div class="col-md-3 mb-2">
@@ -96,13 +96,13 @@
             </div>
         </div>
         
-        <ng-container *ngFor="let work of employersFormArray().controls; let i = index;" formArrayName="employers">
-            <ng-container [formGroupName]="i">
+        <ng-container *ngFor="let work of employersFormArray.controls; let employerIndex = index;" formArrayName="employers">
+            <ng-container [formGroupName]="employerIndex">
                 <div class="bg-light p-3">
                     <button type="button" 
                         class="btn btn-primary" 
-                        [disabled]="i === 0"
-                        (click)="onRemoveEmployerClick(i, work.get('id')?.value)">
+                        [disabled]="employerIndex === 0"
+                        (click)="onRemoveEmployerClick(employerIndex, work.get('id')?.value)">
                             Remove Work Experience
                     </button>
                     <div class="row my-3">
@@ -132,7 +132,7 @@
                         </div>
                         <div class="col-md-3 mb-2">
                             <label class="form-label">Country</label>
-                            <select class="form-select" formControlName="country" (change)="onChangeEmployeeCountry($event, i)">
+                            <select class="form-select" formControlName="country" (change)="onEmployerAddressCountryChange($event, employerIndex)">
                                 <option selected disabled>Country</option>
                                 <option *ngFor="let country of countryList" [value]="country">{{country}}</option>
                             </select>
@@ -141,7 +141,7 @@
                             <label class="form-label">State/Province</label>
                             <select class="form-select" formControlName="state">
                                 <option selected disabled>State</option>
-                                <option *ngFor="let state of selectedEmployeeStateList[i]" [value]="state.abbreviation">{{state.name}}</option>
+                                <option *ngFor="let state of selectedEmployer[employerIndex]" [value]="state.abbreviation">{{state.name}}</option>
                             </select>
                         </div>
                         <div class="col-md-3 mb-2">
@@ -160,17 +160,17 @@
                     <div class="d-sm-flex">
                         <p class="lead fw-bold">Job Description</p>
                     </div>
-                    <ng-container *ngFor="let job of jobDescriptionFormsArray(i).controls; let ji = index" formArrayName="workExps">
-                        <ng-container [formGroupName]="ji">
+                    <ng-container *ngFor="let job of jobDescriptionFormsArray(employerIndex).controls; let workExpIndex = index" formArrayName="workExps">
+                        <ng-container [formGroupName]="workExpIndex">
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" formControlName="description">
                                     <button class="btn btn-outline-secondary" 
-                                        (click)="onAddJobDescriptionClick(i)">
+                                        (click)="onAddJobDescriptionClick(employerIndex)">
                                             +
                                     </button>
                                 <button class="btn btn-outline-secondary" 
-                                    [disabled]="ji === 0"
-                                    (click)="onRemoveJobDescriptionpClick(i, ji, job.get('id')?.value)">
+                                    [disabled]="workExpIndex === 0"
+                                    (click)="onRemoveJobDescriptionpClick(employerIndex, workExpIndex, job.get('id')?.value)">
                                         -
                                 </button>
                             </div>
@@ -185,6 +185,5 @@
 
     <div class="text-center">
         <button class="btn btn-primary m-2 w-25" [routerLink]="['../']">Close</button>
-        <button class="btn btn-primary m-2 w-25" (click)="testmethod()">Submit</button>
     </div>
 </form> 

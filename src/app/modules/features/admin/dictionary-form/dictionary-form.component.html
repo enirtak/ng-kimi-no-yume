@@ -5,7 +5,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <p class="lead fw-bold mt-auto mb-auto text-dark">{{isEditForm ? 'Edit' : 'Add'}}</p>
+                <p class="lead fw-bold mt-auto mb-auto text-dark">{{isEditForm ? 'Edit a Dream' : 'Add New Dream'}}</p>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body mb-2">
@@ -40,12 +40,12 @@
                     </div>
                     <div class="row py-2">
                         <label class="col-sm-4 fw-bold">
-                            Dream Theme
+                            Dream Category
                             <span class="text-danger">*</span>
                         </label>
                         <div class="col-sm-8">
                             <select class="form-select" formControlName="dreamCategoryId">
-                                <option value="null" disabled>Dream Theme</option>
+                                <option value="null" disabled>Dream Category</option>
                                 <option *ngFor="let cat of dreamThemeList" value="{{cat?.id}}">
                                     {{cat?.categoryName}}
                                 </option>

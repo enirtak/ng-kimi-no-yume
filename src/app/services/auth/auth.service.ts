@@ -28,7 +28,7 @@ export class AuthService {
   async login(request: AuthenticateUserRequest) {
     await lastValueFrom(this.svc.postApiAuthenticateAuthenticateUser(request))
     .then((response) => {
-        this.storageSVC.set("token", response.token);
+        this.storageSVC.set('token', response.token);
         this.router.navigate(['admin']); 
     })
     .catch(() => {

@@ -5,13 +5,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FilterPipe implements PipeTransform {
 
-  transform(list: any[], searchValue: string, fieldName: any, filterMetadata: any): any[] {
+  transform(list: any[], searchValue: string, fieldName: any): any[] {
 
     if (!list) return[];
-    if (!searchValue) {
-      filterMetadata.count = list.length;
-      return list;
-    }
+    if (!searchValue) return list;
 
     let filteredResult = list.filter(key => {
       return key && 
@@ -19,7 +16,6 @@ export class FilterPipe implements PipeTransform {
         key[fieldName].toLowerCase().includes(searchValue.toLowerCase());
     });
 
-    filterMetadata.count = filteredResult.length;
     return filteredResult;
   }
 
