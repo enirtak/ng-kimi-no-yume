@@ -20,7 +20,8 @@ export class SpinnerInterceptor implements HttpInterceptor {
 
     return next.handle(request)
       .pipe(
-        tap({
+        tap(
+          {
             next: (event) => {
                 if (event instanceof HttpResponse) {
                     this.loadingSVC.hide();
@@ -30,7 +31,8 @@ export class SpinnerInterceptor implements HttpInterceptor {
                 console.log('HTTPInterceptor error', err);
                 this.loadingSVC.resetSpinner();
             }
-        })
+        }
+      )
     );
   }
 }

@@ -1,35 +1,36 @@
-<navigation></navigation>
-
-<div class="py-4">
-    <div class="container">
-        <div class="mb-2">
-            <span>By Symbol: </span>
-            <div class="d-flex flex-wrap justify-content-between align-items-center">
-                <ng-container *ngIf="alphabet">
-                    <ng-container *ngFor="let letter of alphabet">
-                        <button class="btn badge rounded-pill text-bg-light m-1" (click)="onClickLetter(letter)">{{letter}}</button>
-                    </ng-container>
-                </ng-container>
-            </div>
-        </div>
-        <div>
-            <span class="text-start">By Theme: </span>
-            <div class="d-flex flex-wrap justify-content-between align-items-center">
-                <ng-container *ngIf="themeList">
-                    <ng-container *ngFor="let theme of themeList">
-                        <button class="btn badge rounded-pill text-bg-light m-1" (click)="onClickTheme(theme.id)">{{theme.categoryName}}</button>
-                    </ng-container>
-                </ng-container>
+<div class="dictionary-background vh-100">
+    <navigation></navigation>
+    <div class="container p-vh-2">
+        <div [formGroup]="form">
+            <div class="row">
+                <div class="col-4 g-2 py-2 py-md-0 ">
+                    <span>By Symbol: </span>
+                    <select class="form-select" formControlName="selectedLetter" >
+                        <option value="null" disabled>Dream Symbol</option>
+                        <option *ngFor="let letter of alphabet" [ngValue]="letter">
+                            <span>{{letter}}</span>
+                        </option>
+                    </select>
+                </div>
+                <div class="col-8 g-2 py-2 py-md-0 ">
+                    <span>By Category: </span>
+                    <select class="form-select" formControlName="selectedTheme">
+                        <option value="null" disabled>Dream Category</option>
+                        <option *ngFor="let theme of categoryList" [ngValue]="theme.id">
+                            <span>{{theme.categoryName}}</span>
+                        </option>
+                    </select>
+                </div>
             </div>
         </div>
         <hr class="border border-black border-2 opacity-50 my-4">
     </div>
     
-    <div class="container mt-4">
+    <div class="container">
         <ng-container *ngIf="selectedCategory">
             <div class="mb-4">
                 <h2 class="purple-shadow text-white">{{selectedCategory}}</h2>
-                <p class="justify-text">{{description}}</p>
+                <p class="justify-text">{{categoryDescription}}</p>
             </div>
         </ng-container>
         <div class="list-container">

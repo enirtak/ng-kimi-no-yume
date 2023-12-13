@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { DreamCategoryDTO, DreamDictionaryDTO } from '../../../../api/models';
 import { Settings } from 'src/settings/settings';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { LocalStorageService } from 'src/app/services/localstorage/localstorage.service';
 import { CategoryService } from 'src/app/services/category/category.service';
-import { dreamThemeDTOToFormGroup, dreamThemeFormGroupToList } from '../forms/admin.formgroup.patchvalue';
+import { dreamCategoryDTOToFormGroup, dreamCategoryFormGroupToList } from '../forms/admin.formgroup.patchvalue';
 import { createDreamCategoryFormGroup } from '../forms/admin.formgroup.create';
 import { setupCategoryFormGroupHandler } from '../forms/admin.formgroup.handler';
 
@@ -18,9 +18,9 @@ export class CategoryListComponent implements OnInit {
   @Output() onShowAddForm: EventEmitter<void> = new EventEmitter();
   @Output() onGetSelectedDreamThemeItem: EventEmitter<number> = new EventEmitter();
 
-  dreamThemeFormGroup!: FormGroup; 
-  dreamThemeList?: Array<DreamCategoryDTO>;
-  selectedDreamTheme?: DreamCategoryDTO;
+  dreamCategoryFormGroup!: FormGroup; 
+  dreamCategoryList: Array<DreamCategoryDTO> | undefined = [];
+  selectedDreamCategory?: DreamCategoryDTO;
 
   dreamCategorySearch = '';
   itemCount = Settings.ItemCount;
@@ -33,65 +33,65 @@ export class CategoryListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (!this.dreamThemeFormGroup) this.dreamThemeFormGroup = createDreamCategoryFormGroup(this.fb);
-    setupCategoryFormGroupHandler(this.dreamThemeFormGroup);
+    if (!this.dreamCategoryFormGroup) this.dreamCategoryFormGroup = createDreamCategoryFormGroup(this.fb);
+    setupCategoryFormGroupHandler(this.dreamCategoryFormGroup);
 
     this.getListOnCache();
   }
 
   getListOnCache() {
-    let theme = this.storageSVC.get(Settings.DreamThemeKey);
-    this.dreamThemeList = this.storageSVC.parse(theme) ?? this.getDreamThemeList();
+    let theme = this.storageSVC.get(Settings.DreamCategoryListKey);
+    this.dreamCategoryList = this.storageSVC.parse(theme) ?? this.getDreamCategoryList();
   }
 
-  getDreamThemeList() {
+  getDreamCategoryList() {
     this.categorySVC.GetList()
     .then((data) => {
-      this.dreamThemeList = data.categories;
-      this.storageSVC.set(Settings.DreamThemeKey, this.dreamThemeList);
+      this.dreamCategoryList = data.categories;
+      this.storageSVC.set(Settings.DreamCategoryListKey, this.dreamCategoryList);
     });
   }
 
-  getSelectedDreamThemeItem(id: number | undefined) {
-    this.selectedDreamTheme = this.dreamThemeList?.find(x => x.id === id);
-    dreamThemeDTOToFormGroup(this.dreamThemeFormGroup, this.selectedDreamTheme);
+  getSelectedDreamCategory(id: number | undefined) {
+    this.selectedDreamCategory = this.dreamCategoryList?.find(x => x.id === id);
+    dreamCategoryDTOToFormGroup(this.dreamCategoryFormGroup, this.selectedDreamCategory);
   }
 
   addButtonClick() {
-    this.dreamThemeFormGroup.reset();
+    this.dreamCategoryFormGroup.reset();
   }
 
-  onUpSertDreamTheme() {
-    let formValues = this.dreamThemeFormGroup?.value;
+  onUpSertDreamCategory() {
+    let formValues = this.dreamCategoryFormGroup?.value;
 
-    if (formValues && formValues?.id) {
+    if (formValues && formValues.id) {
       this.categorySVC.Update(formValues)
         .then((response) => {
-          this.dreamThemeList?.map(x => {
+          this.dreamCategoryList?.map(x => {
             if (x.id === formValues.id) {
-              dreamThemeFormGroupToList(x, response.category as DreamDictionaryDTO);
+              dreamCategoryFormGroupToList(x, response.category as DreamDictionaryDTO);
             }
           });
-          this.resetThemeForm();
+          this.resetDreamCategoryForm();
         });
     } else {
       if (!formValues.id) formValues.id = 0;
       this.categorySVC.Create(formValues)
         .then((response) => {
-          this.dreamThemeList?.push(response.category as DreamCategoryDTO);
-          this.resetThemeForm();
+          this.dreamCategoryList?.push(response.category as DreamCategoryDTO);
+          this.resetDreamCategoryForm();
         });
     }
   }
 
-  onDeleteDreamTheme() {
-    this.categorySVC.Delete(this.dreamThemeFormGroup?.value)
-    .then(() => this.resetThemeForm());
+  onDeleteDreamCategory() {
+    this.categorySVC.Delete(this.dreamCategoryFormGroup?.value)
+    .then(() => this.resetDreamCategoryForm());
   }
 
-  resetThemeForm() {
-    this.dreamThemeList?.sort((a, b) => a.categoryName!.localeCompare(b.categoryName!));
-    this.storageSVC.set(Settings.DreamThemeKey, this.dreamThemeList);
-    this.dreamThemeFormGroup?.reset();
+  resetDreamCategoryForm() {
+    this.dreamCategoryList?.sort((a, b) => a.categoryName!.localeCompare(b.categoryName!));
+    this.storageSVC.set(Settings.DreamCategoryListKey, this.dreamCategoryList);
+    this.dreamCategoryFormGroup?.reset();
   }
 }

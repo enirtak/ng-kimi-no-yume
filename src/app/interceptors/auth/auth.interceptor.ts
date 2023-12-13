@@ -18,6 +18,7 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
     let userToken = this.authSVC.getTokenCache();
+    
     if (userToken) {
       request = request.clone({
         setHeaders: {

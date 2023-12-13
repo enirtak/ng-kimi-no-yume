@@ -4,4 +4,5 @@ export interface DreamDictionaryDTO {
   dreamDescription?: string;
   dreamName?: string;
   id?: number;
+  isActive?: boolean;
 }

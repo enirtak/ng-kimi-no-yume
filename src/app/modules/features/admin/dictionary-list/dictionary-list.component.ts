@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DreamCategoryDTO, DreamDictionaryDTO } from 'src/app/api/models';
 import { DictionaryService } from 'src/app/services/dictionary/dictionary.service';
@@ -7,6 +7,7 @@ import { Settings } from 'src/settings/settings';
 import { dictionaryDTOToFormGroup, yumeFormGroupToList } from '../forms/admin.formgroup.patchvalue';
 import { createDreamFormGroup } from '../forms/admin.formgroup.create';
 import { setupDreamFormGroupHandler } from '../forms/admin.formgroup.handler';
+import { CategoryService } from 'src/app/services/category/category.service';
 
 @Component({
   selector: 'dictionary-list',
@@ -16,10 +17,12 @@ import { setupDreamFormGroupHandler } from '../forms/admin.formgroup.handler';
 export class DictionaryListComponent implements OnInit {
 
   yumeFormGroup!: FormGroup;
-  dreamList?: Array<DreamDictionaryDTO>;
+
+  dreamList: Array<DreamDictionaryDTO> | undefined = [];
+  dreamThemeList?: Array<DreamCategoryDTO> = [];
+
   selectedDream?: DreamDictionaryDTO;
   selectedDreamCategory: string | undefined = '';
-  dreamThemeList?: Array<DreamCategoryDTO>;
 
   dreamListSearch = '';
   itemCount = Settings.ItemCount;
@@ -27,22 +30,25 @@ export class DictionaryListComponent implements OnInit {
 
   constructor(
     private dreamSVC: DictionaryService,
+    private categorySVC: CategoryService,
     private storageSVC: LocalStorageService,
     private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
     if (!this.yumeFormGroup) this.yumeFormGroup = createDreamFormGroup(this.fb);
+
     setupDreamFormGroupHandler(this.yumeFormGroup);
-    this.getListOnCache();
+
+    this.getDictionaryList();
   }
 
-  getListOnCache() {
+  getDictionaryList() {
     let list = this.storageSVC.get(Settings.DreamListKey);
     this.dreamList = this.storageSVC.parse(list) ?? this.getDreamList();
 
-    let theme = this.storageSVC.get(Settings.DreamThemeKey);
-    this.dreamThemeList = this.storageSVC.parse(theme);
+    let theme = this.storageSVC.get(Settings.DreamCategoryListKey);
+    this.dreamThemeList = this.storageSVC.parse(theme) ?? this.getDreamCategoryList();
   }
 
   getDreamList() {
@@ -50,6 +56,14 @@ export class DictionaryListComponent implements OnInit {
       .then((data) => {
         this.dreamList = data.dictionaryList;
         this.storageSVC.set(Settings.DreamListKey, this.dreamList);
+      });
+  }
+
+  getDreamCategoryList() {
+    this.categorySVC.GetList()
+      .then((data) => {
+        this.dreamThemeList = data.categories;
+        this.storageSVC.set(Settings.DreamCategoryListKey, this.dreamThemeList);
       });
   }
 
@@ -72,7 +86,7 @@ export class DictionaryListComponent implements OnInit {
   onUpSertDream() {
     let formValues = this.yumeFormGroup?.value;
 
-    if (formValues && formValues?.id) {
+    if (formValues && formValues.id) {
       this.dreamSVC.Update(formValues)
         .then((response) => {
           this.dreamList?.map(x => {

@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DreamCategoryDTO, DreamDictionaryDTO } from 'src/app/api/models';
-import { LocalStorageService } from 'src/app/services/localstorage/localstorage.service';
 import { Settings } from 'src/settings/settings';
+import { SearchList } from '../search/Search';
+import { CategoryService } from 'src/app/services/category/category.service';
+import { DictionaryService } from 'src/app/services/dictionary/dictionary.service';
+import { MapDreamListToCombinedList, MapDreamCategoryListToCombinedList, SortCombinedList } from 'src/app/helpers/dream-helper';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-list',
@@ -9,64 +13,97 @@ import { Settings } from 'src/settings/settings';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-
-  alphabet =  ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-  symbolList: Array<DreamDictionaryDTO> = [];
-  dreamList: DreamDictionaryDTO[] = [];
-
-  selectedCategory: string = '';
-  description?: string = '';
-
-  themeList?: Array<DreamCategoryDTO>;
-
+  alphabet =  Settings.AlphabetList;
   itemCount = Settings.ItemCount;
   currentPage = Settings.CurrentPage;
-  
+
+  categoryList: Array<DreamCategoryDTO> = [];
+  symbolList: Array<DreamDictionaryDTO> = [];
+  dreamList: DreamDictionaryDTO[] = [];
+  combinedList: SearchList[] = [];
+
+  selectedCategory: string = '';
+  categoryDescription?: string = '';
+
+  form!: FormGroup;
+
   constructor(
-    private storageSVC: LocalStorageService) { }
+    private categorySVC: CategoryService,
+    private dreamSVC: DictionaryService,
+    private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.loadListFromCache();
-  }
+    this.loadListFromCache()
+      .then(() => this.loadSearch());
 
-  loadListFromCache() {
-    let cachedList = this.storageSVC.get(Settings.DreamListKey);
-    this.dreamList = this.storageSVC.parse(cachedList);
-
-    let themeList = this.storageSVC.get(Settings.DreamThemeKey);
-    this.themeList = this.storageSVC.parse(themeList);
-  }
-
-  onClickLetter(letter: string) {
-    console.log('onClickLetter ' + letter)
-    
-    this.selectedCategory = `${letter}`;
-    this.description = '';
-
-    // clear current list
-    if (this.symbolList) this.symbolList = [];    
-    
-    if (this.dreamList) {
-      this.dreamList.forEach((data) => {
-        if (data) {
-          if (data.dreamName?.toLocaleLowerCase()?.charAt(0) === letter.toLocaleLowerCase()) {
-            this.symbolList.push(data);
-          }
-        }
+    if (!this.form) {
+      this.form = this.fb.group({
+        selectedLetter: new FormControl(),
+        selectedTheme: new FormControl()
       });
+    }
+
+    this.subscribeToFormChanges();
+  }
+
+  subscribeToFormChanges() {
+    this.form.get('selectedLetter')?.valueChanges
+    .subscribe((letter) => {
+      this.onLetterChange(letter);
+      this.form.get('selectedTheme')?.setValue(null, { emitEvent: false });
+    });
+
+    this.form.get('selectedTheme')?.valueChanges
+    .subscribe((theme) => {
+      this.onThemeChange(theme);
+      this.form.get('selectedLetter')?.setValue(null, { emitEvent: false });
+    });
+  }
+
+  onThemeChange(id: any) {
+    this.symbolList = [];  
+
+    let category = this.categoryList?.find(x => x.id === id);
+
+    this.selectedCategory = `${category?.categoryName}`;
+    this.categoryDescription = category?.description;
+
+    this.symbolList.push(...this.dreamList.filter(x => x.dreamCategoryId === id) ?? []);
+  }
+
+  onLetterChange(letter: any) {
+    this.symbolList = []; 
+    this.categoryDescription = '';
+    this.selectedCategory = `${letter}`;
+    
+    if (this.combinedList) {
+      this.symbolList = this.combinedList
+        .filter(data => data && data.name?.toLowerCase()?.charAt(0) === letter.toLowerCase())
+        .map(data => ({
+          dreamName: data.name,
+          dreamDescription: data.description,
+          id: data.id
+        })
+      );
     }
   }
 
-  onClickTheme(id: number | undefined) {
-    console.log('onClickTheme ' + id);
-    let category = this.themeList?.find(x => x.id === id);
+  async loadListFromCache() {
+    this.dreamList = await this.dreamSVC.GetListFromCache();
+    this.categoryList = await this.categorySVC.GetListFromCache();
+  }
 
-    this.selectedCategory = `${category?.categoryName}`;
-    this.description = category?.description;
-    
-    // clear current list
-    if (this.symbolList) this.symbolList = [];  
+  loadSearch() {
+    let dreamList : any[] = [];
+    if (this.dreamList) {
+      dreamList = MapDreamListToCombinedList(this.dreamList);
+    }
 
-    this.symbolList.push(...this.dreamList.filter(x => x.dreamCategoryId === id) ?? []);
+    let categoryList: any[] = [];
+    if (this.categoryList) {
+      categoryList = MapDreamCategoryListToCombinedList(this.categoryList, this.dreamList.length);
+    }
+
+    this.combinedList = SortCombinedList(dreamList, categoryList);
   }
 }

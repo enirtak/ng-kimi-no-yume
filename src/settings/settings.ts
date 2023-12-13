@@ -532,12 +532,18 @@ const usStateList = [
   }
 ];
 
+const alphabetList = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+
 export const Settings = {
     APIUrl: 'https://localhost:7255',
     CurrentPage: 1,
     ItemCount: 15,
     DreamListKey: "dreamList",
-    DreamThemeKey: "dreamTheme",
+    DreamCategoryListKey: "dreamListCategory",
     PHProvinceList: phProvinceList,
-    USStateList: usStateList
+    USStateList: usStateList,
+    AlphabetList: alphabetList,
+    CountryList: ["Philippines", "United States"],
+    EditModalLabel: 'Edit a record',
+    AddModalLabel: 'Add a new record'
 }

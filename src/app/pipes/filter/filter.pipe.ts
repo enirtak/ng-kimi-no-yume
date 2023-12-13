@@ -10,11 +10,13 @@ export class FilterPipe implements PipeTransform {
     if (!list) return[];
     if (!searchValue) return list;
 
-    return list.filter(key => {
+    let filteredResult = list.filter(key => {
       return key && 
-      key[fieldName] && 
-      key[fieldName].toLowerCase().includes(searchValue.toLowerCase());
+        key[fieldName] && 
+        key[fieldName].toLowerCase().includes(searchValue.toLowerCase());
     });
+
+    return filteredResult;
   }
 
 }

@@ -13,6 +13,7 @@ import { LoadingService } from 'src/app/services/loading/loading.service';
 export class LoginComponent implements OnInit {
   
   loginFormGroup!: FormGroup;
+  loginImageURL = './../../../../../assets/images/undraw_secure_login_pdn4.svg';
 
   constructor(private fb: FormBuilder,
     private authSVC: AuthService,

@@ -5,7 +5,6 @@
 }
 
 .container-relative-404 h1 {    
-    font-family: 'Itim';
     font-size: 150px;
     font-weight: 900;
     margin: 0;
@@ -14,7 +13,7 @@
     -webkit-transform: translateX(-50%);
     -ms-transform: translateX(-50%);
     transform: translateX(-50%);
-    background: white; 
+    background: black; 
     /* url('/src/assets/images/dreamy.jpg') no-repeat; */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -23,11 +22,9 @@
 }
 
 h2 {
-    font-family: 'Handlee';
     font-size: 24px;
 }
 
 a {
-    font-family: 'Handlee';
     font-size: 14px;
 }

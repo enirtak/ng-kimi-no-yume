@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { DreamDictionaryDTO, DreamDictionaryRequest } from 'src/app/api/models';
-import { DreamService } from 'src/app/api/services';
+import { DictionaryResponse, DreamDictionaryDTO, DreamDictionaryRequest } from 'src/app/api/models';
+import { DreamDictionaryService } from 'src/app/api/services';
 import { Settings } from 'src/settings/settings';
+import { LocalStorageService } from '../localstorage/localstorage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,36 +11,52 @@ import { Settings } from 'src/settings/settings';
 export class DictionaryService {
 
   constructor(
-    private svc : DreamService
+    private svc : DreamDictionaryService,
+    private storageSVC: LocalStorageService
   ) {
     if (this.svc && this.svc.rootUrl === '') this.svc.rootUrl = Settings.APIUrl;
    }
 
-  async GetList() {
-    return await lastValueFrom(this.svc.getApiDreamGetDreamDictionary());
+   async GetListFromCache() {
+    let list = this.storageSVC.get(Settings.DreamListKey);
+    let result = this.storageSVC.parse(list) ?? await this.GetDreamList();
+
+    return result;
+   }
+
+  async GetDreamList() {
+    let response: DictionaryResponse = {};
+
+    await this.GetList()
+      .then((result) => {
+        response = result;
+        this.storageSVC.set(Settings.DreamListKey, response.dictionaryList);
+      });
+
+    return response.dictionaryList;
   }
 
-  async Create(data: DreamDictionaryDTO) {
+  GetList() {
+    return lastValueFrom(this.svc.getApiDreamDictionaryGetDreamDictionary());
+  }
+
+  Create(data: DreamDictionaryDTO) {
     let request: DreamDictionaryRequest = {
       dreamItem : data
     };
 
-   return await lastValueFrom(this.svc.postApiDreamCreateNewDream(request));
+   return lastValueFrom(this.svc.postApiDreamDictionaryCreateNewDream(request));
   }
 
-  async Update(data: any) {
+  Update(data: any) {
     let request: DreamDictionaryRequest = {
       dreamItem : data
     };
 
-   return await lastValueFrom(this.svc.putApiDreamUpdateDream(request));
+   return lastValueFrom(this.svc.postApiDreamDictionaryUpdateDream(request));
   }
 
-  async Delete(data: any) {
-    let request: DreamDictionaryRequest = {
-      dreamItem : data
-    };
-
-   return await lastValueFrom(this.svc.deleteApiDreamDeleteDream(request));
+  Delete(id: number) {
+   return lastValueFrom(this.svc.putApiDreamDictionaryDeleteDream(id));
   }
 }

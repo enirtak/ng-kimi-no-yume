@@ -22,10 +22,11 @@ export class ProfileComponent implements OnInit {
 
   currentProfile: PersonDTO | undefined = {};
 
-  selectedAddressState: any = [];
-  selectedEmployeeStateList: any = [];
-  countryList = ["Philippines", "United States"];
-  stateList: any = {
+  selectedAddress: any = [];
+  selectedEmployer: any = [];
+
+  countryList = Settings.CountryList;
+  countryStateList: any = {
     "Philippines" : Settings.PHProvinceList,
     "United States": Settings.USStateList
   };
@@ -42,71 +43,65 @@ export class ProfileComponent implements OnInit {
     if (!this.jobDescriptionFormGroup) this.jobDescriptionFormGroup = createJobDescriptionFormGroup(this.fb);
 
     this.getProfile();
-    this.loadState();
-  }
-
-  loadState() {
-    this.loadAddressStateList();
-    this.loadEmployeeStateList();
-  }
-
-  loadAddressStateList() {
-    this.currentProfile?.addresses?.forEach((value, index) => {
-      this.selectedAddressState[index] = this.stateList[value?.country!];
-    });
-  }
-
-  loadEmployeeStateList() {
-    this.currentProfile?.employers?.forEach((value, index) => {
-      this.selectedEmployeeStateList[index] = this.stateList[value?.country!];
-    });
   }
 
   // https://stackoverflow.com/questions/60113914/duplicate-dynamic-select-box-using-angular-6-form-array
-  onChangeEmployeeCountry(event: any, index: number) {
-    this.selectedEmployeeStateList[index] = this.stateList[event?.target?.value];
+  onEmployerAddressCountryChange(event: any, index: number) {
+    this.selectedEmployer[index] = this.countryStateList[event?.target?.value];
   }
 
-  onChangeAddressCountry(event: any, index: number) {
-    this.selectedAddressState[index] = this.stateList[event?.target?.value];
+  onProfileAddressCountryChange(event: any, index: number) {
+    this.selectedAddress[index] = this.countryStateList[event?.target?.value];
   }
 
   getProfile() {
     let profile = this.storageSVC.parse(this.storageSVC.get("profile")) as PersonDTO;
+
     if (profile) {
       profileDTOToFormGroup(this.profileFormGroup, profile, this.fb);
       this.currentProfile = profile;
-      console.log(profile.employers)
-      this.loadState();
+      this.loadRelatedEntities();
     } else {
       this.svc.GetProfile()
       .then((response) => {
-        this.storageSVC.set("profile", response.person);
-        profileDTOToFormGroup(this.profileFormGroup, response.person, this.fb);
-        this.currentProfile = response.person;
+        this.storageSVC.set('profile', response?.person);
+        profileDTOToFormGroup(this.profileFormGroup, response?.person, this.fb);
+        this.currentProfile = response?.person;
       });
     }
   }
 
+  loadRelatedEntities() {
+    this.getProfileAddressList();
+    this.getProfileEmployerList();
+  }
+
+  getProfileAddressList() {
+    this.currentProfile?.addresses?.forEach((value, index) => {
+      this.selectedAddress[index] = this.countryStateList[value?.country!];
+    });
+  }
+
+  getProfileEmployerList() {
+    this.currentProfile?.employers?.forEach((value, index) => {
+      this.selectedEmployer[index] = this.countryStateList[value?.country!];
+    });
+  }
+
   submitForm() {
     let formValues = this.profileFormGroup?.value;
-    // console.log(formValues)
 
-    if (formValues.id && formValues.id > 0) {
+    if (formValues && formValues.id && formValues.id !== 0) {
       this.svc.Update(formValues)
         .then((response) => {
-          if (response && response.person) {
-            this.storageSVC.set("profile", response.person);
-            this.currentProfile = response.person;
-          }
+          this.storageSVC.set('profile', response?.person);
+          this.currentProfile = response?.person;
         });
     } else {
       this.svc.Create(formValues)
         .then((response) => {
-          if (response && response.person) {
-            this.storageSVC.set("profile", response.person);
-            this.currentProfile = response.person;
-          }
+          this.storageSVC.set('profile', response?.person);
+          this.currentProfile = response?.person;
         });
     }
   }
@@ -115,27 +110,28 @@ export class ProfileComponent implements OnInit {
     return getFormArray(this.profileFormGroup, 'addresses');
   }
 
-  employersFormArray() {
+  get employersFormArray() {
     return getFormArray(this.profileFormGroup, 'employers');
   }
 
   onAddEmployerClick() {
-    addItemToFormArray(this.employersFormArray(), this.employersFormGroup);
+    addItemToFormArray(this.employersFormArray, this.employersFormGroup);
   }
 
   onRemoveEmployerClick(index: number, id: number) {
-    let selected = this.employersFormArray()?.at(index);
-    if (selected && selected.value?.id === id) {
+    let selected = this.employersFormArray?.at(index);
+
+    if (selected && selected.value && selected.value.id === id) {
       selected.patchValue({
         isActive: false
       });
-      removeItemToFormArray(this.employersFormArray(), index);
+      removeItemToFormArray(this.employersFormArray, index);
     }
   }
 
   // https://www.tektutorialshub.com/angular/nested-formarray-example-add-form-fields-dynamically/
   jobDescriptionFormsArray(index: number) {
-    let result = this.employersFormArray().at(index).get('workExps') as FormArray;
+    let result = this.employersFormArray.at(index).get('workExps') as FormArray;
     return result;
   }
 
@@ -145,7 +141,8 @@ export class ProfileComponent implements OnInit {
 
   onRemoveJobDescriptionpClick(index: number, workExpIndex: number, id: number) {
     let selected = this.jobDescriptionFormsArray(index)?.at(workExpIndex);
-    if (selected && selected.value?.id === id) {
+
+    if (selected && selected.value && selected.value.id === id) {
       selected.patchValue({
         isActive: false
       });

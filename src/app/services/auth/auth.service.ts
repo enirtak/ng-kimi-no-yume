@@ -25,10 +25,10 @@ export class AuthService {
     return token && !this.jwtHelper.isTokenExpired(token);
   }
 
-  async login(request: AuthenticateUserRequest) {
-    await lastValueFrom(this.svc.postApiAuthenticateAuthenticateUser(request))
+  login(request: AuthenticateUserRequest) {
+    lastValueFrom(this.svc.postApiAuthenticateAuthenticateUser(request))
     .then((response) => {
-        this.storageSVC.set("token", response.token);
+        this.storageSVC.set('token', response.token);
         this.router.navigate(['admin']); 
     })
     .catch(() => {

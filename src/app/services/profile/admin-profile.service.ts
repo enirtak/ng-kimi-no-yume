@@ -3,6 +3,7 @@ import { lastValueFrom } from 'rxjs';
 import { PersonDTO, ProfileRequest } from 'src/app/api/models';
 import { ProfileService } from 'src/app/api/services';
 import { Settings } from 'src/settings/settings';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,26 +13,25 @@ export class AdminProfileService {
     if (this.svc && this.svc.rootUrl === '') this.svc.rootUrl = Settings.APIUrl;
   }
 
-  async GetList() {
-    return await lastValueFrom(this.svc.getApiProfileGetProfileList());
+  GetList() {
+    return lastValueFrom(this.svc.getApiProfileGetProfileList());
   }
 
-  async GetProfile() {
-    return await lastValueFrom(this.svc.getApiProfileGetCurrentProfile());
+  GetProfile() {
+    return lastValueFrom(this.svc.getApiProfileGetCurrentProfile());
   }
 
-  async Create(data: PersonDTO) {
+  Create(data: PersonDTO) {
     let request :ProfileRequest = {
       person : data
     };
-    return await lastValueFrom(this.svc.postApiProfileCreateProfile(request));
+    return lastValueFrom(this.svc.postApiProfileCreateProfile(request));
   }
 
-  // Update / Delete 
-  async Update(data: PersonDTO) {
+  Update(data: PersonDTO) {
     let request :ProfileRequest = {
       person : data
     };
-    return await lastValueFrom(this.svc.putApiProfileUpdateProfile(request));
+    return lastValueFrom(this.svc.putApiProfileUpdateProfile(request));
   }
 }

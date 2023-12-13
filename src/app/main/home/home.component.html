@@ -1,28 +1,91 @@
-<div class="d-flex">
-    <a class="ms-auto admin-link link-dark" [routerLink]="[routerLink]">LOGIN</a>
-</div>
+<div class="progress"></div>
+<ul class="nav justify-content-end">
+    <li>
+        <p class="p-3 m-2">
+            <a class="text-secondary" href="#">
+                Home
+            </a>
+        </p>
+    </li>
+    <li>
+        <p class="p-3 m-2">
+            <a class="text-secondary" href="#about-me">
+                About Me
+            </a>
+        </p>
+    </li>
+    <li>
+        <p class="p-3 m-2">
+            <a class="text-secondary" [href]="routerLink">
+                <i class="bi bi-person-lock" title="login"></i>
+            </a>
+        </p>
+    </li>
+  </ul>
 
-<div class="container">
-    <div class="d-flex kimi-container">
-        <div class="m-auto">
-            <div class="d-sm-flex align-items-center justify-content-center cursor-default">
-                <h1 class="display-1 text-center text-md-start text-white purple-shadow">
-                    Welcome to
-                    <h5 class="display-1 handlee purple-shadow">
-                        <span class="fw-bold">君の夢</span>
-                        <p class="fs-2 text-white">
-                            Your Dream
+<div class="home josefin-slab">
+    <div class="position-relative vh-100">
+        <div class="position-absolute top-50 start-50 translate-middle">
+            <div class="container">
+                <div class="d-sm-flex align-items-center justify-content-between">
+                    <div class="text-center text-md-start">
+                        <p class="display-4">
+                            hi, i am
+                            <span class="display-1 text-pink">
+                                katoriiin
+                            </span>
                         </p>
-                    </h5>
-                </h1>
-                <div class="col-md-6 text-md-start text-center">
-                    <div class="mx-5 px-3">
-                        <p class="fs-2 text-secondary text-white purple-shadow">
-                            Unlock and interpret the meaning of your dreams.
+                        <div>
+                            <a class="text-secondary" title="About" href="#about-me">
+                                <span class="p-3 badge rounded-pill btn-pink me-2"><i class="bi bi-arrow-down"></i></span>about me 
+                            </a>
+                        </div>
+                    </div>
+                    <div class="d-none d-md-block w-50">
+                        <img [src]="imgURL" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="position-relative vh-100" id="about-me">
+        <div class="position-absolute top-50 start-50 translate-middle">
+            <div class="container text-end">
+                <div class="d-sm-flex align-items-center justify-content-center">
+                    <div class="d-none d-md-flex">
+                        <div class="w-100 m-auto">
+                            <img [src]="aboutMeURL" class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="text-center text-md-end ms-md-5">
+                        <p class="display-1">
+                            about me
                         </p>
-                        <a class="btn btn-dkpurple text-white" routerLink="search">
-                            <i class="bi bi-chevron-right"></i> Search for a dream symbol
-                        </a>
+                        <div class="my-4">
+                            <p>
+                                i am a software engineer with 4 years of experience developing 
+                                web applications using C#, ASP.NET Core Web API.
+                            </p>
+                            <p>c#, asp.net core web api, entity framework, angular, typescript, html/css, bootstrap</p>
+                        </div>
+                        <div class="my-4 d-md-block">
+                            <a class="badge rounded-pill btn-pink p-3 m-2" title="Email" [href]="emailTo">
+                                <span class=""><i class="bi bi-envelope"></i></span>
+                            </a>
+                            <a class="badge rounded-pill btn-pink p-3 m-2" title="LinkedIn" [href]="linkedInURL" target="_blank">
+                                <i class="bi bi-linkedin"></i>
+                            </a>
+                            <a class="badge rounded-pill btn-pink p-3 m-2" title="GitHub" [href]="githubURL" target="_blank">
+                                <i class="bi bi-github"></i>
+                            </a>
+                            <a class="badge rounded-pill btn-pink p-3 m-2" title="KimiNoYume" [routerLink]="['kiminoyume']" target="_blank">
+                                <i class="bi bi-cloud"></i>
+                            </a>
+                            <a class="badge rounded-pill btn-pink p-3 m-2" title="shIIgoto" [routerLink]="['shiigoto']" target="_blank">
+                                <i class="bi bi-person-badge"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

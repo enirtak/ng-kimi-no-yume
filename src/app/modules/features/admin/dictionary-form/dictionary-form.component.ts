@@ -11,7 +11,7 @@ export class DictionaryFormComponent implements OnInit {
 
   @Input() modalId!: string;
   @Input() formGroup!: FormGroup;
-  @Input() dreamThemeList?: Array<DreamCategoryDTO>;
+  @Input() dreamThemeList?: Array<DreamCategoryDTO> = [];
   @Output() onUpSertButtonClick: EventEmitter<void> = new EventEmitter();
 
   minDescriptionCount = 20;

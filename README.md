@@ -36,7 +36,8 @@ Reference (https://medium.com/@ryanchenkie_40935/angular-authentication-using-ro
 Reference (https://www.ultimateakash.com/blog-details/Ii1TNGAKYAo=/How-to-Implement-JWT-Authentication-in-Angular-2023)
 
 ## Generate a component with module
-`ng g c modules/shared/spinner/spinner --module modules/shared/shared.module.ts`
+CD to the folder
+`ng g m job-app-tracker --route job-app-tracker --module app.module`
 
 ## Handling HTTP Errors
 Reference (https://www.pluralsight.com/guides/handling-exceptions-using-the-angular-httpclient)

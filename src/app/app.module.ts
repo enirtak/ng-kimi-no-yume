@@ -8,23 +8,21 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './main/home/home.component';
 import { LoginComponent } from './modules/features/admin/login/login.component';
 
-import { AuthGuardService } from './services/auth/auth-guard.service';
-
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './interceptors/auth/auth.interceptor';
 import { ErrorInterceptor } from './interceptors/error/error.interceptor';
 import { SpinnerInterceptor } from './interceptors/spinner/spinner.interceptor';
 import { Settings } from 'src/settings/settings';
-
-export function tokenGetter() {
-  return localStorage.getItem('token');
-}
+import { HomeDictionaryComponent } from './modules/features/home-dictionary/home-dictionary.component';
+import { tokenGetter } from 'src/settings/token-getter';
+import { AuthInterceptor } from './interceptors/auth/auth.interceptor';
+import { AuthGuardService } from './services/auth/auth-guard.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
+    HomeDictionaryComponent,
   ],
   imports: [
     BrowserModule,

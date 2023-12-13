@@ -65,137 +65,13 @@
         }
       }
     },
-    "/api/Dream/GetDreamDictionary": {
+    "/api/DreamCategory/GetCategories": {
       "get": {
         "tags": [
-          "Dream"
+          "DreamCategory"
         ],
         "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/DreamListResponse"
-            }
-          }
-        }
-      }
-    },
-    "/api/Dream/CreateNewDream": {
-      "post": {
-        "tags": [
-          "Dream"
-        ],
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/DreamDictionaryRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/DreamItemResponse"
-            }
-          }
-        }
-      }
-    },
-    "/api/Dream/UpdateDream": {
-      "put": {
-        "tags": [
-          "Dream"
-        ],
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/DreamDictionaryRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/DreamItemResponse"
-            }
-          }
-        }
-      }
-    },
-    "/api/Dream/DeleteDream": {
-      "delete": {
-        "tags": [
-          "Dream"
-        ],
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/DreamDictionaryRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/DreamItemResponse"
-            }
-          }
-        }
-      }
-    },
-    "/api/Dream/GetCategories": {
-      "get": {
-        "tags": [
-          "Dream"
-        ],
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
+          "application/json"
         ],
         "responses": {
           "200": {
@@ -203,31 +79,30 @@
             "schema": {
               "$ref": "#/definitions/CategoryResponse"
             }
+          },
+          "500": {
+            "description": "Server Error"
           }
         }
       }
     },
-    "/api/Dream/CreateNewCategory": {
+    "/api/DreamCategory/CreateNewCategory": {
       "post": {
         "tags": [
-          "Dream"
+          "DreamCategory"
         ],
         "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
+          "application/json"
         ],
         "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
+          "application/json"
         ],
         "parameters": [
           {
             "in": "body",
             "name": "body",
             "schema": {
-              "$ref": "#/definitions/CategoryRequest"
+              "$ref": "#/definitions/DreamCategoryRequest"
             }
           }
         ],
@@ -241,27 +116,23 @@
         }
       }
     },
-    "/api/Dream/UpdateCategory": {
+    "/api/DreamCategory/UpdateCategory": {
       "post": {
         "tags": [
-          "Dream"
+          "DreamCategory"
         ],
         "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
+          "application/json"
         ],
         "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
+          "application/json"
         ],
         "parameters": [
           {
             "in": "body",
             "name": "body",
             "schema": {
-              "$ref": "#/definitions/CategoryRequest"
+              "$ref": "#/definitions/DreamCategoryRequest"
             }
           }
         ],
@@ -271,31 +142,31 @@
             "schema": {
               "$ref": "#/definitions/CategoryItemResponse"
             }
+          },
+          "500": {
+            "description": "Server Error"
           }
         }
       }
     },
-    "/api/Dream/DeleteCategory": {
-      "delete": {
+    "/api/DreamCategory/DeleteCategory": {
+      "put": {
         "tags": [
-          "Dream"
+          "DreamCategory"
         ],
         "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
+          "application/json"
         ],
         "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
+          "application/json"
         ],
         "parameters": [
           {
             "in": "body",
             "name": "body",
             "schema": {
-              "$ref": "#/definitions/CategoryRequest"
+              "format": "int32",
+              "type": "integer"
             }
           }
         ],
@@ -303,8 +174,132 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/CategoryItemResponse"
+              "$ref": "#/definitions/BaseResponse"
             }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/DreamDictionary/GetDreamDictionary": {
+      "get": {
+        "tags": [
+          "DreamDictionary"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/DictionaryResponse"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/DreamDictionary/CreateNewDream": {
+      "post": {
+        "tags": [
+          "DreamDictionary"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/DreamDictionaryRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/DictionarytemResponse"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/DreamDictionary/UpdateDream": {
+      "post": {
+        "tags": [
+          "DreamDictionary"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/DreamDictionaryRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/DictionarytemResponse"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/DreamDictionary/DeleteDream": {
+      "put": {
+        "tags": [
+          "DreamDictionary"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/BaseResponse"
+            }
+          },
+          "500": {
+            "description": "Server Error"
           }
         }
       }
@@ -315,14 +310,10 @@
           "Profile"
         ],
         "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
+          "application/json"
         ],
         "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
+          "application/json"
         ],
         "parameters": [
           {
@@ -348,24 +339,8 @@
         "tags": [
           "Profile"
         ],
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
         "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "schema": {
-              "$ref": "#/definitions/ProfileListRequest"
-            }
-          }
+          "application/json"
         ],
         "responses": {
           "200": {
@@ -373,6 +348,9 @@
             "schema": {
               "$ref": "#/definitions/ProfileListResponse"
             }
+          },
+          "500": {
+            "description": "Server Error"
           }
         }
       }
@@ -383,9 +361,7 @@
           "Profile"
         ],
         "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
+          "application/json"
         ],
         "responses": {
           "200": {
@@ -393,6 +369,9 @@
             "schema": {
               "$ref": "#/definitions/ProfileResponse"
             }
+          },
+          "500": {
+            "description": "Server Error"
           }
         }
       }
@@ -403,14 +382,10 @@
           "Profile"
         ],
         "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
+          "application/json"
         ],
         "produces": [
-          "text/plain",
-          "application/json",
-          "text/json"
+          "application/json"
         ],
         "parameters": [
           {
@@ -427,6 +402,43 @@
             "schema": {
               "$ref": "#/definitions/ProfileResponse"
             }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/Profile/DeleteProfile": {
+      "put": {
+        "tags": [
+          "Profile"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/BaseResponse"
+            }
+          },
+          "500": {
+            "description": "Server Error"
           }
         }
       }
@@ -492,6 +504,17 @@
         }
       }
     },
+    "BaseResponse": {
+      "type": "object",
+      "properties": {
+        "isSuccess": {
+          "type": "boolean"
+        },
+        "errorMessage": {
+          "type": "string"
+        }
+      }
+    },
     "CategoryItemResponse": {
       "type": "object",
       "properties": {
@@ -501,14 +524,6 @@
         "errorMessage": {
           "type": "string"
         },
-        "category": {
-          "$ref": "#/definitions/DreamCategoryDTO"
-        }
-      }
-    },
-    "CategoryRequest": {
-      "type": "object",
-      "properties": {
         "category": {
           "$ref": "#/definitions/DreamCategoryDTO"
         }
@@ -531,12 +546,46 @@
         }
       }
     },
+    "DictionaryResponse": {
+      "type": "object",
+      "properties": {
+        "isSuccess": {
+          "type": "boolean"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "dictionaryList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DreamDictionaryDTO"
+          }
+        }
+      }
+    },
+    "DictionarytemResponse": {
+      "type": "object",
+      "properties": {
+        "isSuccess": {
+          "type": "boolean"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "dreamItem": {
+          "$ref": "#/definitions/DreamDictionaryDTO"
+        }
+      }
+    },
     "DreamCategoryDTO": {
       "type": "object",
       "properties": {
         "id": {
           "format": "int32",
           "type": "integer"
+        },
+        "isActive": {
+          "type": "boolean"
         },
         "categoryName": {
           "type": "string"
@@ -546,12 +595,23 @@
         }
       }
     },
+    "DreamCategoryRequest": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "$ref": "#/definitions/DreamCategoryDTO"
+        }
+      }
+    },
     "DreamDictionaryDTO": {
       "type": "object",
       "properties": {
         "id": {
           "format": "int32",
           "type": "integer"
+        },
+        "isActive": {
+          "type": "boolean"
         },
         "dreamName": {
           "type": "string"
@@ -570,37 +630,6 @@
       "properties": {
         "dreamItem": {
           "$ref": "#/definitions/DreamDictionaryDTO"
-        }
-      }
-    },
-    "DreamItemResponse": {
-      "type": "object",
-      "properties": {
-        "isSuccess": {
-          "type": "boolean"
-        },
-        "errorMessage": {
-          "type": "string"
-        },
-        "dreamItem": {
-          "$ref": "#/definitions/DreamDictionaryDTO"
-        }
-      }
-    },
-    "DreamListResponse": {
-      "type": "object",
-      "properties": {
-        "isSuccess": {
-          "type": "boolean"
-        },
-        "errorMessage": {
-          "type": "string"
-        },
-        "dictionaryList": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/DreamDictionaryDTO"
-          }
         }
       }
     },
@@ -722,14 +751,6 @@
           "items": {
             "$ref": "#/definitions/ProjectsDTO"
           }
-        }
-      }
-    },
-    "ProfileListRequest": {
-      "type": "object",
-      "properties": {
-        "isGetAll": {
-          "type": "boolean"
         }
       }
     },

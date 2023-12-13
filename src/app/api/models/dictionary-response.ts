@@ -1,6 +1,6 @@
 /* tslint:disable */
 import { DreamDictionaryDTO } from './dream-dictionary-dto';
-export interface DreamListResponse {
+export interface DictionaryResponse {
   dictionaryList?: Array<DreamDictionaryDTO>;
   errorMessage?: string;
   isSuccess?: boolean;
