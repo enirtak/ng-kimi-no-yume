@@ -36,27 +36,27 @@ export class CategoryService {
     return response.categories;
   }
 
-  async GetList() {
-    return await lastValueFrom(this.svc.getApiDreamCategoryGetCategories());
+  GetList() {
+    return lastValueFrom(this.svc.getApiDreamCategoryGetCategories());
   }
 
-  async Create(data: DreamCategoryDTO) {
+  Create(data: DreamCategoryDTO) {
     let request: DreamCategoryRequest = {
       category : data
     };
 
-   return await lastValueFrom(this.svc.postApiDreamCategoryCreateNewCategory(request));
+   return lastValueFrom(this.svc.postApiDreamCategoryCreateNewCategory(request));
   }
 
-  async Update(data: any) {
+  Update(data: any) {
     let request: DreamCategoryRequest = {
       category : data
     };
 
-   return await lastValueFrom(this.svc.postApiDreamCategoryUpdateCategory(request));
+   return lastValueFrom(this.svc.postApiDreamCategoryUpdateCategory(request));
   }
 
-  async Delete(id: number) {
-   return await lastValueFrom(this.svc.putApiDreamCategoryDeleteCategory(id));
+  Delete(id: number) {
+   return lastValueFrom(this.svc.putApiDreamCategoryDeleteCategory(id));
   }
 }

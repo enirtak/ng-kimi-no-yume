@@ -36,27 +36,27 @@ export class DictionaryService {
     return response.dictionaryList;
   }
 
-  async GetList() {
-    return await lastValueFrom(this.svc.getApiDreamDictionaryGetDreamDictionary());
+  GetList() {
+    return lastValueFrom(this.svc.getApiDreamDictionaryGetDreamDictionary());
   }
 
-  async Create(data: DreamDictionaryDTO) {
+  Create(data: DreamDictionaryDTO) {
     let request: DreamDictionaryRequest = {
       dreamItem : data
     };
 
-   return await lastValueFrom(this.svc.postApiDreamDictionaryCreateNewDream(request));
+   return lastValueFrom(this.svc.postApiDreamDictionaryCreateNewDream(request));
   }
 
-  async Update(data: any) {
+  Update(data: any) {
     let request: DreamDictionaryRequest = {
       dreamItem : data
     };
 
-   return await lastValueFrom(this.svc.postApiDreamDictionaryUpdateDream(request));
+   return lastValueFrom(this.svc.postApiDreamDictionaryUpdateDream(request));
   }
 
-  async Delete(id: number) {
-   return await lastValueFrom(this.svc.putApiDreamDictionaryDeleteDream(id));
+  Delete(id: number) {
+   return lastValueFrom(this.svc.putApiDreamDictionaryDeleteDream(id));
   }
 }

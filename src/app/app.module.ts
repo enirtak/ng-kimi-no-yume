@@ -14,6 +14,8 @@ import { SpinnerInterceptor } from './interceptors/spinner/spinner.interceptor';
 import { Settings } from 'src/settings/settings';
 import { HomeDictionaryComponent } from './modules/features/home-dictionary/home-dictionary.component';
 import { tokenGetter } from 'src/settings/token-getter';
+import { AuthInterceptor } from './interceptors/auth/auth.interceptor';
+import { AuthGuardService } from './services/auth/auth-guard.service';
 
 @NgModule({
   declarations: [
